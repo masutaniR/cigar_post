@@ -1,21 +1,13 @@
 <table class="table table-sm table-borderless">
-  <thead>
+  <tbody>
+    <% @information.each do |info| %>
     <tr>
       <td><i class="fas fa-info-circle"></i></td>
-      <td>日付</td>
-      <td>タイトル</td>
+      <td><%= info.created_at.to_s(:datetime_jp) %></td>
+      <td><%= link_to info.title, information_path(info) %></td>
     </tr>
-    <tr>
-      <td><i class="fas fa-info-circle"></i></td>
-      <td>日付</td>
-      <td>タイトル</td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-info-circle"></i></td>
-      <td>日付</td>
-      <td>タイトル</td>
-    </tr>
-  </thead>
+    <% end %>
+  </tbody>
 </table>
 
 <div class="d-flex justify-content-end">
