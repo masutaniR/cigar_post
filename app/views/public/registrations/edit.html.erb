@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-6 col-sm-10 mx-auto">
 
-      <h2>登録情報変更</h2>
+      <h2 class="title">登録情報変更</h2>
       <small><span class="need-item">*</span> は入力必須項目です。</small>
 
       <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
@@ -41,7 +41,7 @@
           <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
         </div>
 
-        <div class="actions d-flex justify-content-center">
+        <div class="actions">
           <%= f.submit "変更", class: 'btn btn-info' %>
         </div>
       <% end %>

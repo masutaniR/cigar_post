@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-10 mx-auto mt-2">
+      <h3 class="title">お知らせ詳細</h3>
+      <p>
+        <span class="font-weight-bold">投稿日時：</span><br>
+        <%= @information.created_at.to_s(:datetime_jp) %>
+      </p>
+      <% if @information.updated_at != @information.created_at %>
+        <p>
+          <span class="font-weight-bold">更新日時：</span><br>
+          <%= @information.updated_at.to_s(:datetime_jp) %>
+        </p>
+      <% end %>
+      <p>
+        <span class="font-weight-bold">タイトル：</span><br>
+        <%= @information.title %>
+      </p>
+      <p>
+        <span class="font-weight-bold">本文：</span><br>
+        <%= @information.body %>
+      </p>
+
+      <div class="d-flex justify-content-center">
+        <%= link_to '編集', edit_admin_information_path(@information), class: 'btn btn-sm btn-info px-5 mr-5' %>
+        <%= link_to '削除', admin_information_path(@information), method: :delete,
+            data: { confirm: '本当に削除しますか？', cancel: 'やめる',commit: '削除する'},title: '削除確認',
+            class: 'btn btn-sm btn-danger px-5 ml-5' %>
+      </div>
+
+    </div>
+  </div>
+</div>
