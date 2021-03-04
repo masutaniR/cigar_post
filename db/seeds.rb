@@ -5,6 +5,6 @@ Admin.create(
 
 User.create(
   email: 'user@user.com',
-  name: 'GUEST',
+  name: 'TEST',
   password: 'password'
   )
