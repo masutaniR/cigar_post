@@ -6,9 +6,9 @@ class Admin::InformationController < ApplicationController
   end
 
   def create
-    @information = Information.new(info_params)
-    if @information.save
-      redirect_to admin_information_path(@information)
+    information = Information.new(info_params)
+    if information.save
+      redirect_to admin_information_path(information)
     else
       render :new
     end
@@ -23,12 +23,22 @@ class Admin::InformationController < ApplicationController
   end
 
   def edit
+    @information = Information.find(params[:id])
   end
 
   def update
+    information = Information.find(params[:id])
+    if information.update(info_params)
+      redirect_to admin_information_path(information)
+    else
+      render :edit
+    end
   end
 
   def destroy
+    information = Information.find(params[:id])
+    information.destroy
+    redirect_to admin_information_index_path
   end
 
   private
