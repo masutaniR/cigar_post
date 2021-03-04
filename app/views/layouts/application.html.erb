@@ -9,7 +9,45 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column vh-100">
+    <header class="shadow-sm mb-3">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">CigarPost</a>
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <% if admin_signed_in? %>
+            <%= render 'layouts/admin_signed_in_nav' %>
+          <% elsif user_signed_in? %>
+            <%= render 'layouts/user_signed_in_nav' %>
+          <% else %>
+            <%= render 'layouts/before_signed_in_nav' %>
+          <% end %>
+        </ul>
+      </nav>
+    </header>
+
+    <% flash.each do |key, value| %>
+      <% if key == 'notice' %>
+        <p class="alert alert-success">
+          <%= value %>
+          <button class="close" type="button" data-dismiss="alert">&times;</button>
+        </p>
+      <% else %>
+        <p class="alert alert-danger">
+          <%= value %>
+          <button class="close" type="button" data-dismiss="alert">&times;</button>
+        </p>
+      <% end %>
+    <% end %>
+
     <%= yield %>
+
+    <footer>
+      <div class="d-flex justify-content-center mt-5">
+        ©CigarPost
+      </div>
+    </footer>
+
   </body>
 </html>
