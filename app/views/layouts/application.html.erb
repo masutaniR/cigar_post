@@ -9,12 +9,15 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="d-flex flex-column vh-100">
+  <body>
     <header class="shadow-sm mb-3">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand" href="/">CigarPost</a>
-        </div>
+          <a class="navbar-brand text-info font-weight-bold" href="/">CigarPost</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if admin_signed_in? %>
             <%= render 'layouts/admin_signed_in_nav' %>
@@ -23,6 +26,7 @@
           <% else %>
             <%= render 'layouts/before_signed_in_nav' %>
           <% end %>
+        </div>
         </ul>
       </nav>
     </header>
@@ -47,7 +51,7 @@
       <div class="d-flex justify-content-center mt-5">
         ©CigarPost
       </div>
-      <div class="d-flex justify-content-end mt-5">
+      <div class="d-flex justify-content-end">
         <small class="admin_session">
           <%= link_to '管理者ログイン', new_admin_session_path %>
         </small>
