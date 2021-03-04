@@ -18,15 +18,61 @@
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
 
- .field_with_errors {
+a {
+  text-decoration: underline;
+  color: #212529;
+}
+
+thead {
+  text-align: center;
+}
+
+.welcome {
+  height: 700px;
+  background-image: url(top.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.whats_cp {
+  font-size: 20px;
+  text-decoration: underline;
+  color: #212529;
+}
+
+.welcome_info,
+.about_info {
+  padding-top: 190px;
+  .btn {
+    width: 200px;
+  }
+}
+
+.about {
+  @extend .welcome;
+  background-image: url(about.jpg);
+}
+
+.highlight {
+    background: linear-gradient(transparent 90%, #17a2b8 0%);
+    line-height: 1.3em;
+}
+
+div {
+  &.field, &.actions {
+    margin-bottom: 15px;
+  }
+}
+
+.field_with_errors {
   display: contents;
   input {
     @extend .is-invalid;
   }
 }
 
-.nav-link.btn-outline-dark:hover {
-  color: #f8f9fa !important;
+.nav-item {
+  margin-left: 20px;
 }
 
 .need-item {
@@ -35,4 +81,17 @@
 
 .admin_session > a {
   color: #6c757d;
+}
+
+a.dropdown-toggle,
+a.dropdown-toggle:hover {
+  text-decoration: none;
+  color: #343a40 !important;
+}
+
+a.nav-link,
+a.btn,
+a.navbar-brand,
+a.dropdown-item {
+  text-decoration: none;
 }

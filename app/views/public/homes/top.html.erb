@@ -1,3 +1,36 @@
-<h1>CigarPostのトップページです</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-5 welcome">
+      <div class="welcome_info">
+        <h2 class="text-center">Welcome to CigarPost!!</h2>
+        <div class="d-flex justify-content-center py-2">
+          <%= link_to 'CigarPostとは？', about_path, class: 'whats_cp text-center' %>
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-2">
+          <%= link_to '新規登録', new_user_registration_path, class: 'btn btn-info' %>
+        </div>
+        <div class="d-flex justify-content-center mb-2">
+          <%= link_to 'ログイン', new_user_session_path, class: 'btn btn-outline-info' %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= link_to 'かんたんログイン', users_guest_sign_in_path, method: :post, class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    </div>
 
-<%= link_to 'かんたんログイン', users_guest_sign_in_path, method: :post, class: 'btn btn-sm btn-block btn-secondary' %>
+    <div class="col-md-7">
+      <div class="col-md-11 mx-auto mt-4">
+        <h4 class="text-info"><i class="fas fa-fire"></i> 人気投稿TOP3</h4>
+          <%= render 'popular_posts' %>
+        <h4 class="text-info mt-5"><i class="fas fa-seedling"></i> 新着投稿</h4>
+          <%= render 'new_posts' %>
+        <h5 class="mt-5">
+          <span class="highlight">
+            <i class="fas fa-info-circle"></i> CigarPostからのお知らせ
+          </span>
+        </h5>
+          <%= render 'admin_info' %>
+      </div>
+    </div>
+  </div>
+</div>

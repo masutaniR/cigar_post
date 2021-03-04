@@ -21,9 +21,13 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if current_user.email == 'test@test.com'
+      redirect_to root_path, alert: 'ゲストアカウントは編集できません。'
+    else
+      super
+    end
+  end
 
   # DELETE /resource
   # def destroy
