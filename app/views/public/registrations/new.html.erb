@@ -10,19 +10,19 @@
 
         <div class="field pt-3 mb-3">
           <span class="need-item">*</span>
-          <%= f.label :name, '名前' %><br>
+          <%= f.label :name %><br>
           <%= f.text_field :name, autofocus: true, autocomplete: '名前', class: 'form-control' %>
         </div>
 
         <div class="field mb-3">
           <span class="need-item">*</span>
-          <%= f.label :email, 'メールアドレス' %><br />
+          <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "メールアドレス", class: 'form-control' %>
         </div>
 
         <div class="field mb-3">
           <span class="need-item">*</span>
-          <%= f.label :password, 'パスワード' %>
+          <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> 文字以上)</em>
           <% end %><br />
@@ -31,7 +31,7 @@
 
         <div class="field">
           <span class="need-item">*</span>
-          <%= f.label :password_confirmation, 'パスワード(確認用)' %><br />
+          <%= f.label :password_confirmation %><br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
