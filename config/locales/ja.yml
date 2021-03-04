@@ -1,0 +1,27 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      post: 投稿
+      post_comment: コメント
+      admin: 管理者
+      information: お知らせ
+    attributes:
+      user:
+        name: 名前
+        introduction: 自己紹介
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認用)
+      post:
+        body: 本文
+        category: カテゴリー
+      post_comment:
+        comment: コメント
+        category: カテゴリー
+      admin:
+        email: メールアドレス
+        password: パスワード
+      information:
+        title: タイトル
+        body: 本文

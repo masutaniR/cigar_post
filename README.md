@@ -52,6 +52,4 @@ https://docs.google.com/spreadsheets/d/1p2eNx49KThXUrPEluwff0QOLA7k9yHlytG6SJwKq
 
 ## 使用素材
 
-- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名と URL を明記してください。
-
-※TOP ページなどに画像を使用すると思いますが、まだ使用サイト・画像が未定のため、この項目は追って記入します。
+- [ぱくたそ](https://www.pakutaso.com/)
