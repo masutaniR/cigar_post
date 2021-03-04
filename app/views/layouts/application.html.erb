@@ -27,6 +27,20 @@
       </nav>
     </header>
 
+    <% flash.each do |key, value| %>
+      <% if key == 'notice' %>
+        <p class="alert alert-success">
+          <%= value %>
+          <button class="close" type="button" data-dismiss="alert">&times;</button>
+        </p>
+      <% else %>
+        <p class="alert alert-danger">
+          <%= value %>
+          <button class="close" type="button" data-dismiss="alert">&times;</button>
+        </p>
+      <% end %>
+    <% end %>
+
     <%= yield %>
 
     <footer>
