@@ -17,3 +17,7 @@
  @import "bootstrap";
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
+
+.nav-link.btn-outline-dark:hover {
+  color: #f8f9fa !important;
+}
