@@ -1,1 +1,12 @@
-管理者ヘッダ
+<li class="nav-item">
+  <%= link_to 'ユーザー', root_path, class: 'nav-link text-dark' %>
+</li>
+<li class="nav-item">
+  <%= link_to '投稿', root_path, class: 'nav-link text-dark' %>
+</li>
+<li class="nav-item">
+  <%= link_to 'お知らせ', root_path, class: 'nav-link text-dark' %>
+</li>
+<li class="nav-item">
+  <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
+</li>

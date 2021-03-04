@@ -4,7 +4,7 @@
 
       <h2>ログイン</h2>
 
-      <%= form_with model: @user, url: user_session_path, local: true do |f| %>
+      <%= form_with model: @admin, url: admin_session_path, local: true do |f| %>
         <div class="field mb-3">
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
@@ -26,10 +26,6 @@
           <%= f.submit "ログイン", class: 'btn btn-info' %>
         </div>
       <% end %>
-
-      <div class="mt-5">
-        <%= render "public/shared/links" %>
-      </div>
 
     </div>
   </div>
