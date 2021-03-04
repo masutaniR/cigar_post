@@ -1,3 +1,9 @@
-<h1>CigarPostのトップページです</h1>
-
-<%= link_to 'かんたんログイン', users_guest_sign_in_path, method: :post, class: 'btn btn-sm btn-block btn-secondary' %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 mx-auto">
+      <h1>CigarPostのトップページです</h1>
+      <%= link_to 'CigarPostとは？', about_path %><br>
+      <%= link_to 'かんたんログイン', users_guest_sign_in_path, method: :post, class: 'btn btn-sm btn-secondary' %>
+    </div>
+  </div>
+</div>
