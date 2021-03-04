@@ -18,6 +18,13 @@
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
 
+ .field_with_errors {
+  display: contents;
+  input {
+    @extend .is-invalid;
+  }
+}
+
 .nav-link.btn-outline-dark:hover {
   color: #f8f9fa !important;
 }
