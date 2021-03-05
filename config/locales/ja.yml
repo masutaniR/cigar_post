@@ -10,6 +10,7 @@ ja:
       user:
         name: 名前
         introduction: 自己紹介
+        profile_image_id: プロフィール画像
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード(確認用)

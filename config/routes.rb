@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get 'about' => 'homes#about'
     get 'home' => 'users#home', as: 'timeline'
     resources :information, only: [:index, :show]
-    resources :users, only: [:index, :show, :edit, :update, :destroy] do
+    resources :users, only: [:index, :show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
       member do
         get :following, :followers, :likes
