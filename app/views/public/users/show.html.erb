@@ -1,1 +1,11 @@
-<%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: '20x20' %>
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-4 user-info-container">
+      <%= render 'public/users/info', user: @user %>
+    </div>
+
+    <div class="col-md-7 offset-md-1">
+      <h4><%= @user.name %>さんの投稿</h4>
+    </div>
+  </div>
+</div>

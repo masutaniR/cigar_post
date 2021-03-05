@@ -1,0 +1,32 @@
+<div class="user-info my-3">
+  <div class="user-img-field">
+    <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '100x100', class: 'user-icon') %>
+  </div>
+  <div class="user-name-field my-2">
+    <strong><%= user.name %></strong>
+  </div>
+  <div class="user-intro-field">
+    <%= user.introduction %>
+  </div>
+  <hr>
+  <table class="table table-sm table-borderless">
+    <tbody>
+      <tr>
+        <th>フォロー</th>
+        <td>5</td>
+      </tr>
+      <tr>
+        <th>フォロワー</th>
+        <td>6</td>
+      </tr>
+      <tr>
+        <th>いいね</th>
+        <td>10</td>
+      </tr>
+    </tbody>
+  </table>
+  <% if user == current_user %>
+    <%= link_to 'プロフィール編集', edit_user_path(user), class: 'btn btn-sm btn-block px-5 btn-info my-2' %>
+    <%= link_to '通知を見る', '/', class: 'btn btn-sm px-5 btn-block btn-outline-dark' %>
+  <% end %>
+</div>

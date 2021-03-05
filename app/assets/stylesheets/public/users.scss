@@ -1,6 +1,9 @@
 // Place all the styles related to the public::users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$info: #17a2b8;
+
 .prev-content > img,
 img.no-photo {
   max-width: 100px;
@@ -9,4 +12,16 @@ img.no-photo {
 
 .profile-img-field {
   display: none;
+}
+
+img.user-icon {
+  border-radius: 50%;
+}
+
+.user-info-container {
+  background-color: #f5f5f5;
+  border-radius: 10%;
+  border: solid 1px $info;
+  display: flex;
+  justify-content: center;
 }
