@@ -23,16 +23,24 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     if current_user.email == 'test@test.com'
-      redirect_to root_path, alert: 'ゲストアカウントは編集できません。'
+      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
     else
       super
     end
   end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+     @user = current_user
+    if @user.email == 'test@test.com'
+      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
+    elsif @user.valid_password?(params[:password])
+      @user.destroy
+      redirect_to root_path, notice: '退会が完了しました。ご利用ありがとうございました。'
+    else
+      redirect_to edit_user_registration_path, alert: 'パスワードが違います。'
+    end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
