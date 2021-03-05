@@ -1,6 +1,6 @@
 <div class="user-info my-3">
   <div class="user-img-field">
-    <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '100x100', class: 'user-icon') %>
+    <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '100x100', fallback: 'no-img.jpeg', class: 'user-icon') %>
   </div>
   <div class="user-name-field my-2">
     <strong><%= user.name %></strong>
