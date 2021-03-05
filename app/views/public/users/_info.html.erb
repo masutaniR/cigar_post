@@ -28,5 +28,7 @@
   <% if user == current_user %>
     <%= link_to 'プロフィール編集', edit_user_path(user), class: 'btn btn-sm btn-block px-5 btn-info my-2' %>
     <%= link_to '通知を見る', '/', class: 'btn btn-sm px-5 btn-block btn-outline-dark' %>
+  <% else %>
+    <%= link_to 'フォロー', '/', class: 'btn btn-sm btn-block px-5 btn-info my-2'%>
   <% end %>
 </div>
