@@ -18,17 +18,24 @@
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
 
+$info: #17a2b8;
+
 header {
   background-color: #fff;
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 65px;
 }
 
 a {
   text-decoration: underline;
   color: #212529;
+}
+
+.nav-item>a::before,
+.nav-item>a>i::before {
+  color: $info;
 }
 
 thead {
