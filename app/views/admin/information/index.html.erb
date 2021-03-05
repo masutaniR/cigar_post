@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto mt-2">
+      <h3 class="title">お知らせ一覧</h3>
+      <div class="d-flex justify-content-end">
+        <%= link_to '新規投稿', new_admin_information_path, class: 'btn btn-info mb-2' %>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>作成日時</th>
+            <th>タイトル</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @information.each do |info| %>
+            <tr>
+              <td class="text-center">
+                <%= info.id %>
+              </td>
+              <td>
+                <%= info.created_at.to_s(:datetime_jp) %>
+              </td>
+              <td>
+                <%= link_to info.title, admin_information_path(info) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="paginate">
+        <%= paginate @information %>
+      </div>
+
+    </div>
+  </div>
+</div>

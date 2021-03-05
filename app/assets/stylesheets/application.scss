@@ -18,9 +18,24 @@
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
 
+$info: #17a2b8;
+
+header {
+  background-color: #fff;
+}
+
+body {
+  padding-top: 65px;
+}
+
 a {
   text-decoration: underline;
   color: #212529;
+}
+
+.nav-item>a::before,
+.nav-item>a>i::before {
+  color: $info;
 }
 
 thead {
@@ -28,7 +43,7 @@ thead {
 }
 
 .welcome {
-  height: 700px;
+  height: 800px;
   background-image: url(top.jpg);
   background-position: center;
   background-size: cover;
@@ -62,11 +77,24 @@ div {
   &.field, &.actions {
     margin-bottom: 15px;
   }
+  &.actions, &.paginate {
+    display: flex;
+    justify-content: center;
+    .btn {
+      padding-right: 50px;
+      padding-left: 50px;
+    }
+  }
+}
+
+.title {
+  text-align: center;
 }
 
 .field_with_errors {
   display: contents;
-  input {
+  input,
+  textarea {
     @extend .is-invalid;
   }
 }
@@ -92,6 +120,24 @@ a.dropdown-toggle:hover {
 a.nav-link,
 a.btn,
 a.navbar-brand,
-a.dropdown-item {
+a.dropdown-item,
+a.plain-link {
   text-decoration: none;
+}
+
+.pagination {
+  .active>a {
+    border-radius: 15px;
+    text-decoration: none;
+    color: #212529;
+    background: #17a2b8 !important;
+  }
+  li>a {
+    text-decoration: none;
+    border: none;
+    color: #212529;
+    &:hover {
+      border-radius: 15px;
+    }
+  }
 }

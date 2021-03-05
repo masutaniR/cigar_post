@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto mt-2">
+      <h4 class="pb-2">ユーザー一覧</h4>
+
+      <table class="table">
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <td>
+              <%= link_to user_path(user) do %>
+                <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '60x60', fallback: 'no-img.jpeg', class: 'user-icon') %>
+              <% end %>
+            </td>
+            <td>
+              <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
+              <%= user.introduction %>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <small><b>フォロー</b> 　5</small>
+              </div>
+              <div class="d-flex justify-content-end">
+                <small><b>フォロワー</b> 3</small>
+              </div>
+            </td>
+            <td>
+              <%= link_to 'フォロー', '/', class: 'btn btn-info px-3' %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="paginate">
+        <%= paginate @users %>
+      </div>
+
+    </div>
+  </div>
+</div>

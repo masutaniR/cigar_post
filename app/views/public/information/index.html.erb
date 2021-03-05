@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto mt-2">
+      <h4 class="title pb-2 highlight">CigarPostからのお知らせ</h4>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>投稿日時</th>
+            <th>タイトル</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @information.each do |info| %>
+          <tr>
+            <td><%= info.created_at.to_s(:datetime_jp) %></td>
+            <td><%= link_to info.title, information_path(info) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="paginate">
+        <%= paginate @information %>
+      </div>
+
+    </div>
+  </div>
+</div>

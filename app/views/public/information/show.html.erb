@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <h4 class="title highlight">
+        <%= @information.title %>
+      </h4>
+
+      <div class="d-flex justify-content-end mt-3">
+        <small><b>投稿日時：</b><%= @information.created_at.to_s(:datetime_jp) %></small>
+      </div>
+      <div class="d-flex justify-content-end mb-3">
+        <% if @information.updated_at != @information.created_at %>
+          <small><b>更新日時：</b><%= @information.updated_at.to_s(:datetime_jp) %></small>
+        <% end %>
+      </div>
+
+      <p>
+        <%= safe_join(@information.body.split("\n"), tag(:br)) %>
+      </p>
+
+      <p class="small mt-5">
+        <%= link_to '<< お知らせ一覧に戻る', information_index_path %>
+      </p>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto mt-2">
+      <h4 class="title">プロフィール編集</h4>
+      <small><span class="need-item">*</span> は入力必須項目です。</small>
+
+      <%= form_with model: @user, url: user_path, local: true do |f| %>
+        <%= render "layouts/errors", obj: @user %>
+
+        <div class="field pt-3">
+          <span class="need-item">*</span>
+          <%= f.label :name %><br>
+          <%= f.text_field :name, autofocus: true, autocomplete: '名前', class: 'form-control' %>
+        </div>
+
+        <div class="field">
+          <%= f.label :profile_image_id %><br>
+          <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
+            <%= f.label :profile_image, class: 'image_label' do %>
+              <div class="prev-contents">
+                <!--既に登録されている画像があれば表示-->
+                <% if @user.profile_image.present? %>
+                  <div class="prev-content">
+                    <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
+                  </div>
+                <% else %>
+                  <!--登録画像がなければno-imgを表示-->
+                  <div class="no-img">
+                    <%= image_tag('no-img.jpeg', class: 'no-photo') %>
+                  </div>
+                <% end %>
+                <!--非表示-->
+                <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
+              </div>
+            <% end %>
+
+        </div>
+
+        <div class="field">
+          <%= f.label :introduction %><br>
+          <%= f.text_area :introduction, autofocus: true, autocomplete: '自己紹介', rows: '5', class: 'form-control' %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "更新", class: 'btn btn-info' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

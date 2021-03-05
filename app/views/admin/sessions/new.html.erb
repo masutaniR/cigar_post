@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-sm-10 mx-auto">
+    <div class="col-md-6 col-sm-10 mx-auto mt-2">
 
-      <h2>ログイン</h2>
+      <h2 class="title">管理者ログイン</h2>
 
       <%= form_with model: @admin, url: admin_session_path, local: true do |f| %>
         <div class="field">
@@ -22,7 +22,7 @@
           </div>
         <% end %>
 
-        <div class="actions d-flex justify-content-center">
+        <div class="actions">
           <%= f.submit "ログイン", class: 'btn btn-info' %>
         </div>
       <% end %>

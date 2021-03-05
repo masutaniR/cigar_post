@@ -10,6 +10,7 @@ ja:
       user:
         name: 名前
         introduction: 自己紹介
+        profile_image_id: プロフィール画像
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード(確認用)
@@ -25,3 +26,10 @@ ja:
       information:
         title: タイトル
         body: 本文
+  views:
+    pagination:
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."
