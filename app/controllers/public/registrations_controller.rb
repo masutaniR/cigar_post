@@ -36,7 +36,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
       redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
     elsif @user.valid_password?(params[:password])
       @user.destroy
-      redirect_to root_path, notice: '退会が完了しました。ご利用ありがとうございました。'
+      redirect_to root_path, notice: '退会手続が完了しました。ご利用ありがとうございました。'
     else
       redirect_to edit_user_registration_path, alert: 'パスワードが違います。'
     end
