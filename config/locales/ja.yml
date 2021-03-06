@@ -33,3 +33,9 @@ ja:
       previous: <i class="fas fa-angle-left"></i>
       next: <i class="fas fa-angle-right"></i>
       truncate: "..."
+  enums:
+    post:
+      category:
+        senryu: 川柳
+        tanka: 短歌
+        free_haiku: 自由律俳句
