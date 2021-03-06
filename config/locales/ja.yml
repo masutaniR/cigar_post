@@ -16,6 +16,7 @@ ja:
         password_confirmation: パスワード(確認用)
       post:
         body: 本文
+        post_image_id: 画像
         category: カテゴリー
       post_comment:
         comment: コメント

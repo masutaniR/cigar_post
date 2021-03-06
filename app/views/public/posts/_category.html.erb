@@ -1,0 +1,7 @@
+<% if post.category == 'senryu' %>
+  <p class="senryu badge badge-info">川柳</p>
+<% elsif post.category == 'tanka' %>
+  <p class="tanka badge badge-tanka">短歌</p>
+<% else %>
+  <p class="free-haiku badge badge-haiku">自由律俳句</p>
+<% end %>
