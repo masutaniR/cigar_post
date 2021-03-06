@@ -5,7 +5,6 @@ $info: #17a2b8;
 
 .post-container {
   border: solid 1px $info;
-  border-radius: 10%;
 }
 
 .post-body {
@@ -35,11 +34,11 @@ img.index-post-img {
 }
 
 .post-index-container {
-  border: solid 1px #dee2e6;
+  border: solid 1px $info;
 }
 
 .one-post {
-  border-bottom: solid 1px #dee2e6;
+  border-bottom: solid 1px $info;
   &:last-child {
     border-bottom: none;
   }
