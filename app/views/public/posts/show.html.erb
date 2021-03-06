@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4 user-info-container">
+    <div class="col-md-4 user-info-container rounded">
       <%= render 'public/users/info', user: @post.user %>
     </div>
 
     <div class="col-md-7 mx-auto">
-      <div class="col-12 post-container py-3 px-5">
+      <div class="col-12 post-container rounded py-3 px-5">
         <div class="d-flex justify-content-between">
           <div class="post-user d-flex justify-content-start">
             <%= link_to user_path(@post.user), class: 'plain-link' do %>
