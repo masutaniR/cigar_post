@@ -13,7 +13,26 @@
 
       <div class="field">
         <%= f.label :post_image_id %>
-        <%= f.attachment_field :post_image %>
+        <small class="text-muted ml-3">クリックで画像選択/変更</small>
+        <br>
+        <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
+        <%= f.label :post_image, class: 'image_label' do %>
+          <div class="post-prev-contents">
+            <!--選択画像があれば表示-->
+            <% if @post.post_image.present? %>
+              <div class="post-prev-content">
+                <%= attachment_image_tag(@post, :post_image, alt: "preview", class: "post-prev-image rounded") %>
+              </div>
+            <% else %>
+              <!--選択画像がなければiconを表示-->
+              <div class="post-no-img">
+                <%= icon('fas', 'image', class: 'post-no-photo') %>
+              </div>
+            <% end %>
+            <!--非表示-->
+            <%= f.file_field :post_image, class: 'post-img-field mt-2' %>
+          </div>
+        <% end %>
       </div>
 
       <div class="field d-flex justify-content-start">
@@ -26,7 +45,7 @@
       </div>
 
       <div class="actions">
-        <%= f.submit '送信', class: 'btn btn-info' %>
+        <%= f.submit '送信', class: 'btn btn-info mt-3' %>
       </div>
       <% end %>
     </div>

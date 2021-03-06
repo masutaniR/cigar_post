@@ -44,3 +44,16 @@ img.index-post-img {
     border-bottom: none;
   }
 }
+
+.post-img-field {
+  display: none;
+}
+
+.post-prev-content > img {
+  width: 30%;
+  object-fit: cover;
+}
+
+.post-no-photo {
+  font-size: 50px;
+}
