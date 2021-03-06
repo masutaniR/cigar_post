@@ -1,3 +1,59 @@
 // Place all the styles related to the public::posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$info: #17a2b8;
+
+.post-container {
+  border: solid 1px $info;
+  border-radius: 10%;
+}
+
+.post-body {
+  font-size: 2rem;
+}
+
+img.post-img {
+  width: 100%;
+  object-fit: cover;
+}
+
+img.index-post-img {
+  width: 50%;
+  object-fit: cover;
+}
+
+.badge-tanka {
+  @extend .badge-info !optional;
+  background-color: #46CAB8;
+  color: #fff;
+}
+
+.badge-haiku {
+  @extend .badge-info !optional;
+  background-color: #C7593F;
+  color: #fff;
+}
+
+.post-index-container {
+  border: solid 1px #dee2e6;
+}
+
+.one-post {
+  border-bottom: solid 1px #dee2e6;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.post-img-field {
+  display: none;
+}
+
+.post-prev-content > img {
+  width: 30%;
+  object-fit: cover;
+}
+
+.post-no-photo {
+  font-size: 50px;
+}

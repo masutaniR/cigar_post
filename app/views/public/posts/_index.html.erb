@@ -1,0 +1,36 @@
+<% posts.each do |post| %>
+  <div class="one-post py-5 px-5">
+    <div class="d-flex justify-content-between">
+      <div class="post-user d-flex justify-content-start">
+        <%= link_to user_path(post.user), class: 'plain-link' do %>
+          <%= attachment_image_tag(post.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
+          <strong><%= post.user.name %></strong>
+        <% end %>
+      </div>
+      <div class="category">
+        <%= render 'public/posts/category', post: post %>
+      </div>
+    </div>
+    <p class="index-post-body mt-2">
+      <%= safe_join(post.body.split("\n"), tag(:br)) %>
+    </p>
+    <% if post.post_image.present? %>
+      <div class="post-img mx-auto">
+        <%= attachment_image_tag(post, :post_image, format: 'jpg', class: 'rounded index-post-img') %>
+      </div>
+    <% end %>
+    <hr>
+    <%= post.created_at.to_s(:datetime_jp) %><br>
+    <%= link_to '>> 投稿詳細を見る', post_path(post), class: 'mt-2' %>
+    <div class="post-reaction mt-2">
+      <% if post.user == current_user %>
+        <%= link_to post_path(post), method: :delete, class: 'plain-link text-muted small mr-4',
+            data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
+          <i class="far fa-trash-alt"></i> 削除
+        <% end %>
+      <% end %>
+      <span class="mr-4 text-muted small"><i class="far fa-comment"></i> コメント</span>
+      <span class="text-muted small"><i class="far fa-heart"></i> いいね</span>
+    </div>
+  </div>
+<% end %>

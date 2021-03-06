@@ -7,21 +7,20 @@
     </tr>
   </thead>
   <tbody>
+    <% new_posts.each do |post| %>
     <tr>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
+      <td>
+        <%= attachment_image_tag(post.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
+        <strong><%= post.user.name %></strong>
+      </td>
+      <td class="d-flex justify-content-center">
+        <%= render 'public/posts/category', post: post %>
+      </td>
+      <td>
+        <%= safe_join(post.body.split("\n"), tag(:br)) %>
+      </td>
     </tr>
-    <tr>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
-    </tr>
-    <tr>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
-    </tr>
+    <% end %>
   </tbody>
 </table>
 

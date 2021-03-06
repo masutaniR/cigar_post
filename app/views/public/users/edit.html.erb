@@ -14,7 +14,9 @@
         </div>
 
         <div class="field">
-          <%= f.label :profile_image_id %><br>
+          <%= f.label :profile_image_id %>
+          <small class="text-muted ml-3">クリックで画像選択/変更</small>
+          <br>
           <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
             <%= f.label :profile_image, class: 'image_label' do %>
               <div class="prev-contents">

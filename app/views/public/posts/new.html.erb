@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-10 mx-auto mt-2">
+      <h3 class="title">CigarPost 新規投稿</h3>
+
+      <%= render 'layouts/errors', obj: @post %>
+
+      <%= form_with model: @post, url: posts_path, local: true do |f| %>
+      <div class="field">
+        <%= f.label :body %>
+        <%= f.text_area :body, autocomplete: 'ここに本文を入力してください。', rows: '5', class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :post_image_id %>
+        <small class="text-muted ml-3">クリックで画像選択/変更</small>
+        <br>
+        <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
+        <%= f.label :post_image, class: 'image_label' do %>
+          <div class="post-prev-contents">
+            <!--選択画像があれば表示-->
+            <% if @post.post_image.present? %>
+              <div class="post-prev-content">
+                <%= attachment_image_tag(@post, :post_image, alt: "preview", class: "post-prev-image rounded") %>
+              </div>
+            <% else %>
+              <!--選択画像がなければiconを表示-->
+              <div class="post-no-img">
+                <%= icon('fas', 'image', class: 'post-no-photo') %>
+              </div>
+            <% end %>
+            <!--非表示-->
+            <%= f.file_field :post_image, class: 'post-img-field mt-2' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="field d-flex justify-content-start">
+        <%= f.label :category %>
+        <div class="radio-btn ml-4">
+          <%= f.radio_button :category, 'senryu', checked: true %> 川柳<br>
+          <%= f.radio_button :category, 'tanka' %> 短歌<br>
+          <%= f.radio_button :category, 'free_haiku' %> 自由律俳句
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '送信', class: 'btn btn-info mt-3' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

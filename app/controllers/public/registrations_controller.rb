@@ -33,7 +33,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def destroy
      @user = current_user
     if @user.email == 'test@test.com'
-      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
+      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは退会できません。'
     elsif @user.valid_password?(params[:password])
       @user.destroy
       redirect_to root_path, notice: '退会手続が完了しました。ご利用ありがとうございました。'
