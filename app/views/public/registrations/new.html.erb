@@ -35,6 +35,35 @@
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
+        <div class="field">
+          <%= f.label :profile_image_id %>
+          <small class="text-muted ml-3">クリックで画像選択/変更</small>
+          <br>
+          <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
+          <%= f.label :profile_image, class: 'image_label' do %>
+            <div class="prev-contents">
+              <!--既に登録されている画像があれば表示-->
+              <% if @user.profile_image.present? %>
+                <div class="prev-content">
+                  <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
+                </div>
+              <% else %>
+                <!--登録画像がなければno-imgを表示-->
+                <div class="no-img">
+                  <%= image_tag('no-img.jpeg', class: 'no-photo') %>
+                </div>
+              <% end %>
+              <!--非表示-->
+              <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= f.label :introduction %><br>
+          <%= f.text_area :introduction, autofocus: true, autocomplete: '自己紹介', rows: '5', class: 'form-control' %>
+        </div>
+
         <div class="actions">
           <%= f.submit "新規登録", class: 'btn btn-info' %>
         </div>

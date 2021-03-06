@@ -33,7 +33,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def destroy
      @user = current_user
     if @user.email == 'test@test.com'
-      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
+      redirect_to edit_user_registration_path, alert: 'ゲストアカウントは退会できません。'
     elsif @user.valid_password?(params[:password])
       @user.destroy
       redirect_to root_path, notice: '退会手続が完了しました。ご利用ありがとうございました。'
@@ -54,7 +54,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :profile_image, :introduction])
     end
 
   # If you have extra params to permit, append them to the sanitizer.

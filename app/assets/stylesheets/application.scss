@@ -130,7 +130,7 @@ a.plain-link {
     border-radius: 15px;
     text-decoration: none;
     color: #212529;
-    background: #17a2b8 !important;
+    background: $info !important;
   }
   li>a {
     text-decoration: none;
@@ -138,6 +138,8 @@ a.plain-link {
     color: #212529;
     &:hover {
       border-radius: 15px;
+      color: #212529;
+      background: #E6F6F8;
     }
   }
 }

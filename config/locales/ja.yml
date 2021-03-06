@@ -16,6 +16,7 @@ ja:
         password_confirmation: パスワード(確認用)
       post:
         body: 本文
+        post_image_id: 画像
         category: カテゴリー
       post_comment:
         comment: コメント
@@ -33,3 +34,9 @@ ja:
       previous: <i class="fas fa-angle-left"></i>
       next: <i class="fas fa-angle-right"></i>
       truncate: "..."
+  enums:
+    post:
+      category:
+        senryu: 川柳
+        tanka: 短歌
+        free_haiku: 自由律俳句
