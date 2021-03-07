@@ -1,0 +1,3 @@
+$('#comment-container').html("<%= j( render 'public/post_comments/comments', post: @post, post_comment: @new_comment ) %>");
+$('#comments-count').html("<%= j( render 'public/post_comments/comments_count', post: @post ) %>");
+$('#post_comment_comment').val("");

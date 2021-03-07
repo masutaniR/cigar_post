@@ -30,8 +30,14 @@
         <% end %>
       <% end %>
       <span class="mr-4 small">
-        <%= link_to "posts/#{post.id}#comment-form", class: 'plain-link text-muted' do %>
-          <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+        <% if post.commented_by?(current_user, post) %>
+          <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link text-muted' do %>
+            <i class="fas fa-comment"></i> コメント(<%= post.post_comments.count %>)
+          <% end %>
+        <% else %>
+          <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link text-muted' do %>
+            <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+          <% end %>
         <% end %>
       </span>
       <span class="text-muted small"><i class="far fa-heart"></i> いいね</span>

@@ -6,4 +6,9 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :post_comments, dependent: :destroy
+
+  # 特定のユーザが投稿にコメント済みか確認する
+  def commented_by?(user, post)
+    PostComment.where(user_id: user.id, post_id: post.id).exists?
+  end
 end

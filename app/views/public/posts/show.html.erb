@@ -34,18 +34,14 @@
               <i class="far fa-trash-alt"></i> 削除
             <% end %>
           <% end %>
-          <span class="mr-4">
-            <%= link_to "#{@post.id}#comment-form", class: 'plain-link' do %>
-              <i class="far fa-comment"></i> コメント(<%= @post.post_comments.count %>)
-            <% end %>
+          <span id="comments-count" class="mr-4">
+            <%= render 'public/post_comments/comments_count', post: @post %>
           </span>
           <span><i class="far fa-heart"></i> いいね</span>
         </div>
 
-        <hr>
-
-        <div class="comment-container pt-2">
-          <%= render 'public/post_comments/comments', post: @post %>
+        <div id="comment-container" class="pt-2">
+          <%= render 'public/post_comments/comments', post: @post, post_comment: @post_comment %>
         </div>
 
       </div>
