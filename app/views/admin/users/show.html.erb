@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-4">
+      <div class="user-info-container">
+        <div class="user-info my-3 col-10">
+          <div class="user-img-field">
+            <%= attachment_image_tag(@user, :profile_image, format: 'jpg', size: '100x100', fallback: 'no-img.jpeg', class: 'user-icon') %>
+          </div>
+          <div class="user-field my-2">
+            <b>ユーザー名：</b><br>
+            <%= @user.name %>
+          </div>
+          <div class="user-field my-2">
+            <b>自己紹介：</b><br>
+            <%= @user.introduction %>
+          </div>
+          <div class="user-field my-2">
+            <b>メールアドレス：</b><br>
+            <%= @user.email %>
+          </div>
+          <div class="user-field my-2">
+            <b>登録日時：</b><br>
+            <%= @user.created_at.to_s(:datetime_jp) %>
+          </div>
+          <hr>
+          <table class="table table-sm table-borderless">
+            <tbody>
+              <tr>
+                <th>投稿</th>
+                <td>
+                  <%= @user.posts.count %>
+                </td>
+              </tr>
+              <tr>
+                <th>フォロー</th>
+                <td>5</td>
+              </tr>
+              <tr>
+                <th>フォロワー</th>
+                <td>6</td>
+              </tr>
+              <tr>
+                <th>いいね</th>
+                <td>
+                  <%= @user.likes.count %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7 mx-auto">
+      <div class="post-index">
+        <h4><%= @user.name %>さんの最新投稿</h4>
+        <% if @posts.count == 0 %>
+          <p class="mt-4 pb-4 text-muted">まだ投稿はありません</p>
+        <% else %>
+          <div class="col-12 post-container mt-3">
+            <%= render 'admin/posts/index', posts: @posts %>
+          </div>
+          <div class="d-flex justify-content-end">
+            <%= link_to '>> すべて見る', admin_posts_path(user_id: @user.id) %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="comment-index mt-4">
+        <h4><%= @user.name %>さんの最新コメント</h4>
+        <% if @post_comments.count == 0 %>
+          <p class="mt-4 text-muted">まだコメントの投稿はありません</p>
+        <% else %>
+          <div class="col-12 comment-container mt-3">
+            <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+          </div>
+          <div class="d-flex justify-content-end">
+            <%= link_to '>> すべて見る', admin_post_comments_path(user_id: @user.id) %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
