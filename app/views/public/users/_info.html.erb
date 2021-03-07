@@ -15,6 +15,12 @@
     <table class="table table-sm table-borderless">
       <tbody>
         <tr>
+          <th>投稿</th>
+          <td>
+            <%= link_to user.posts.count, user_path(user), class: 'plain-link' %>
+          </td>
+        </tr>
+        <tr>
           <th>フォロー</th>
           <td>5</td>
         </tr>
@@ -24,7 +30,9 @@
         </tr>
         <tr>
           <th>いいね</th>
-          <td>10</td>
+          <td>
+            <%= link_to user.likes.count, likes_user_path(user), class: 'plain-link' %>
+          </td>
         </tr>
       </tbody>
     </table>
