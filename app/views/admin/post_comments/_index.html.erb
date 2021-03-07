@@ -1,0 +1,25 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>投稿者</th>
+      <th>カテゴリ</th>
+      <th>本文</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% post_comments.each do |comment| %>
+    <tr>
+      <td>
+        <%= attachment_image_tag(comment.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
+        <strong><%= comment.user.name %></strong>
+      </td>
+      <td class="d-flex justify-content-center">
+        <%= render 'public/posts/category', post: comment %>
+      </td>
+      <td>
+        <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

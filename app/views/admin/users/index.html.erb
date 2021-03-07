@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto mt-2">
+      <h3 class="mb-3">ユーザー一覧</h3>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>登録日時</th>
+            <th>ユーザー名</th>
+            <th>メールアドレス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td class="text-center">
+                <%= user.id %>
+              </td>
+              <td>
+                <%= user.created_at.to_s(:datetime_jp) %>
+              </td>
+              <td>
+                <%= link_to user.name, admin_user_path(user) %>
+              </td>
+              <td>
+                <%= user.email %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="paginate">
+        <%= paginate @users %>
+      </div>
+
+    </div>
+  </div>
+</div>
