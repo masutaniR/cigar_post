@@ -1,0 +1,9 @@
+<% if post.commented_by?(current_user) %>
+  <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
+    <i class="fas fa-comment"></i> コメント(<%= post.post_comments.count %>)
+  <% end %>
+<% else %>
+  <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
+    <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+  <% end %>
+<% end %>

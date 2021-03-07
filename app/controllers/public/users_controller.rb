@@ -29,6 +29,11 @@ class Public::UsersController < ApplicationController
   def withdraw_confirm
   end
 
+  def likes
+    @user = User.find(params[:id])
+    @posts = Kaminari.paginate_array(@user.likes.reverse_order.map{|like| like.post}).page(params[:page])
+  end
+
   private
     def user_params
       params.require(:user).permit(:name, :introduction, :profile_image)

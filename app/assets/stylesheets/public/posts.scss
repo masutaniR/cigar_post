@@ -3,8 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $info: #17a2b8;
 
-.post-container {
+.post-container,
+.post-index-container {
   border: solid 1px $info;
+  border-radius: 0.25rem;
 }
 
 .post-body {
@@ -33,10 +35,6 @@ img.index-post-img {
   color: #fff;
 }
 
-.post-index-container {
-  border: solid 1px $info;
-}
-
 .one-post {
   border-bottom: solid 1px $info;
   &:last-child {
@@ -55,4 +53,12 @@ img.index-post-img {
 
 .post-no-photo {
   font-size: 50px;
+}
+
+.fas.fa-comment {
+  color: #4682b4;
+}
+
+.fas.fa-heart {
+  color: #d3381c;
 }

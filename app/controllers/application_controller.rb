@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   def after_sign_up_path_for(resource)
-    root_path
+    user_path(current_user)
   end
 
   def after_sign_in_path_for(resource)
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
       when Admin
         root_path
       when User
-        root_url
+        user_path(current_user)
       end
   end
 

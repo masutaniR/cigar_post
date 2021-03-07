@@ -43,7 +43,6 @@ thead {
 }
 
 .welcome {
-  height: 800px;
   background-image: url(top.jpg);
   background-position: center;
   background-size: cover;
@@ -55,9 +54,9 @@ thead {
   color: #212529;
 }
 
-.welcome_info,
-.about_info {
-  padding-top: 190px;
+.welcome-info,
+.about-info {
+  padding: 190px 0;
   .btn {
     width: 200px;
   }
@@ -66,6 +65,7 @@ thead {
 .about {
   @extend .welcome;
   background-image: url(about.jpg);
+  height: 600px;
 }
 
 .highlight {
@@ -89,6 +89,12 @@ div {
 
 .title {
   text-align: center;
+}
+
+#error_explanation {
+  ul {
+    margin-bottom: 0;
+  }
 }
 
 .field_with_errors {
@@ -141,5 +147,11 @@ a.plain-link {
       color: #212529;
       background: #E6F6F8;
     }
+  }
+}
+
+.comment-btn, .like-btn {
+  .plain-link {
+    color: #6c757d;
   }
 }
