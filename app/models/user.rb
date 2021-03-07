@@ -7,8 +7,9 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   validates :introduction, length: { maximum: 200 }
   attachment :profile_image
-  
+
   has_many :posts, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
 
   # かんたんログイン
   def self.guest

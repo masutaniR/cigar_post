@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4 user-info-container rounded">
+    <div class="col-md-4">
       <%= render 'public/users/info', user: @post.user %>
     </div>
 
     <div class="col-md-7 mx-auto">
-      <div class="col-12 post-container rounded py-3 px-5">
+      <div class="col-12 post-container py-3 px-5">
         <div class="d-flex justify-content-between">
           <div class="post-user d-flex justify-content-start">
             <%= link_to user_path(@post.user), class: 'plain-link' do %>
@@ -17,7 +17,7 @@
             <%= render 'public/posts/category', post: @post %>
           </div>
         </div>
-        <p class="post-body">
+        <p class="post-body pt-2">
           <%= safe_join(@post.body.split("\n"), tag(:br)) %>
         </p>
         <% if @post.post_image.present? %>
@@ -34,14 +34,14 @@
               <i class="far fa-trash-alt"></i> 削除
             <% end %>
           <% end %>
-          <span class="mr-4"><i class="far fa-comment"></i> コメント</span>
+          <span id="comments-count" class="mr-4">
+            <%= render 'public/post_comments/comments_count', post: @post %>
+          </span>
           <span><i class="far fa-heart"></i> いいね</span>
         </div>
 
-        <hr>
-
-        <div class="comment-container">
-
+        <div id="comment-container" class="pt-2">
+          <%= render 'public/post_comments/comments', post: @post, post_comment: @post_comment %>
         </div>
 
       </div>
