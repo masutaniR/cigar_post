@@ -43,7 +43,6 @@ thead {
 }
 
 .welcome {
-  height: 800px;
   background-image: url(top.jpg);
   background-position: center;
   background-size: cover;
@@ -55,9 +54,9 @@ thead {
   color: #212529;
 }
 
-.welcome_info,
-.about_info {
-  padding-top: 190px;
+.welcome-info,
+.about-info {
+  padding: 190px 0;
   .btn {
     width: 200px;
   }
@@ -66,6 +65,7 @@ thead {
 .about {
   @extend .welcome;
   background-image: url(about.jpg);
+  height: 600px;
 }
 
 .highlight {

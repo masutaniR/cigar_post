@@ -1,0 +1,52 @@
+<h5>コメント一覧</h5>
+<% post.post_comments.each do |post_comment| %>
+  <hr>
+  <div class="one-comment py-2 px-4">
+    <div class="d-flex justify-content-between">
+      <div class="post-user d-flex justify-content-start">
+        <%= link_to user_path(post_comment.user), class: 'plain-link' do %>
+          <%= attachment_image_tag(post_comment.user, :profile_image, format: 'jpg', size: '30x30', fallback: 'no-img.jpeg', class: 'user-icon') %>
+          <strong><%= post_comment.user.name %></strong>
+        <% end %>
+      </div>
+      <div class="category">
+        <%= render 'public/posts/category', post: post_comment %>
+      </div>
+    </div>
+    <p class="index-post-body mt-2">
+      <%= safe_join(post_comment.comment.split("\n"), tag(:br)) %>
+    </p>
+    <small><%= post_comment.created_at.to_s(:datetime_jp) %></small>
+    <small class="ml-3">
+      <% if post_comment.user == current_user %>
+        <%= link_to post_post_comment_path(post_comment.post, post_comment), method: :delete, class: 'plain-link mr-4',
+            data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
+          <i class="far fa-trash-alt"></i> 削除
+        <% end %>
+      <% end %>
+    </small>
+  </div>
+<% end %>
+
+<div id="comment-form" class="comment-form">
+  <hr>
+  <%= render 'layouts/errors', obj: @post_comment %>
+  <%= form_with(model:[@post, @post_comment], local: true) do |f| %>
+    <div class="field">
+      <%= f.text_area :comment, rows: '5', placeholder: 'コメントを入力してください', class: 'form-control' %>
+    </div>
+
+    <div class="field d-flex justify-content-start">
+      <%= f.label :category %>
+      <div class="radio-btn ml-4">
+        <%= f.radio_button :category, 'senryu', checked: true %> 川柳<br>
+        <%= f.radio_button :category, 'tanka' %> 短歌<br>
+        <%= f.radio_button :category, 'free_haiku' %> 自由律俳句
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit '送信', class: 'btn btn-info' %>
+    </div>
+  <% end %>
+</div>

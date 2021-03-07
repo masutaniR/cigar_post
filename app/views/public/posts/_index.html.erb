@@ -29,7 +29,11 @@
           <i class="far fa-trash-alt"></i> 削除
         <% end %>
       <% end %>
-      <span class="mr-4 text-muted small"><i class="far fa-comment"></i> コメント</span>
+      <span class="mr-4 small">
+        <%= link_to "posts/#{post.id}#comment-form", class: 'plain-link text-muted' do %>
+          <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+        <% end %>
+      </span>
       <span class="text-muted small"><i class="far fa-heart"></i> いいね</span>
     </div>
   </div>
