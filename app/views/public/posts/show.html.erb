@@ -37,7 +37,9 @@
           <span id="comments-count" class="mr-4">
             <%= render 'public/post_comments/comments_count', post: @post %>
           </span>
-          <span><i class="far fa-heart"></i> いいね</span>
+          <span id="like-btn-<%= @post.id %>">
+            <%= render 'public/likes/likes_count', post: @post %>
+          </span>
         </div>
 
         <div id="comment-container" class="pt-2">

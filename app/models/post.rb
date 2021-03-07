@@ -6,9 +6,15 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :post_comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
-  # 特定のユーザが投稿にコメント済みか確認する
-  def commented_by?(user, post)
-    PostComment.where(user_id: user.id, post_id: post.id).exists?
+  # ユーザが投稿にコメント済みか確認する
+  def commented_by?(user)
+    post_comments.where(user_id: user.id).exists?
+  end
+
+  # ユーザが投稿にいいね済みか確認する
+  def liked_by?(user)
+    likes.where(user_id: user.id).exists?
   end
 end
