@@ -5,6 +5,7 @@
       <th>カテゴリ</th>
       <th>本文</th>
       <th>画像</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,9 @@
         <% if post.post_image.present? %>
           添付あり
         <% end %>
+      </td>
+      <td>
+        <%= link_to '>> 詳細', admin_post_path(post) %>
       </td>
     </tr>
     <% end %>

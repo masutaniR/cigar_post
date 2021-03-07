@@ -4,20 +4,26 @@
       <th>投稿者</th>
       <th>カテゴリ</th>
       <th>本文</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% post_comments.each do |comment| %>
     <tr>
       <td>
-        <%= attachment_image_tag(comment.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
-        <strong><%= comment.user.name %></strong>
+        <%= link_to admin_user_path(comment.user), class: 'plain-link' do %>
+          <%= attachment_image_tag(comment.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
+          <strong><%= comment.user.name %></strong>
+        <% end %>
       </td>
       <td class="d-flex justify-content-center">
         <%= render 'public/posts/category', post: comment %>
       </td>
       <td>
         <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+      </td>
+      <td>
+        <%= link_to '>> 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}" %>
       </td>
     </tr>
     <% end %>

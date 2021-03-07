@@ -75,7 +75,7 @@
             <%= render 'admin/post_comments/index', post_comments: @post_comments %>
           </div>
           <div class="d-flex justify-content-end">
-            <%= link_to '>> すべて見る', posts_path %>
+            <%= link_to '>> すべて見る', admin_post_comments_path(user_id: @user.id) %>
           </div>
         <% end %>
       </div>

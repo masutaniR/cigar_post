@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto mt-2">
+      <% if params[:user_id].present? %>
+        <h3 class="mb-3"><%= @user.name %>さんのコメント一覧</h3>
+      <% else %>
+        <h3 class="mb-3">コメント一覧</h3>
+      <% end %>
+
+      <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+
+      <div class="paginate">
+        <%= paginate @post_comments %>
+      </div>
+
+    </div>
+  </div>
+</div>
