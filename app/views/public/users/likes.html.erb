@@ -5,9 +5,9 @@
     </div>
 
     <div class="col-md-7 mx-auto">
-      <h4><%= @user.name %>さんの投稿</h4>
-      <% if @user.posts.count == 0 %>
-        <p class="mt-4 text-muted">まだ投稿はありません</p>
+      <h4><%= @user.name %>さんのいいね一覧</h4>
+      <% if @posts.count == 0 %>
+        <p class="mt-4 text-muted">まだいいねした投稿はありません</p>
       <% else %>
         <div class="col-12 post-container rounded">
           <%= render 'public/posts/index', posts: @posts %>
