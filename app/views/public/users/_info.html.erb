@@ -22,13 +22,13 @@
         </tr>
         <tr>
           <th>フォロー</th>
-          <td>
+          <td  id="following-link-<%= user.id %>">
             <%= link_to user.following.count, following_user_path(user), class: 'plain-link' %>
           </td>
         </tr>
         <tr>
           <th>フォロワー</th>
-          <td>
+          <td id="followers-link-<%= user.id %>">
             <%= link_to user.followers.count, followers_user_path(user), class: 'plain-link' %>
           </td>
         </tr>
