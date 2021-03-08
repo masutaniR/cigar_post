@@ -39,7 +39,9 @@
     <% if user == current_user %>
       <%= link_to 'プロフィール編集', edit_user_path(user), class: 'btn btn-sm btn-block px-5 btn-info my-2' %>
     <% else %>
-      <%= render 'public/relationships/follow_btn', user: user %>
+      <div id="follow-btn-<%= user.id %>">
+        <%= render 'public/relationships/follow_btn', user: user %>
+      </div>
     <% end %>
   </div>
 </div>
