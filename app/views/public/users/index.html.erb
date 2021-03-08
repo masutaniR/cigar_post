@@ -3,7 +3,9 @@
     <div class="col-md-10 mx-auto mt-2">
       <h4 class="pb-2">ユーザー一覧</h4>
 
-      <%= render 'public/users/index', users: @users %>
+      <div class="main-contents px-3">
+        <%= render 'public/users/index', users: @users %>
+      </div>
 
       <div class="paginate">
         <%= paginate @users %>
