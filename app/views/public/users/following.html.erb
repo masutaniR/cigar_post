@@ -5,17 +5,17 @@
     </div>
 
     <div class="col-md-7 mx-auto">
-      <h4><%= @user.name %>さんの投稿</h4>
-      <% if @user.posts.count == 0 %>
-        <p class="mt-4 text-muted">まだ投稿はありません</p>
+      <h4><%= @user.name %>さんのフォロー</h4>
+      <% if @user.following.count == 0 %>
+        <p class="mt-4 text-muted">フォローしているユーザーはいません</p>
       <% else %>
         <div class="col-12 main-contents">
-          <%= render 'public/posts/index', posts: @posts %>
+          <%= render 'public/users/index', users: @users %>
         </div>
       <% end %>
 
       <div class="paginate mt-3">
-        <%= paginate @posts %>
+        <%= paginate @users %>
       </div>
     </div>
   </div>

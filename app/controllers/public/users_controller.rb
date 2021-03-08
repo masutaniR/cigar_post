@@ -34,6 +34,16 @@ class Public::UsersController < ApplicationController
     @posts = Kaminari.paginate_array(@user.likes.reverse_order.map{|like| like.post}).page(params[:page])
   end
 
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following.page(params[:page]).reverse_order
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers.page(params[:page]).reverse_order
+  end
+
   private
     def user_params
       params.require(:user).permit(:name, :introduction, :profile_image)

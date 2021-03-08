@@ -13,7 +13,7 @@
         <%= attachment_image_tag(post.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
         <strong><%= post.user.name %></strong>
       </td>
-      <td class="d-flex justify-content-center">
+      <td class="text-center">
         <%= render 'public/posts/category', post: post %>
       </td>
       <td>
