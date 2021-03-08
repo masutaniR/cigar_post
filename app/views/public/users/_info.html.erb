@@ -22,11 +22,15 @@
         </tr>
         <tr>
           <th>フォロー</th>
-          <td>5</td>
+          <td  id="following-link-<%= user.id %>">
+            <%= link_to user.following.count, following_user_path(user), class: 'plain-link' %>
+          </td>
         </tr>
         <tr>
           <th>フォロワー</th>
-          <td>6</td>
+          <td id="followers-link-<%= user.id %>">
+            <%= link_to user.followers.count, followers_user_path(user), class: 'plain-link' %>
+          </td>
         </tr>
         <tr>
           <th>いいね</th>
@@ -38,9 +42,10 @@
     </table>
     <% if user == current_user %>
       <%= link_to 'プロフィール編集', edit_user_path(user), class: 'btn btn-sm btn-block px-5 btn-info my-2' %>
-      <%= link_to '通知を見る', '/', class: 'btn btn-sm px-5 btn-block btn-outline-dark' %>
     <% else %>
-      <%= link_to 'フォロー', '/', class: 'btn btn-sm btn-block px-5 btn-info my-2'%>
+      <div id="follow-btn-<%= user.id %>">
+        <%= render 'public/relationships/follow_btn', user: user %>
+      </div>
     <% end %>
   </div>
 </div>

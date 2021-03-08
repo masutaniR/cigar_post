@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>投稿者</th>
@@ -17,7 +17,7 @@
           <strong><%= post.user.name %></strong>
         <% end %>
       </td>
-      <td class="d-flex justify-content-center">
+      <td class="text-center">
         <%= render 'public/posts/category', post: post %>
       </td>
       <td>

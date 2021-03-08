@@ -12,15 +12,25 @@
         <%= user.introduction %>
       </td>
       <td>
-        <div class="d-flex justify-content-end">
-          <small><b>フォロー</b> 　5</small>
+        <div id="following-count-<%= user.id %>" class="d-flex justify-content-end">
+          <span>
+            <b>フォロー</b>
+            <%= user.following.count %>
+          </span>
         </div>
-        <div class="d-flex justify-content-end">
-          <small><b>フォロワー</b> 3</small>
+        <div id="followers-count-<%= user.id %>" class="d-flex justify-content-end">
+          <span>
+            <b>フォロワー</b>
+            <%= user.followers.count %>
+          </span>
         </div>
       </td>
       <td>
-        <%= link_to 'フォロー', '/', class: 'btn btn-info px-3' %>
+        <% unless current_user == user %>
+          <div id="follow-btn-<%= user.id %>">
+            <%= render 'public/relationships/follow_btn', user: user %>
+          </div>
+        <% end %>
       </td>
     </tr>
     <% end %>

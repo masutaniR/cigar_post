@@ -11,7 +11,13 @@
   </div>
 </li>
 <li class="nav-item my-auto">
-  <%= link_to '通知', root_path, class: 'nav-link text-dark fas fa-bell' %>
+  <%= link_to notifications_path, class: 'nav-link text-dark' do %>
+    <% if unchecked_notifications.any? %>
+      <i class="fas fa-bell">通知&nbsp;</i><p class="badge badge-danger mb-0"><%= unchecked_notifications.count %></p>
+    <% else %>
+      <i class="fas fa-bell">通知</i>
+    <% end %>
+  <% end %>
 </li>
 <li class="nav-item dropdown my-auto">
   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

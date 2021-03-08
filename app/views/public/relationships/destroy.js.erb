@@ -1,0 +1,6 @@
+$('#follow-btn-<%= @user.id %>').html("<%= j( render 'public/relationships/follow_btn', user: @user ) %>");
+$('#followers-count-<%= @user.id %>').html('<span><b>フォロワー</b> <%= @user.followers.count %></span>');
+$('#following-count-<%= current_user.id %>').html('<span><b>フォロー</b> <%= current_user.following.count %></span>');
+
+$('#followers-link-<%= @user.id %>').html('<%= link_to @user.followers.count, followers_user_path(@user), class: 'plain-link' %>');
+$('#following-link-<%= current_user.id %>').html('<%= link_to current_user.following.count, following_user_path(current_user), class: 'plain-link' %>');

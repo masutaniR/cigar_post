@@ -1,12 +1,11 @@
 <div class="container">
   <div class="row mt-2">
     <div class="col-md-4">
-      <%= render 'public/users/info', user: @user %>
+      <%= render 'public/users/info', user: current_user %>
     </div>
 
     <div class="col-md-7 mx-auto">
-      <h4><%= @user.name %>さんの投稿</h4>
-      <% if @user.posts.count == 0 %>
+      <% if @posts.count == 0 %>
         <p class="mt-4 text-muted">まだ投稿はありません</p>
       <% else %>
         <div class="col-12 main-contents">
