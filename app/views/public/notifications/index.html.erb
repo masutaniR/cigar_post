@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-4">
+      <%= render 'public/users/info', user: current_user %>
+    </div>
+
+    <div class="col-md-7 mx-auto">
+      <h4>通知</h4>
+      <% select_notifications = @notifications.where.not(visitor_id: current_user.id) %>
+      <% if select_notifications.count == 0 %>
+        <p class="mt-4 text-muted">通知はありません</p>
+      <% else %>
+        <div class="col-12 main-contents pt-3 px-4">
+          <%= render 'public/notifications/index', notifications: select_notifications %>
+        </div>
+      <% end %>
+
+      <div class="paginate mt-3">
+        <%= paginate @notifications %>
+      </div>
+    </div>
+  </div>
+</div>

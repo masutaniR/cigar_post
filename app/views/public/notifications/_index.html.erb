@@ -1,0 +1,43 @@
+<% notifications.each do |notification| %>
+  <% visitor = notification.visitor %>
+  <% visited = notification.visited %>
+  <div class="notification">
+    <span>
+      <%= link_to user_path(visitor), class: 'plain-link' do %>
+        <%= attachment_image_tag(visitor, :profile_image, format: 'jpg', size: '30x30', fallback: 'no-img.jpeg', class: 'user-icon') %>
+        <strong class="visitor-name"><%= visitor.name %></strong>
+      <% end %>
+      <span class="visitor-name">さんが</span>
+    </span>
+
+    <% case notification.action %>
+    <% when 'follow' then %>
+      <%= 'あなたをフォローしました' %>
+    <% when 'like' then %>
+      <%= link_to 'あなたの投稿', notification.post, class: 'font-weight-bold plain-link' %>
+      <%= 'にいいねしました' %>
+      <p class="text-muted mb-0 mt-2">
+        <%= notification.post.body %>
+      </p>
+    <% when 'comment' then %>
+      <% if notification.post.user.id == visited.id %>
+        <%= link_to 'あなたの投稿', notification.post, class: 'font-weight-bold plain-link' %>
+      <% else %>
+        <span>
+          <%= link_to post_path(notification.post), class: 'plain-link' do %>
+            <%= attachment_image_tag(notification.post.user, :profile_image, format: 'jpg', size: '30x30', fallback: 'no-img.jpeg', class: 'user-icon') %>
+            <strong><%= notification.post.user.name %>さんの投稿</strong>
+          <% end %>
+        </span>
+      <% end %>
+      <%= 'にコメントしました' %>
+      <p class="text-muted mb-0 mt-2">
+        <%= PostComment.find_by(id: notification.post_comment_id).comment %>
+      </p>
+    <% end %>
+  </div>
+  <div class="small text-muted text-right">
+    <%= time_ago_in_words(notification.created_at) %>前
+  </div>
+  <hr>
+<% end %>
