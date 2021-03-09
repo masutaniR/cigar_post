@@ -54,4 +54,27 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+
+  # ユーザー検索
+  def self.search_for(content)
+    User.where("name LIKE? OR introduction LIKE?", "%#{content}%", "%#{content}%")
+  end
+
+  # 管理側ユーザー検索
+  def self.admin_search_for(content)
+    User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
+  end
+
+  # 並び替え
+  def self.sort_for(sort)
+    case sort
+    when '1'
+      order(created_at: "DESC")
+    when '2'
+      order(created_at: "ASC")
+    when '3'
+      users = self.includes(:relationships).sort_by{|user| user.followers.size}.reverse
+      return Kaminari.paginate_array(users)
+    end
+  end
 end

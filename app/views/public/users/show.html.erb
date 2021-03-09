@@ -6,7 +6,7 @@
 
     <div class="col-md-7 mx-auto">
       <h4><%= @user.name %>さんの投稿</h4>
-      <% if @user.posts.count == 0 %>
+      <% if @user.posts.empty? %>
         <p class="mt-4 text-muted">まだ投稿はありません</p>
       <% else %>
         <div class="col-12 main-contents">

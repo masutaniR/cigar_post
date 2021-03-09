@@ -56,4 +56,37 @@ class Post < ApplicationRecord
     end
     notification.save if notification.valid?
   end
+
+  # 投稿検索
+  def self.body_search_for(content)
+    Post.where("body LIKE?", "%#{content}%")
+  end
+
+  # カテゴリ検索
+  def self.category_search_for(content)
+    case content
+    when '川柳'
+      Post.where("category LIKE?", "0")
+    when '短歌'
+      Post.where("category LIKE?", "1")
+    when '自由律俳句'
+      Post.where("category LIKE?", "2")
+    end
+  end
+
+  # 並び替え
+  def self.sort_for(sort)
+    case sort
+    when '1'
+      order("created_at DESC")
+    when '2'
+      order("created_at ASC")
+    when '3'
+      posts = self.includes(:likes).sort_by{|post| post.likes.size}.reverse
+      return Kaminari.paginate_array(posts)
+    when '4'
+      posts = self.includes(:post_comments).sort_by{|post| post.post_comments.size}.reverse
+      return Kaminari.paginate_array(posts)
+    end
+  end
 end

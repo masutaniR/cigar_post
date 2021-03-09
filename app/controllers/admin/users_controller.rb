@@ -2,7 +2,12 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @users = User.all.page(params[:page]).reverse_order
+    @users = User.all
+    if params[:word].present?
+      @users = @users.admin_search_for(params[:word])
+      @word = params[:word]
+    end
+    @users = @users.page(params[:page]).reverse_order
   end
 
   def show

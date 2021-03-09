@@ -1,38 +1,35 @@
-<table class="table">
-  <tbody>
-    <% users.each do |user| %>
-    <tr>
-      <td>
-        <%= link_to user_path(user) do %>
-          <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '60x60', fallback: 'no-img.jpeg', class: 'user-icon') %>
-        <% end %>
-      </td>
-      <td>
-        <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
-        <%= user.introduction %>
-      </td>
-      <td>
-        <div id="following-count-<%= user.id %>" class="d-flex justify-content-end">
-          <span>
-            <b>フォロー</b>
-            <%= user.following.count %>
-          </span>
+<% users.each do |user| %>
+  <div class="row my-3 px-3">
+    <div class="col-2">
+      <%= link_to user_path(user) do %>
+        <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '60x60', fallback: 'no-img.jpeg', class: 'user-icon') %>
+      <% end %>
+    </div>
+    <div class="col-4">
+      <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
+      <%= user.introduction %>
+    </div>
+    <div class="col-3">
+      <div id="following-count-<%= user.id %>" class="d-flex justify-content-end">
+        <small>
+          <b>フォロー</b>
+          <%= user.following.count %>
+        </small>
+      </div>
+      <div id="followers-count-<%= user.id %>" class="d-flex justify-content-end">
+        <small>
+          <b>フォロワー</b>
+          <%= user.followers.count %>
+        </small>
+      </div>
+    </div>
+    <div class="col-3">
+      <% unless current_user == user %>
+        <div id="follow-btn-<%= user.id %>">
+          <%= render 'public/relationships/follow_btn', user: user %>
         </div>
-        <div id="followers-count-<%= user.id %>" class="d-flex justify-content-end">
-          <span>
-            <b>フォロワー</b>
-            <%= user.followers.count %>
-          </span>
-        </div>
-      </td>
-      <td>
-        <% unless current_user == user %>
-          <div id="follow-btn-<%= user.id %>">
-            <%= render 'public/relationships/follow_btn', user: user %>
-          </div>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+<% end %>

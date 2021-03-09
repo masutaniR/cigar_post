@@ -22,7 +22,21 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).reverse_order
+    @posts = Post.all
+    if params[:body].present?
+      @posts = @posts.body_search_for(params[:body])
+      @word = params[:body]
+    end
+    if params[:category].present?
+      @posts = @posts.category_search_for(params[:category])
+      @category = params[:category]
+    end
+    if params[:sort].present?
+      @posts = @posts.sort_for(params[:sort])
+    else
+      @posts = @posts.order(created_at: :desc)
+    end
+    @posts = @posts.page(params[:page])
   end
 
   def destroy
