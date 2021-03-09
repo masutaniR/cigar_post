@@ -15,7 +15,7 @@ class Admin::PostsController < ApplicationController
       @posts = @posts.category_search_for(params[:category])
       @category = params[:category]
     end
-    @posts = @posts.page(params[:page])
+    @posts = @posts.page(params[:page]).reverse_order
   end
 
   def show

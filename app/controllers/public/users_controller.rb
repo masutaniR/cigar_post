@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id).page(params[:page])
+    @posts = Post.where(user_id: @user.id).page(params[:page]).reverse_order
   end
 
   def index
@@ -62,10 +62,10 @@ class Public::UsersController < ApplicationController
       @posts.concat(following_user_posts)
       end
       current_user_posts = Post.where(user_id: current_user.id)
-      @posts = @posts.concat(current_user_posts)
+      @posts.concat(current_user_posts)
       @posts = @posts.sort_by!{|post| post.created_at}.reverse!
     else
-      @posts = current_user.posts.page(params[:page])
+      @posts = current_user.posts.reverse_order.page(params[:page])
     end
     # タイムライン内検索
     if params[:body].present?

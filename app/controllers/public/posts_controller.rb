@@ -33,6 +33,8 @@ class Public::PostsController < ApplicationController
     end
     if params[:sort].present?
       @posts = @posts.sort_for(params[:sort])
+    else
+      @posts = @posts.order(created_at: :desc)
     end
     @posts = @posts.page(params[:page])
   end
