@@ -1,0 +1,8 @@
+<%= form_with url: posts_path, method: :get, local: true do |f| %>
+  <div class="ml-3">
+    <%= f.select :sort,  [["新着順", 1], ["古い順", 2], ["人気順", 3], ["コメント多い順", 4]],
+      {prompt: '並び替え', selected: params[:sort]}, {onchange: "this.form.submit()", class: "btn btn-outline-secondary"} %>
+  </div>
+  <%= f.hidden_field :body, value: params[:body] %>
+  <%= f.hidden_field :category, value: params[:category] %>
+<% end %>

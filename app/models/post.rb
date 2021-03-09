@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  # default_scope -> { order(created_at: :desc) }
   validates :body, presence: true, length: { maximum: 100 }
   validates :category, presence: true
   attachment :post_image
@@ -71,6 +72,22 @@ class Post < ApplicationRecord
       Post.where("category LIKE?", "1")
     when '自由律俳句'
       Post.where("category LIKE?", "2")
+    end
+  end
+
+  # 並び替え
+  def self.sort_for(sort)
+    case sort
+    when '1'
+      order("created_at DESC")
+    when '2'
+      order("created_at ASC")
+    when '3'
+      posts = self.includes(:likes).sort_by{|post| post.likes.size}.reverse
+      return Kaminari.paginate_array(posts)
+    when '4'
+      posts = self.includes(:post_comments).sort_by{|post| post.post_comments.size}.reverse
+      return Kaminari.paginate_array(posts)
     end
   end
 end

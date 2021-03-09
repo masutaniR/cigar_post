@@ -31,7 +31,10 @@ class Public::PostsController < ApplicationController
       @posts = @posts.category_search_for(params[:category])
       @category = params[:category]
     end
-    @posts = @posts.page(params[:page]).reverse_order
+    if params[:sort].present?
+      @posts = @posts.sort_for(params[:sort])
+    end
+    @posts = @posts.page(params[:page])
   end
 
   def destroy

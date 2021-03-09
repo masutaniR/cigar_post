@@ -65,6 +65,7 @@ class User < ApplicationRecord
     User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
   end
 
+  # 並び替え
   def self.sort_for(sort)
     case sort
     when '1'
