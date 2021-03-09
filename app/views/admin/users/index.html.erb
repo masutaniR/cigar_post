@@ -7,12 +7,12 @@
       </div>
 
       <% if params[:word].present? %>
-        <p>キーワード：<%= @word %></p>
+        <small>キーワード：<%= @word %></small>
       <% end %>
       <% if @users.empty? %>
         <p class="mt-4 text-muted">該当するユーザーはいません</p>
       <% else %>
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-3">
           <thead>
             <tr>
               <th>ID</th>

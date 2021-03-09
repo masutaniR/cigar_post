@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <div class="d-flex justify-content-start mb-3">
+      <div class="d-flex justify-content-start mb-2">
         <h4 class="mr-5 my-auto">投稿一覧</h4>
         <% if user_signed_in? %>
           <%= render 'layouts/post_search' %>
@@ -9,17 +9,17 @@
       </div>
 
       <% if params[:body].present? && params[:category].present? %>
-        <p class="mb-0">キーワード：<%= @word %></p>
-        <p>カテゴリ：<%= @category %></p>
+        <small>キーワード：<%= @word %></small><br>
+        <small>カテゴリ：<%= @category %></small>
       <% elsif params[:body].present? %>
-        <p>キーワード：<%= @word %></p>
+        <small>キーワード：<%= @word %></small>
       <% elsif params[:category].present? %>
-        <p>カテゴリ：<%= @category %></p>
+        <small>カテゴリ：<%= @category %></small>
       <% end %>
       <% if @posts.empty? %>
         <p class="mt-4 text-muted">該当する投稿はありません</p>
       <% else %>
-        <div class="col-12 post-index-container">
+        <div class="col-12 post-index-container mt-2">
           <%= render 'public/posts/index', posts: @posts %>
         </div>
       <% end %>
