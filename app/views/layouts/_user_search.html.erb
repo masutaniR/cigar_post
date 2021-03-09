@@ -1,7 +1,7 @@
 <div class="form-container">
   <%= form_with url: users_path, method: :get, local: true do |f| %>
     <div class="input-group-append">
-      <%= f.text_field :name, placeholder: 'ユーザー名', class: 'circle-form' %>
+      <%= f.text_field :name, placeholder: 'ユーザーをさがす', class: 'circle-form' %>
       <%= f.submit "\uF002", class: 'search-btn' %>
     </div>
   <% end %>

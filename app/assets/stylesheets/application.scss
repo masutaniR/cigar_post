@@ -161,10 +161,11 @@ a.plain-link {
   font-family: FontAwesome;
   background-color: transparent;
   border: 1px solid transparent;
+  color: $info;
   &:focus {
     @extend .btn:focus !optional;
     box-shadow: none;
-    color: #c0c0c0;
+    color: #46CAB8;
   }
 }
 

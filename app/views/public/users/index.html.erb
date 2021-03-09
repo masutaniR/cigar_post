@@ -7,14 +7,10 @@
       </div>
 
       <% if params[:name].present? %>
-        <p>検索ワード：<%= @name %></p>
-        <% if @users.empty? %>
-          <p class="mt-4 text-muted">該当するユーザーはいません</p>
-        <% else %>
-          <div class="main-contents px-3">
-            <%= render 'public/users/index', users: @users %>
-          </div>
-        <% end %>
+        <p>キーワード：<%= @name %></p>
+      <% end %>
+      <% if @users.empty? %>
+        <p class="mt-4 text-muted">該当するユーザーはいません</p>
       <% else %>
         <div class="main-contents px-3">
           <%= render 'public/users/index', users: @users %>

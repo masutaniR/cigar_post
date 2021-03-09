@@ -23,6 +23,14 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.page(params[:page]).reverse_order
+    if params[:body].present?
+      @posts = @posts.body_search_for(params[:body])
+      @word = params[:body]
+    end
+    if params[:category].present?
+      @posts = @posts.category_search_for(params[:category])
+      @category = params[:category]
+    end
   end
 
   def destroy
