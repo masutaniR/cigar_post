@@ -6,8 +6,8 @@
         <%= render 'layouts/user_search' %>
       </div>
 
-      <% if params[:name].present? %>
-        <p>キーワード：<%= @name %></p>
+      <% if params[:word].present? %>
+        <p>キーワード：<%= @word %></p>
       <% end %>
       <% if @users.empty? %>
         <p class="mt-4 text-muted">該当するユーザーはいません</p>

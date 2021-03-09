@@ -59,4 +59,9 @@ class User < ApplicationRecord
   def self.search_for(content)
     User.where("name LIKE? OR introduction LIKE?", "%#{content}%", "%#{content}%")
   end
+
+  # 管理側ユーザー検索
+  def self.admin_search_for(content)
+    User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
+  end
 end

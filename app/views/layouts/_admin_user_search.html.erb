@@ -1,0 +1,8 @@
+<div class="form-container">
+  <%= form_with url: admin_users_path, method: :get, local: true do |f| %>
+    <div class="input-group-append">
+      <%= f.text_field :word, placeholder: 'ユーザー名 / アドレス', class: 'circle-form' %>
+      <%= f.submit "\uF002", class: 'search-btn' %>
+    </div>
+  <% end %>
+</div>
