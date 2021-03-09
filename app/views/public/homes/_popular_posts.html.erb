@@ -8,23 +8,24 @@
     </tr>
   </thead>
   <tbody>
+    <% rank = 1 %>
+    <% popular_posts.each do |post| %>
     <tr>
-      <td class="text-center">1</td>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
+      <td class="text-center">
+        <%= rank %>
+      </td>
+      <td>
+        <%= attachment_image_tag(post.user, :profile_image, format: 'jpg', size: '40x40', fallback: 'no-img.jpeg', class: 'user-icon') %>
+        <strong><%= post.user.name %></strong>
+      </td>
+      <td class="text-center">
+        <%= render 'public/posts/category', post: post %>
+      </td>
+      <td>
+        <%= safe_join(post.body.split("\n"), tag(:br)) %>
+      </td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>ユーザー名</td>
-      <td></td>
-      <td>内容</td>
-    </tr>
+    <% rank += 1 %>
+    <% end %>
   </tbody>
 </table>

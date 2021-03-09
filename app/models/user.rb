@@ -64,20 +64,4 @@ class User < ApplicationRecord
   def self.admin_search_for(content)
     User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
   end
-
-  # # タイムライン投稿検索
-  # def Post.body_search_for(content)
-  #   Post.where("body LIKE?", "%#{content}%")
-  # end
-
-  # # タイムラインカテゴリ検索
-  # def Post.category_search_for(content)
-  #   if content == '川柳'
-  #     Post.where("category LIKE?", "0")
-  #   elsif content == '短歌'
-  #     Post.where("category LIKE?", "1")
-  #   else
-  #     Post.where("category LIKE?", "2")
-  #   end
-  # end
 end
