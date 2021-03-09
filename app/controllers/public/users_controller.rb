@@ -15,6 +15,8 @@ class Public::UsersController < ApplicationController
     end
     if params[:sort].present?
       @users = @users.sort_for(params[:sort])
+    else
+      @users = @users.order(created_at: :desc)
     end
     @users = @users.page(params[:page])
   end
