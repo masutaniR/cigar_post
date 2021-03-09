@@ -64,11 +64,12 @@ class Post < ApplicationRecord
 
   # カテゴリ検索
   def self.category_search_for(content)
-    if content == '川柳'
+    case content
+    when '川柳'
       Post.where("category LIKE?", "0")
-    elsif content == '短歌'
+    when '短歌'
       Post.where("category LIKE?", "1")
-    else
+    when '自由律俳句'
       Post.where("category LIKE?", "2")
     end
   end

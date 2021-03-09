@@ -64,4 +64,16 @@ class User < ApplicationRecord
   def self.admin_search_for(content)
     User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
   end
+
+  def self.sort_for(sort)
+    case sort
+    when '1'
+      order(created_at: "DESC")
+    when '2'
+      order(created_at: "ASC")
+    when '3'
+      users = self.includes(:relationships).sort_by{|user| user.followers.size}.reverse
+      return Kaminari.paginate_array(users)
+    end
+  end
 end
