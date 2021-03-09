@@ -1,13 +1,28 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <% if params[:user_id].present? %>
-        <h3 class="mb-3"><%= @user.name %>さんの投稿一覧</h3>
-      <% else %>
-        <h3 class="mb-3">投稿一覧</h3>
-      <% end %>
+      <div class="d-flex justify-content-start mb-2">
+        <% if params[:user_id].present? %>
+          <h3 class="mr-5 my-auto"><%= @user.name %>さんの投稿一覧</h3>
+        <% else %>
+          <h3 class="mr-5 my-auto">投稿一覧</h3>
+          <%= render 'admin/posts//admin_post_search' %>
+        <% end %>
+      </div>
 
-      <%= render 'admin/posts/index', posts: @posts %>
+      <% if params[:body].present? && params[:category].present? %>
+        <small>キーワード：<%= @word %></small><br>
+        <small>カテゴリ：<%= @category %></small>
+      <% elsif params[:body].present? %>
+        <small>キーワード：<%= @word %></small>
+      <% elsif params[:category].present? %>
+        <small>カテゴリ：<%= @category %></small>
+      <% end %>
+      <% if @posts.empty? %>
+        <p class="mt-4 text-muted">該当する投稿はありません</p>
+      <% else %>
+        <%= render 'admin/posts/index', posts: @posts %>
+      <% end %>
 
       <div class="paginate">
         <%= paginate @posts %>

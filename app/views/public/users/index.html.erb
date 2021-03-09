@@ -1,11 +1,21 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <h4 class="pb-2">ユーザー一覧</h4>
-
-      <div class="main-contents px-3">
-        <%= render 'public/users/index', users: @users %>
+      <div class="d-flex justify-content-start mb-3">
+        <h4 class="mr-5 my-auto">ユーザー一覧</h4>
+        <%= render 'public/users/user_search' %>
       </div>
+
+      <% if params[:word].present? %>
+        <small>キーワード：<%= @word %></small>
+      <% end %>
+      <% if @users.empty? %>
+        <p class="mt-4 text-muted">該当するユーザーはいません</p>
+      <% else %>
+        <div class="main-contents px-3 mt-3">
+          <%= render 'public/users/index', users: @users %>
+        </div>
+      <% end %>
 
       <div class="paginate">
         <%= paginate @users %>

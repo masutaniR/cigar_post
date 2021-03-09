@@ -1,0 +1,10 @@
+<div class="form-container">
+  <%= form_with url: posts_path, method: :get, local: true do |f| %>
+    <div class="input-group-append">
+      <%= f.text_field :body, placeholder: '投稿をさがす', class: 'circle-form' %>
+      <%= f.select :category, Post.categories.keys.map{|k| [I18n.t("enums.post.category.#{k}"), I18n.t("enums.post.category.#{k}")]},
+          {prompt:'カテゴリ'} %>
+      <%= f.submit "\uF002", class: 'search-btn' %>
+    </div>
+  <% end %>
+</div>

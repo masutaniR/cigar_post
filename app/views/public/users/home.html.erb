@@ -5,10 +5,21 @@
     </div>
 
     <div class="col-md-7 mx-auto">
-      <% if @posts.count == 0 %>
-        <p class="mt-4 text-muted">まだ投稿はありません</p>
+      <div class="timeline-search mb-2">
+        <%= render 'public/users/timeline_search' %>
+      </div>
+      <% if params[:body].present? && params[:category].present? %>
+        <small>キーワード：<%= @word %></small><br>
+        <small>カテゴリ：<%= @category %></small>
+      <% elsif params[:body].present? %>
+        <small>キーワード：<%= @word %></small>
+      <% elsif params[:category].present? %>
+        <small>カテゴリ：<%= @category %></small>
+      <% end %>
+      <% if @posts.empty? %>
+        <p class="mt-4 text-muted">投稿はありません</p>
       <% else %>
-        <div class="col-12 main-contents">
+        <div class="col-12 main-contents mt-1">
           <%= render 'public/posts/index', posts: @posts %>
         </div>
       <% end %>

@@ -8,7 +8,12 @@ class Public::UsersController < ApplicationController
   end
 
   def index
-    @users = User.page(params[:page])
+    @users = User.all
+    if params[:word].present?
+      @users = @users.search_for(params[:word])
+      @word = params[:word]
+    end
+    @users = @users.page(params[:page]).reverse_order
   end
 
   def edit
@@ -45,6 +50,7 @@ class Public::UsersController < ApplicationController
   end
 
   def home
+    # フォローしているユーザー＋自分の投稿を最新順で取得
     users = current_user.following
     @posts = []
     if users.present?
@@ -54,10 +60,34 @@ class Public::UsersController < ApplicationController
       end
       current_user_posts = Post.where(user_id: current_user.id)
       @posts.concat(current_user_posts)
-      @posts = Kaminari.paginate_array(@posts.sort_by!{|post| post.created_at}.reverse!).page(params[:page])
+      @posts = @posts.sort_by!{|post| post.created_at}.reverse!
     else
       @posts = current_user.posts.reverse_order.page(params[:page])
     end
+    # タイムライン内検索
+    if params[:body].present?
+      @posts = @posts.select do |post|
+        post.body.include?(params[:body])
+      end
+      @word = params[:body]
+    end
+    if params[:category].present?
+      if params[:category] == '川柳'
+        @posts = @posts.select do |post|
+          post.category == 'senryu'
+        end
+      elsif params[:category] == '短歌'
+        @posts = @posts.select do |post|
+          post.category == 'tanka'
+        end
+      else
+        @posts = @posts.select do |post|
+          post.category == 'free_haiku'
+        end
+      end
+      @category = params[:category]
+    end
+    @posts = Kaminari.paginate_array(@posts).page(params[:page])
   end
 
   private
