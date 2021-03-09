@@ -13,7 +13,12 @@ class Public::UsersController < ApplicationController
       @users = @users.search_for(params[:word])
       @word = params[:word]
     end
-    @users = @users.page(params[:page]).reverse_order
+    if params[:sort].present?
+      @users = @users.sort_for(params[:sort])
+    else
+      @users = @users.order(created_at: :desc)
+    end
+    @users = @users.page(params[:page])
   end
 
   def edit
@@ -72,15 +77,16 @@ class Public::UsersController < ApplicationController
       @word = params[:body]
     end
     if params[:category].present?
-      if params[:category] == '川柳'
+      case params[:category]
+      when '川柳'
         @posts = @posts.select do |post|
           post.category == 'senryu'
         end
-      elsif params[:category] == '短歌'
+      when '短歌'
         @posts = @posts.select do |post|
           post.category == 'tanka'
         end
-      else
+      when '自由律俳句'
         @posts = @posts.select do |post|
           post.category == 'free_haiku'
         end

@@ -1,9 +1,9 @@
 <div class="form-container">
   <%= form_with url: timeline_path, method: :get, local: true do |f| %>
     <div class="input-group-append">
-      <%= f.text_field :body, placeholder: 'タイムライン内投稿検索', class: 'circle-form' %>
+      <%= f.text_field :body, value: params[:body], placeholder: 'タイムライン内投稿検索', class: 'circle-form' %>
       <%= f.select :category, Post.categories.keys.map{|k| [I18n.t("enums.post.category.#{k}"), I18n.t("enums.post.category.#{k}")]},
-          {prompt:'カテゴリ'} %>
+          { prompt:'カテゴリ', selected: params[:category], include_blank: 'すべて' } %>
       <%= f.submit "\uF002", class: 'search-btn' %>
     </div>
   <% end %>

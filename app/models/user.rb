@@ -65,19 +65,16 @@ class User < ApplicationRecord
     User.where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
   end
 
-  # # タイムライン投稿検索
-  # def Post.body_search_for(content)
-  #   Post.where("body LIKE?", "%#{content}%")
-  # end
-
-  # # タイムラインカテゴリ検索
-  # def Post.category_search_for(content)
-  #   if content == '川柳'
-  #     Post.where("category LIKE?", "0")
-  #   elsif content == '短歌'
-  #     Post.where("category LIKE?", "1")
-  #   else
-  #     Post.where("category LIKE?", "2")
-  #   end
-  # end
+  # 並び替え
+  def self.sort_for(sort)
+    case sort
+    when '1'
+      order(created_at: "DESC")
+    when '2'
+      order(created_at: "ASC")
+    when '3'
+      users = self.includes(:relationships).sort_by{|user| user.followers.size}.reverse
+      return Kaminari.paginate_array(users)
+    end
+  end
 end
