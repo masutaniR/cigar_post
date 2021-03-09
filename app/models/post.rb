@@ -56,4 +56,14 @@ class Post < ApplicationRecord
     end
     notification.save if notification.valid?
   end
+
+  # 投稿検索
+  def self.body_search_for(content)
+    Post.where("body LIKE?", "%#{content}%")
+  end
+
+  # カテゴリ検索
+  def self.category_search_for(content)
+    Post.where("category LIKE?", "#{content}")
+  end
 end

@@ -54,4 +54,9 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+
+  # ユーザー検索
+  def self.search_for(content)
+    User.where("name LIKE? OR introduction LIKE?", "%#{content}%", "%#{content}%")
+  end
 end

@@ -9,6 +9,10 @@ class Public::UsersController < ApplicationController
 
   def index
     @users = User.page(params[:page])
+    if params[:name].present?
+      @users = @users.search_for(params[:name])
+      @name = params[:name]
+    end
   end
 
   def edit
