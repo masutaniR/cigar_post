@@ -1,19 +1,15 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'admin/users/info', user: @post.user %>
-    </div>
-
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <div class="delete-btn d-flex justify-content-end">
-          <%= link_to '投稿を削除', admin_post_path(@post), method: :delete, class: 'btn btn-danger',
-              data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' %>
-        </div>
+        <%= link_to '投稿を削除', admin_post_path(@post), method: :delete, class: 'btn btn-danger',
+            data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' %>
+      </div>
       <div class="col-12 main-contents py-3 px-5 mt-2">
         <div class="d-flex justify-content-between">
           <div class="post-user d-flex justify-content-start">
             <%= link_to admin_user_path(@post.user), class: 'plain-link' do %>
-              <%= attachment_image_tag(@post.user, :profile_image, format: 'jpg', size: '50x50', fallback: 'no-img.jpeg', class: 'user-icon') %>
+              <%=attachment_image_tag(@post.user, :profile_image, format: 'jpg', size: '50x50', fallback: 'no-img.jpeg', class: 'user-icon') %>
               <strong><%= @post.user.name %></strong>
             <% end %>
           </div>
@@ -25,11 +21,12 @@
           <%= safe_join(@post.body.split("\n"), tag(:br)) %>
         </p>
         <% if @post.post_image.present? %>
-          <div class="post-img mx-auto">
-            <%= attachment_image_tag(@post, :post_image, format: 'jpg', class: 'rounded post-img') %>
-          </div>
+        <div class="post-img mx-auto">
+          <%= attachment_image_tag(@post, :post_image, format: 'jpg', class: 'rounded post-img') %>
+        </div>
         <% end %>
         <hr>
+
         <%= @post.created_at.to_s(:datetime_jp) %>
         <div class="post-reaction mt-2">
           <span id="comments-count" class="mr-4">
@@ -46,5 +43,10 @@
 
       </div>
     </div>
+
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'admin/users/info', user: @post.user %>
+    </div>
+
   </div>
 </div>
