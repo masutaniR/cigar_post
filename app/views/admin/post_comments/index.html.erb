@@ -1,3 +1,8 @@
+<% if params[:user_id].present? %>
+  <% provide(:title, "#{@user.name}さんのコメント一覧") %>
+<% else %>
+  <% provide(:title, 'コメント一覧') %>
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
