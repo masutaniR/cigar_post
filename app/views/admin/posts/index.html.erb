@@ -1,16 +1,21 @@
+<% if params[:user_id].present? %>
+  <% provide(:title, "#{@user.name}さんの投稿一覧") %>
+<% else %>
+  <% provide(:title, '投稿一覧') %>
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <div class="d-flex justify-content-start heading-search mb-2">
         <% if params[:user_id].present? %>
-          <h3 class="mr-5 my-auto"><%= @user.name %>さんの投稿一覧</h3>
+          <h3 class="mb-3 my-auto"><%= @user.name %>さんの投稿一覧</h3>
         <% else %>
-          <h3 class="mr-5 my-auto heading">投稿一覧</h3>
-          <div class="d-flex justify-content-start search-container">
-            <%= render 'admin/posts/admin_post_search' %>
+          <div class="d-flex justify-content-start heading-search mb-2">
+            <h3 class="mr-5 my-auto heading">投稿一覧</h3>
+            <div class="d-flex justify-content-start search-container">
+              <%= render 'admin/posts/admin_post_search' %>
+            </div>
           </div>
         <% end %>
-      </div>
 
       <% if params[:body].present? && params[:category].present? %>
         <small>キーワード：<%= @word %></small><br>

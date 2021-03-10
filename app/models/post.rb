@@ -37,11 +37,11 @@ class Post < ApplicationRecord
 
   # コメント通知
   def create_notification_comment(current_user, comment_id)
+    save_notification_comment(current_user, comment_id, user_id)
     temp_ids = PostComment.select(:user_id).where(post_id: id).where.not(user_id: current_user.id).distinct
     temp_ids.each do |temp_id|
       save_notification_comment(current_user, comment_id, temp_id['user_id'])
     end
-    save_notification_comment(current_user, comment_id, user_id) if temp_ids.blank?
   end
 
   def save_notification_comment(current_user, comment_id, visited_id)
@@ -77,14 +77,14 @@ class Post < ApplicationRecord
   # 並び替え
   def self.sort_for(sort)
     case sort
-    when '1'
+    when 'created_at_desc'
       order("created_at DESC")
-    when '2'
+    when 'created_at_asc'
       order("created_at ASC")
-    when '3'
+    when 'likes_count'
       posts = self.includes(:likes).sort_by{|post| post.likes.size}.reverse
       return Kaminari.paginate_array(posts)
-    when '4'
+    when 'comments_count'
       posts = self.includes(:post_comments).sort_by{|post| post.post_comments.size}.reverse
       return Kaminari.paginate_array(posts)
     end
