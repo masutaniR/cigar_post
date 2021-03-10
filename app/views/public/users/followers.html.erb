@@ -1,12 +1,8 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'public/users/info', user: @user %>
-    </div>
-
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <h4><%= @user.name %>さんのフォロワー</h4>
-      <% if @user.followers.count == 0 %>
+      <% if @user.followers.empty? %>
         <p class="mt-4 text-muted">フォロワーはいません</p>
       <% else %>
         <div class="col-12 main-contents">
@@ -17,6 +13,10 @@
       <div class="paginate mt-3">
         <%= paginate @users %>
       </div>
+    </div>
+
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'public/users/info', user: @user %>
     </div>
   </div>
 </div>

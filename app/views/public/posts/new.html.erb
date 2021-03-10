@@ -38,9 +38,9 @@
       <div class="field d-flex justify-content-start">
         <%= f.label :category %>
         <div class="radio-btn ml-4">
-          <%= f.radio_button :category, 'senryu', checked: true %> 川柳<br>
-          <%= f.radio_button :category, 'tanka' %> 短歌<br>
-          <%= f.radio_button :category, 'free_haiku' %> 自由律俳句
+          <%= f.radio_button :category, 'senryu', checked: true %><%= f.label :category, '川柳', value: 'senryu', class: 'ml-1 mb-0' %><br>
+          <%= f.radio_button :category, 'tanka' %><%= f.label :category, '短歌', value: 'tanka', class: 'ml-1 mb-0' %><br>
+          <%= f.radio_button :category, 'free_haiku' %><%= f.label :category, '自由律俳句', value: 'free_haiku', class: 'ml-1 mb-0' %>
         </div>
       </div>
 

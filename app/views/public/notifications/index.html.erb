@@ -1,14 +1,10 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'public/users/info', user: current_user %>
-    </div>
-
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <h4>通知</h4>
       <% select_notifications = @notifications.where.not(visitor_id: current_user.id) %>
-      <% if select_notifications.count == 0 %>
-        <p class="mt-4 text-muted">通知はありません</p>
+      <% if select_notifications.empty? %>
+        <p class="mt-4 text-muted no-contents">通知はありません</p>
       <% else %>
         <div class="col-12 main-contents pt-3 px-4">
           <%= render 'public/notifications/index', notifications: select_notifications %>
@@ -18,6 +14,10 @@
       <div class="paginate mt-3">
         <%= paginate @notifications %>
       </div>
+    </div>
+
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'public/users/info', user: current_user %>
     </div>
   </div>
 </div>

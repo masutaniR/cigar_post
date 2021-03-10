@@ -1,10 +1,6 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'public/users/info', user: @post.user %>
-    </div>
-
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <div class="col-12 main-contents py-3 px-5">
         <div class="d-flex justify-content-between">
           <div class="post-user d-flex justify-content-start">
@@ -47,6 +43,10 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'public/users/info', user: @post.user %>
     </div>
   </div>
 </div>
