@@ -77,14 +77,14 @@ class Post < ApplicationRecord
   # 並び替え
   def self.sort_for(sort)
     case sort
-    when '1'
+    when 'created_at_desc'
       order("created_at DESC")
-    when '2'
+    when 'created_at_asc'
       order("created_at ASC")
-    when '3'
+    when 'likes_count'
       posts = self.includes(:likes).sort_by{|post| post.likes.size}.reverse
       return Kaminari.paginate_array(posts)
-    when '4'
+    when 'comments_count'
       posts = self.includes(:post_comments).sort_by{|post| post.post_comments.size}.reverse
       return Kaminari.paginate_array(posts)
     end
