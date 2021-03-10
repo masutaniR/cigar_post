@@ -18,7 +18,7 @@
 
       <div class="comment-index mt-4">
         <h4><%= @user.name %>さんの最新コメント</h4>
-        <% if @post_comments.count == 0 %>
+        <% if @post_comments.empty? %>
           <p class="mt-4 text-muted">まだコメントの投稿はありません</p>
         <% else %>
           <div class="admin-comment-container mt-3">

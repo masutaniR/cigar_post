@@ -3,7 +3,7 @@
     <div class="col-md-7 order-md-2 mx-auto">
       <h4>通知</h4>
       <% select_notifications = @notifications.where.not(visitor_id: current_user.id) %>
-      <% if select_notifications.count == 0 %>
+      <% if select_notifications.empty? %>
         <p class="mt-4 text-muted no-contents">通知はありません</p>
       <% else %>
         <div class="col-12 main-contents pt-3 px-4">

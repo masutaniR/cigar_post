@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between">
           <div class="post-user d-flex justify-content-start">
             <%= link_to admin_user_path(@post.user), class: 'plain-link' do %>
-              <%=attachment_image_tag(@post.user, :profile_image, format: 'jpg', size: '50x50', fallback: 'no-img.jpeg', class: 'user-icon') %>
+              <%= attachment_image_tag(@post.user, :profile_image, format: 'jpg', size: '50x50', fallback: 'no-img.jpeg', class: 'user-icon') %>
               <strong><%= @post.user.name %></strong>
             <% end %>
           </div>

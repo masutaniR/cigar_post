@@ -2,7 +2,7 @@
   <div class="row mt-2">
     <div class="col-md-7 order-md-2 mx-auto">
       <h4><%= @user.name %>さんのフォロー</h4>
-      <% if @user.following.count == 0 %>
+      <% if @user.following.empty? %>
         <p class="mt-4 text-muted">フォローしているユーザーはいません</p>
       <% else %>
         <div class="col-12 main-contents">
