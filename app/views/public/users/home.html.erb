@@ -1,10 +1,7 @@
+<% provide(:title, 'ホーム') %>
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'public/users/info', user: current_user %>
-    </div>
-
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <div class="timeline-search mb-2">
         <%= render 'public/users/timeline_search' %>
       </div>
@@ -17,7 +14,7 @@
         <small>カテゴリ：<%= @category %></small>
       <% end %>
       <% if @posts.empty? %>
-        <p class="mt-4 text-muted">投稿はありません</p>
+        <p class="mt-4 text-muted no-contents">投稿はありません</p>
       <% else %>
         <div class="col-12 main-contents mt-1">
           <%= render 'public/posts/index', posts: @posts %>
@@ -27,6 +24,10 @@
       <div class="paginate mt-3">
         <%= paginate @posts %>
       </div>
+    </div>
+
+    <div class="col-md-4 sidebar order-md-1">
+      <%= render 'public/users/info', user: current_user %>
     </div>
   </div>
 </div>

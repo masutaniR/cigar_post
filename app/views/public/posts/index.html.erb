@@ -1,11 +1,14 @@
+<% provide(:title, '投稿一覧') %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <div class="d-flex justify-content-start mb-2">
-        <h4 class="mr-5 my-auto">投稿一覧</h4>
+      <div class="d-flex justify-content-start heading-search mb-2">
+        <h4 class="mr-5 my-auto heading">投稿一覧</h4>
         <% if user_signed_in? %>
-          <%= render 'public/posts/post_search' %>
-          <%= render 'public/posts/post_sort_search' %>
+          <div class="search-container d-flex justify-content-start">
+            <%= render 'public/posts/post_search' %>
+            <%= render 'public/posts/post_sort_search' %>
+          </div>
         <% end %>
       </div>
 

@@ -1,13 +1,11 @@
+<% provide(:title, @user.name) %>
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-4">
-      <%= render 'admin/users/info', user: @user %>
-    </div>
 
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-7 order-md-2 mx-auto">
       <div class="post-index">
         <h4><%= @user.name %>さんの最新投稿</h4>
-        <% if @posts.count == 0 %>
+        <% if @posts.empty? %>
           <p class="mt-4 pb-4 text-muted">まだ投稿はありません</p>
         <% else %>
           <div class="admin-post-container mt-3">
@@ -21,7 +19,7 @@
 
       <div class="comment-index mt-4">
         <h4><%= @user.name %>さんの最新コメント</h4>
-        <% if @post_comments.count == 0 %>
+        <% if @post_comments.empty? %>
           <p class="mt-4 text-muted">まだコメントの投稿はありません</p>
         <% else %>
           <div class="admin-comment-container mt-3">
@@ -32,7 +30,10 @@
           </div>
         <% end %>
       </div>
+    </div>
 
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'admin/users/info', user: @user %>
     </div>
   </div>
 </div>

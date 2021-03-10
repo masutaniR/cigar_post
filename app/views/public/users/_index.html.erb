@@ -6,8 +6,10 @@
       <% end %>
     </div>
     <div class="col-4">
-      <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
-      <%= user.introduction %>
+      <div class="ml-1">
+        <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
+        <%= user.introduction %>
+      </div>
     </div>
     <div class="col-3">
       <div id="following-count-<%= user.id %>" class="d-flex justify-content-end">

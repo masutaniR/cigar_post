@@ -68,11 +68,11 @@ class User < ApplicationRecord
   # 並び替え
   def self.sort_for(sort)
     case sort
-    when '1'
+    when 'created_at_desc'
       order(created_at: "DESC")
-    when '2'
+    when 'created_at_asc'
       order(created_at: "ASC")
-    when '3'
+    when 'followers_count'
       users = self.includes(:relationships).sort_by{|user| user.followers.size}.reverse
       return Kaminari.paginate_array(users)
     end

@@ -1,7 +1,7 @@
 <%= form_with url: users_path, method: :get, local: true do |f| %>
   <div class="sort-box my-auto ml-3">
-    <%= f.select :sort,  [["新着順", 1], ["古い順", 2], ["人気順", 3]],
-      {prompt: '並び替え', selected: params[:sort]}, {onchange: "this.form.submit()", class: "btn btn-outline-secondary"} %>
+    <%= f.select :sort,  [['新着順', 'created_at_desc'], ['古い順', 'created_at_asc'], ['人気順', 'followers_count']],
+      {prompt: '並び替え', selected: params[:sort]}, {onchange: "this.form.submit()", class: 'btn btn-outline-secondary'} %>
   </div>
   <%= f.hidden_field :word, value: params[:word] %>
 <% end %>

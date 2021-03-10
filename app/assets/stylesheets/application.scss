@@ -191,3 +191,23 @@ a.plain-link {
 select#sort {
   height: 44px;
 }
+
+
+
+@media screen and (max-width:767px) {
+  .main {
+    margin-top: 10px;
+  }
+  .no-contents {
+    height: 200px;
+  }
+  .sidebar {
+    margin-top: 30px;
+  }
+  .heading-search {
+    display: block !important;
+  }
+  .heading {
+    padding-bottom: 10px;
+  }
+}

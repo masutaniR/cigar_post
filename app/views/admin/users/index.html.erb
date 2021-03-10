@@ -1,9 +1,12 @@
+<% provide(:title, 'ユーザー一覧') %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <div class="d-flex justify-content-start mb-3">
-        <h3 class="mr-5 my-auto">ユーザー一覧</h3>
-        <%= render 'admin/users//admin_user_search' %>
+      <div class="d-flex justify-content-start heading-search mb-3">
+        <h3 class="mr-5 my-auto heading">ユーザー一覧</h3>
+        <div class="d-flex justify-content-start search-container">
+          <%= render 'admin/users/admin_user_search' %>
+        </div>
       </div>
 
       <% if params[:word].present? %>
