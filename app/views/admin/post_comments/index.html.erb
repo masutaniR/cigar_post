@@ -2,12 +2,31 @@
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
       <% if params[:user_id].present? %>
-        <h3 class="mb-3"><%= @user.name %>さんのコメント一覧</h3>
+        <h3 class="mr-5 my-auto"><%= @user.name %>さんのコメント一覧</h3>
       <% else %>
-        <h3 class="mb-3">コメント一覧</h3>
+      <div class="d-flex justify-content-start heading-search mb-2">
+        <h3 class="mr-5 pb-1 my-auto">コメント一覧</h3>
+        <div class="d-flex justify-content-start search-container">
+          <%= render 'admin/post_comments/admin_comment_search' %>
+        </div>
+      </div>
       <% end %>
 
-      <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+      <% if params[:comment].present? %>
+        <div class="small">
+          キーワード：<%= @word %>
+        </div>
+      <% end %>
+      <% if params[:category].present? %>
+        <div class="small">
+          カテゴリ：<%= @category %>
+        </div>
+      <% end %>
+      <% if @post_comments.empty? %>
+        <p class="mt-4 text-muted no-contents">該当する投稿はありません</p>
+      <% else %>
+        <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+      <% end %>
 
       <div class="paginate">
         <%= paginate @post_comments %>

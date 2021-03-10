@@ -1,0 +1,10 @@
+<div class="form-container">
+  <%= form_with url: admin_post_comments_path, method: :get, local: true do |f| %>
+    <div class="input-group-append">
+      <%= f.text_field :comment, value: params[:comment], placeholder: '投稿内容', class: 'circle-form' %>
+      <%= f.select :category, PostComment.categories.keys.map{|k| [I18n.t("enums.post_comment.category.#{k}"), I18n.t("enums.post_comment.category.#{k}")]},
+          { prompt:'カテゴリ', selected: params[:category], include_blank: 'すべて' } %>
+      <%= f.submit "\uF002", class: 'search-btn' %>
+    </div>
+  <% end %>
+</div>
