@@ -12,7 +12,12 @@
       </div>
     </div>
     <p class="index-post-body mt-2">
-      <%= safe_join(post.body.split("\n"), tag(:br)) %>
+      <!-- 検索でヒットしたキーワードを太字にする -->
+      <% if @body.present? %>
+        <%= emphasize_keyword(safe_join(post.body.split("\n"), tag(:br)), @body) %>
+      <% else %>
+        <%= safe_join(post.body.split("\n"), tag(:br)) %>
+      <% end %>
     </p>
     <% if post.post_image.present? %>
       <div class="post-img mx-auto">

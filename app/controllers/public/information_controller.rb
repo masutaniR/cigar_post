@@ -4,6 +4,6 @@ class Public::InformationController < ApplicationController
   end
 
   def index
-    @information = Information.page(params[:page]).reverse_order
+    @information = Information.page(params[:page]).order(created_at: :desc)
   end
 end

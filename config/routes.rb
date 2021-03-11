@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :admin, controllers: {
+  devise_for :admin, :skip => [:registrations, :password], controllers: {
     sessions: 'admin/sessions',
   }
 
@@ -10,15 +10,20 @@ Rails.application.routes.draw do
     end
     resources :post_comments, only: [:index]
     resources :information
+    get 'information/new/confirm' => 'information#confirm'
+    get 'information/edit/confirm' => 'information#confirm'
+    get 'information/new/back' => 'information#back'
+    get 'information/edit/back' => 'information#back'
   end
 
   devise_for :users, controllers: {
     sessions: 'public/sessions',
     registrations: 'public/registrations',
+    passwords: 'public/passwords'
   }
 
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'public/sessions#new_guest'
+    post 'users/guest_sign_in' => 'public/sessions#new_guest'
   end
 
   scope module: :public do
@@ -41,4 +46,7 @@ Rails.application.routes.draw do
     end
     resources :notifications, only: [:index]
   end
+
+  # 開発環境で送信したメールを /letter_opener で確認する
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

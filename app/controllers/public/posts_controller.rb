@@ -23,14 +23,16 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    # キーワード検索
     if params[:body].present?
-      @posts = @posts.body_search_for(params[:body])
-      @word = params[:body]
+      @body = params[:body]
+      @posts = @posts.body_search_for(@body)
     end
+    # カテゴリー検索
     if params[:category].present?
       @posts = @posts.category_search_for(params[:category])
-      @category = params[:category]
     end
+    # 並び替え
     if params[:sort].present?
       @posts = @posts.sort_for(params[:sort])
     else
