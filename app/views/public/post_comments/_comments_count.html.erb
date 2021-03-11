@@ -1,13 +1,24 @@
+<!-- コメントが1件以上ある場合のみ数字を表示 -->
 <% if user_signed_in? %>
-  <% if post.commented_by?(current_user) %>
+  <% if post.post_comments.empty? %>
     <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
-      <i class="fas fa-comment"></i> コメント(<%= post.post_comments.count %>)
+      <i class="far fa-comment"></i> コメント
     <% end %>
   <% else %>
-    <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
-      <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+    <% if post.commented_by?(current_user) %>
+      <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
+        <i class="fas fa-comment"></i> コメント <%= post.post_comments.count %>
+      <% end %>
+    <% else %>
+      <%= link_to "/posts/#{post.id}#comment-form", class: 'plain-link' do %>
+        <i class="far fa-comment"></i> コメント <%= post.post_comments.count %>
+      <% end %>
     <% end %>
   <% end %>
 <% else %>
-  <i class="far fa-comment"></i> コメント(<%= post.post_comments.count %>)
+  <% if post.post_comments.empty? %>
+    <i class="far fa-comment"></i> コメント
+  <% else %>
+    <i class="far fa-comment"></i> コメント <%= post.post_comments.count %>
+  <% end %>
 <% end %>

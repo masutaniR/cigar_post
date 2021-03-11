@@ -1,6 +1,6 @@
 <%= form_with url: posts_path, method: :get, local: true do |f| %>
   <div class="ml-3">
-    <%= f.select :sort,  [['新着順', 'created_at_desc'], ['古い順', 'created_at_asc'], ['人気順', 'likes_count'], ['コメント多い順', 'comments_count']],
+    <%= f.select :sort,  [['新着順', 'created_at_desc'], ['古い順', 'created_at_asc'], ['いいね多い順', 'likes_count'], ['コメント多い順', 'comments_count']],
       {prompt: '並び替え', selected: params[:sort]}, {onchange: "this.form.submit()", class: 'btn btn-outline-secondary'} %>
   </div>
   <%= f.hidden_field :body, value: params[:body] %>

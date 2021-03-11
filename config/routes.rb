@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :admin, controllers: {
+  devise_for :admin, :skip => [:registrations, :password], controllers: {
     sessions: 'admin/sessions',
   }
 
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'public/sessions',
     registrations: 'public/registrations',
+    passwords: 'public/passwords'
   }
 
   devise_scope :user do
@@ -41,4 +42,7 @@ Rails.application.routes.draw do
     end
     resources :notifications, only: [:index]
   end
+
+  # 開発環境で送信したメールを /letter_opener で確認する
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
