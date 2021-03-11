@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :admin, controllers: {
+  devise_for :admin, :skip => [:registrations, :password], controllers: {
     sessions: 'admin/sessions',
   }
 
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'public/sessions',
     registrations: 'public/registrations',
+    passwords: 'public/passwords'
   }
 
   devise_scope :user do
