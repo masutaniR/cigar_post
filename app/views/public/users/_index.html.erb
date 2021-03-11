@@ -9,8 +9,8 @@
       <div class="ml-1">
         <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
         <!-- 検索でヒットしたキーワードを太字にする -->
-        <% if params[:word].present? %>
-          <%= highlight(user.introduction, params[:word], :highlighter => '<strong>\1</strong>') %>
+        <% if @word.present? %>
+          <%= emphasize_keyword(user.introduction, @word) %>
         <% else %>
           <%= user.introduction %>
         <% end %>

@@ -25,7 +25,8 @@ class Public::PostsController < ApplicationController
     @posts = Post.all
     # キーワード検索
     if params[:body].present?
-      @posts = @posts.body_search_for(params[:body])
+      @body = params[:body]
+      @posts = @posts.body_search_for(@body)
     end
     # カテゴリー検索
     if params[:category].present?

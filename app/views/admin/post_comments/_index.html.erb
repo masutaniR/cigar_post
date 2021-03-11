@@ -20,7 +20,12 @@
         <%= render 'public/posts/category', post: comment %>
       </td>
       <td>
-        <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+        <!-- 検索でヒットしたキーワードを太字にする -->
+        <% if @comment.present? %>
+          <%= emphasize_keyword(safe_join(comment.comment.split("\n"), tag(:br)), @comment) %>
+        <% else %>
+          <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+        <% end %>
       </td>
       <td>
         <%= link_to '>> 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}" %>

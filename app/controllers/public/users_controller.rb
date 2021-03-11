@@ -11,7 +11,8 @@ class Public::UsersController < ApplicationController
     @users = User.all
     # キーワード検索
     if params[:word].present?
-      @users = @users.search_for(params[:word])
+      @word = params[:word]
+      @users = @users.search_for(@word)
     end
     # 並び替え
     if params[:sort].present?
@@ -77,8 +78,9 @@ class Public::UsersController < ApplicationController
     end
     # タイムライン内検索
     if params[:body].present?
+      @body = params[:body]
       @posts = @posts.select do |post|
-        post.body.include?(params[:body])
+        post.body.include?(@body)
       end
     end
     if params[:category].present?

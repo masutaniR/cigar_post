@@ -17,16 +17,6 @@
       </div>
       <% end %>
 
-      <% if params[:comment].present? %>
-        <div class="small">
-          キーワード：<%= @word %>
-        </div>
-      <% end %>
-      <% if params[:category].present? %>
-        <div class="small">
-          カテゴリ：<%= @category %>
-        </div>
-      <% end %>
       <% if @post_comments.empty? %>
         <p class="mt-4 text-muted no-contents">該当する投稿はありません</p>
       <% else %>

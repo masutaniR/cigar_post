@@ -9,9 +9,6 @@
         </div>
       </div>
 
-      <% if params[:word].present? %>
-        <small>キーワード：<%= @word %></small>
-      <% end %>
       <% if @users.empty? %>
         <p class="mt-4 text-muted">該当するユーザーはいません</p>
       <% else %>
@@ -34,10 +31,21 @@
                   <%= user.created_at.to_s(:datetime_jp) %>
                 </td>
                 <td>
-                  <%= link_to user.name, admin_user_path(user) %>
+                  <!-- 検索でヒットしたキーワードを太字にする -->
+                  <% if @word.present? %>
+                    <%= link_to admin_user_path(user) do %>
+                      <%= emphasize_keyword(user.name, @word) %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to user.name, admin_user_path(user) %>
+                  <% end %>
                 </td>
                 <td>
-                  <%= user.email %>
+                  <% if @word.present? %>
+                    <%= emphasize_keyword(user.email, @word) %>
+                  <% else %>
+                    <%= user.email %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

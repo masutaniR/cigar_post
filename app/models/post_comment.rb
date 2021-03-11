@@ -15,11 +15,11 @@ class PostComment < ApplicationRecord
   # 管理側コメントカテゴリ検索
   def self.category_search_for(content)
     case content
-    when '川柳'
+    when 'senryu'
       PostComment.where("category LIKE?", "0")
-    when '短歌'
+    when 'tanka'
       PostComment.where("category LIKE?", "1")
-    when '自由律俳句'
+    when 'free_haiku'
       PostComment.where("category LIKE?", "2")
     end
   end
