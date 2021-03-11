@@ -54,3 +54,4 @@ https://docs.google.com/spreadsheets/d/1p2eNx49KThXUrPEluwff0QOLA7k9yHlytG6SJwKq
 
 - [ぱくたそ](https://www.pakutaso.com/)
 - [icon rainbow](https://icon-rainbow.com/)
+- [ICOON MONO](https://icooon-mono.com/)
