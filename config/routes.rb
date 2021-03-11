@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     end
     resources :post_comments, only: [:index]
     resources :information
+    get 'information/new/confirm' => 'information#confirm'
+    get 'information/edit/confirm' => 'information#confirm'
+    get 'information/new/back' => 'information#back'
+    get 'information/edit/back' => 'information#back'
   end
 
   devise_for :users, controllers: {
@@ -19,7 +23,7 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'public/sessions#new_guest'
+    post 'users/guest_sign_in' => 'public/sessions#new_guest'
   end
 
   scope module: :public do

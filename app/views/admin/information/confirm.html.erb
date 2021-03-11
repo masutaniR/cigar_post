@@ -1,0 +1,43 @@
+<% provide(:title, '確認画面') %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-10 mx-auto mt-2">
+      <h3 class="title">確認画面</h3>
+      <p>
+        <b>タイトル：</b><br>
+        <%= @information.title %>
+      </p>
+      <p>
+        <b>本文：</b><br>
+        <%= safe_join(@information.body.split("\n"), tag(:br)) %>
+      </p>
+
+      <div class="d-flex justify-content-center mt-5 mb-3">
+        <% if @information.id.blank? %>
+          <div class="back-form">
+            <%= form_with model: @information, url: admin_information_new_back_path, method: :get, local: true do |f| %>
+              <%= f.submit '入力画面に戻る', class: 'btn btn-secondary mr-5' %>
+            <% end %>
+          </div>
+          <div class="submit-form">
+            <%= form_with model: @information, url: admin_information_index_path, local: true do |f| %>
+              <%= f.submit '送信', class: 'btn btn-primary px-5 ml-5' %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="back-form">
+            <%= form_with model: @information, url: admin_information_edit_back_path, method: :get, local: true do |f| %>
+              <%= f.submit '入力画面に戻る', class: 'btn btn-secondary mr-5' %>
+            <% end %>
+          </div>
+          <div class="submit-form">
+            <%= form_with model: @information, url: admin_information_path(@information.id), method: :patch, local: true do |f| %>
+              <%= f.submit '更新', class: 'btn btn-primary px-5 ml-5' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

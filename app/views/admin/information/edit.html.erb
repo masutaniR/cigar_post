@@ -6,15 +6,17 @@
 
       <%= render 'layouts/errors', obj: @information %>
 
-      <%= form_with model: @information, url: admin_information_path, local: true do |f| %>
+      <%= form_with model: Information.new, url: admin_information_edit_confirm_path, method: :get, local: true do |f| %>
       <div class="field">
         <%= f.label :title %>
-        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.text_field :title, value: @information.title, class: 'form-control' %>
       </div>
       <div class="field">
         <%= f.label :body %>
-        <%= f.text_area :body, rows: '5', class: 'form-control' %>
+        <%= f.text_area :body, value: @information.body, rows: '5', class: 'form-control' %>
       </div>
+
+      <%= f.hidden_field :id, value: @information.id %>
 
       <div class="actions">
         <%= f.submit '変更', class: 'btn btn-primary' %>
