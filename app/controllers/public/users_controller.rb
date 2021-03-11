@@ -12,7 +12,6 @@ class Public::UsersController < ApplicationController
     # キーワード検索
     if params[:word].present?
       @users = @users.search_for(params[:word])
-      @word = params[:word]
     end
     # 並び替え
     if params[:sort].present?
@@ -81,24 +80,22 @@ class Public::UsersController < ApplicationController
       @posts = @posts.select do |post|
         post.body.include?(params[:body])
       end
-      @word = params[:body]
     end
     if params[:category].present?
       case params[:category]
-      when '川柳'
+      when 'senryu'
         @posts = @posts.select do |post|
           post.category == 'senryu'
         end
-      when '短歌'
+      when 'tanka'
         @posts = @posts.select do |post|
           post.category == 'tanka'
         end
-      when '自由律俳句'
+      when 'free_haiku'
         @posts = @posts.select do |post|
           post.category == 'free_haiku'
         end
       end
-      @category = params[:category]
     end
     @posts = Kaminari.paginate_array(@posts).page(params[:page])
   end

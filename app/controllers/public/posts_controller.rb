@@ -26,12 +26,10 @@ class Public::PostsController < ApplicationController
     # キーワード検索
     if params[:body].present?
       @posts = @posts.body_search_for(params[:body])
-      @word = params[:body]
     end
     # カテゴリー検索
     if params[:category].present?
       @posts = @posts.category_search_for(params[:category])
-      @category = params[:category]
     end
     # 並び替え
     if params[:sort].present?

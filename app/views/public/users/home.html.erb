@@ -5,14 +5,6 @@
       <div class="timeline-search mb-2">
         <%= render 'public/users/timeline_search' %>
       </div>
-      <% if params[:body].present? && params[:category].present? %>
-        <small>キーワード：<%= @word %></small><br>
-        <small>カテゴリ：<%= @category %></small>
-      <% elsif params[:body].present? %>
-        <small>キーワード：<%= @word %></small>
-      <% elsif params[:category].present? %>
-        <small>カテゴリ：<%= @category %></small>
-      <% end %>
       <% if @posts.empty? %>
         <p class="mt-4 text-muted no-contents">投稿はありません</p>
       <% else %>
