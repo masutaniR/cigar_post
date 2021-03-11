@@ -42,4 +42,7 @@ Rails.application.routes.draw do
     end
     resources :notifications, only: [:index]
   end
+
+  # 開発環境で送信したメールを /letter_opener で確認する
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
