@@ -21,7 +21,12 @@
         <%= render 'public/posts/category', post: post %>
       </td>
       <td>
-        <%= safe_join(post.body.split("\n"), tag(:br)) %>
+        <!-- 検索でヒットしたキーワードを太字にする -->
+        <% if @body.present? %>
+          <%= emphasize_keyword(safe_join(post.body.split("\n"), tag(:br)), @body) %>
+        <% else %>
+          <%= safe_join(post.body.split("\n"), tag(:br)) %>
+        <% end %>
       </td>
       <td>
         <% if post.post_image.present? %>

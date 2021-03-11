@@ -5,8 +5,8 @@ class Admin::UsersController < ApplicationController
     @users = User.all
     # キーワード検索
     if params[:word].present?
-      @users = @users.admin_search_for(params[:word])
       @word = params[:word]
+      @users = @users.admin_search_for(@word)
     end
     @users = @users.page(params[:page]).order(created_at: :desc)
   end

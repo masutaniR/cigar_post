@@ -8,7 +8,12 @@
     <div class="col-4">
       <div class="ml-1">
         <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
-        <%= user.introduction %>
+        <!-- 検索でヒットしたキーワードを太字にする -->
+        <% if @word.present? %>
+          <%= emphasize_keyword(user.introduction, @word) %>
+        <% else %>
+          <%= user.introduction %>
+        <% end %>
       </div>
     </div>
     <div class="col-3">
