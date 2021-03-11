@@ -12,10 +12,8 @@ Rails.application.routes.draw do
     resources :information
     get 'information/new/confirm' => 'information#confirm'
     get 'information/edit/confirm' => 'information#confirm'
-    # get 'information/confirm' => 'information#confirm'
     get 'information/new/back' => 'information#back'
     get 'information/edit/back' => 'information#back'
-    # get 'information/back' => 'information#redirect'
   end
 
   devise_for :users, controllers: {
