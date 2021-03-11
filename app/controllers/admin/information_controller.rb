@@ -19,7 +19,7 @@ class Admin::InformationController < ApplicationController
   end
 
   def index
-    @information = Information.page(params[:page]).per(10).reverse_order
+    @information = Information.page(params[:page]).order(created_at: :desc)
   end
 
   def edit
