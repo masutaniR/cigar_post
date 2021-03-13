@@ -16,7 +16,7 @@
         </div>
       </div>
       <p class="index-post-body mt-2">
-        <%= safe_join(post_comment.comment.split("\n"), tag(:br)) %>
+        <%= new_line(post_comment.comment) %>
       </p>
       <small><%= post_comment.created_at.to_s(:datetime_jp) %></small>
       <small class="ml-3">

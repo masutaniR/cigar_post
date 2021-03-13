@@ -24,7 +24,7 @@
         <% if @comment.present? %>
           <%= emphasize_keyword(safe_join(comment.comment.split("\n"), tag(:br)), @comment) %>
         <% else %>
-          <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+          <%= new_line(comment.comment) %>
         <% end %>
       </td>
       <td>

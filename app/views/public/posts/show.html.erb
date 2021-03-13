@@ -15,7 +15,7 @@
           </div>
         </div>
         <p class="post-body pt-2">
-          <%= safe_join(@post.body.split("\n"), tag(:br)) %>
+          <%= new_line(@post.body) %>
         </p>
         <% if @post.post_image.present? %>
           <div class="post-img mx-auto">
