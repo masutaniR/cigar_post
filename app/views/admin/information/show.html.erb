@@ -19,7 +19,7 @@
       </p>
       <p>
         <b>本文：</b><br>
-        <%= safe_join(@information.body.split("\n"), tag(:br)) %>
+        <%= new_line(@information.body) %>
       </p>
 
       <div class="d-flex justify-content-center mb-3">

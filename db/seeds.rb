@@ -1,10 +1,12 @@
 Admin.create(
   email: 'admin@admin.com',
-  password: 'password'
+  password: ENV['ADMIN_KEY']
   )
 
-User.create(
-  email: 'user@user.com',
-  name: 'TEST',
-  password: 'password'
+20.times do |number|
+User.create!(
+  email: "user#{number}@user.com",
+  name: Gimei.first.hiragana,
+  password: ENV['USER_KEY']
   )
+end

@@ -22,7 +22,7 @@
         <%= render 'public/posts/category', post: post %>
       </td>
       <td>
-        <%= safe_join(post.body.split("\n"), tag(:br)) %>
+        <%= new_line(post.body) %>
       </td>
     </tr>
     <% rank += 1 %>
