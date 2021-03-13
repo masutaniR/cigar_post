@@ -76,3 +76,6 @@ gem 'devise-i18n-views'
 gem 'data-confirm-modal'
 gem 'dotenv-rails'
 gem 'gimei'
+group :production do
+  gem 'mysql2'
+end

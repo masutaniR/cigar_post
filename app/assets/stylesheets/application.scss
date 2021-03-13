@@ -43,7 +43,7 @@ thead {
 }
 
 .welcome {
-  background-image: url(top.jpg);
+  background-image: image-url("top.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -64,7 +64,7 @@ thead {
 
 .about {
   @extend .welcome;
-  background-image: url(about.jpg);
+  background-image: image-url("about.jpg");
   height: 600px;
 }
 
