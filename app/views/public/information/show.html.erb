@@ -16,7 +16,7 @@
       </div>
 
       <p>
-        <%= safe_join(@information.body.split("\n"), tag(:br)) %>
+        <%= new_line(@information.body) %>
       </p>
 
       <p class="small mt-5">

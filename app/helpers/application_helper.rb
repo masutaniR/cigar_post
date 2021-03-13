@@ -13,4 +13,9 @@ module ApplicationHelper
   def emphasize_keyword(body, keyword)
     highlight(body, keyword, :highlighter => '<strong>\1</strong>')
   end
+  
+  # 文章の改行をして表示
+  def new_line(sentence)
+    safe_join(sentence.split("\n"), tag(:br))
+  end
 end
