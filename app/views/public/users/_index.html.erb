@@ -1,11 +1,11 @@
 <% users.each do |user| %>
   <div class="row my-3 px-3">
-    <div class="col-2">
+    <div class="col-sm-2 col-xs-3">
       <%= link_to user_path(user) do %>
         <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '60x60', fallback: 'no-img.jpeg', class: 'user-icon') %>
       <% end %>
     </div>
-    <div class="col-4">
+    <div class="col-sm-5 col-xs col-xs-5">
       <div class="ml-1">
         <strong><%= link_to user.name, user_path(user), class: 'plain-link' %></strong><br>
         <!-- 検索でヒットしたキーワードを太字にする -->
@@ -16,7 +16,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-sm-2 col-xs-4">
       <div id="following-count-<%= user.id %>" class="d-flex justify-content-end">
         <small>
           <b>フォロー</b>
@@ -30,7 +30,7 @@
         </small>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-sm-3 col-xs-12">
       <% unless current_user == user %>
         <div id="follow-btn-<%= user.id %>">
           <%= render 'public/relationships/follow_btn', user: user %>
