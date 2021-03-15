@@ -30,9 +30,9 @@ class Public::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.email == 'test@test.com'
-      redirect_to edit_user_path(@user), alert: 'ゲストアカウントは編集できません。'
+      redirect_to user_path(@user), alert: 'ゲストアカウントは編集できません。'
     elsif @user.update(user_params)
-      redirect_to user_path(@user)
+      redirect_to user_path(@user), notice: 'ユーザー情報が更新されました。'
     else
       render :edit
     end
@@ -104,7 +104,9 @@ class Public::UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:name, :introduction, :profile_image)
+      params.require(:user).permit(
+        :name, :introduction, :profile_image, :like_notice, :comment_notice, :other_comment_notice, :follow_notice
+        )
     end
 
     def ensure_correct_user

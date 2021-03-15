@@ -7,4 +7,9 @@ class Public::NotificationsController < ApplicationController
       notification.update_attributes(checked: true)
     end
   end
+
+  # 通知設定
+  def setting
+    @user = current_user
+  end
 end

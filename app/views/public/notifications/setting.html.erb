@@ -1,0 +1,36 @@
+<% provide(:title, '通知設定') %>
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-7 order-md-2 mx-auto">
+      <h4 class="title">通知設定</h4>
+
+      <%= form_with model: @user, url: user_path(current_user.id), local: true do |f| %>
+        <%= render "layouts/errors", obj: @user %>
+
+        <div class="field">
+          <p class="my-3">
+            通知を受け取るものにチェックを入れてください
+          </p>
+          <div class="check-box pb-3">
+            <%= f.check_box :follow_notice, {class: 'check-box'}, checked_value = 'true', unchecked_value = 'false' %>
+            <%= f.label :follow_notice, 'フォロー', class: 'pl-1 mb-0' %><br>
+            <%= f.check_box :like_notice, {class: 'check-box'}, checked_value = 'true', unchecked_value = 'false' %>
+            <%= f.label :like_notice, 'いいね', class: 'pl-1 mb-0' %><br>
+            <%= f.check_box :comment_notice, {class: 'check-box'}, checked_value = 'true', unchecked_value = 'false' %>
+            <%= f.label :comment_notice, '自分の投稿へのコメント', class: 'pl-1 mb-0' %><br>
+            <%= f.check_box :other_comment_notice, {class: 'check-box'}, checked_value = 'true', unchecked_value = 'false' %>
+            <%= f.label :other_comment_notice, 'コメントした投稿への他のコメント', class: 'pl-1 mb-0' %><br>
+          </div>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "更新", class: 'btn btn-sm btn-info' %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-4 order-md-1 sidebar">
+      <%= render 'public/users/info', user: current_user %>
+    </div>
+  </div>
+</div>

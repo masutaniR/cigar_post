@@ -42,6 +42,7 @@
     </table>
     <% if user == current_user %>
       <%= link_to 'プロフィール編集', edit_user_path(user), class: 'btn btn-sm btn-block px-5 btn-info my-2' %>
+      <%= link_to '通知設定', notifications_setting_path, class: 'btn btn-sm btn-block px-5 btn-secondary my-2' %>
     <% else %>
       <div id="follow-btn-<%= user.id %>">
         <%= render 'public/relationships/follow_btn', user: user %>
