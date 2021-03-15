@@ -16,7 +16,9 @@
     <header class="border-bottom fixed-top">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <% if user_signed_in? %>
+          <% if admin_signed_in? %>
+            <%= link_to 'CigarPost', admin_users_path, class: 'navbar-brand text-info font-weight-bold' %>
+          <% elsif user_signed_in? %>
             <%= link_to 'CigarPost', timeline_path, class: 'navbar-brand text-info font-weight-bold' %>
           <% else %>
             <a class="navbar-brand text-info font-weight-bold" href="/">CigarPost</a>

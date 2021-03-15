@@ -150,12 +150,6 @@ a.plain-link {
   }
 }
 
-.comment-btn, .like-btn {
-  .plain-link {
-    color: #6c757d;
-  }
-}
-
 .search-btn {
   @extend .btn !optional;
   font-family: FontAwesome;

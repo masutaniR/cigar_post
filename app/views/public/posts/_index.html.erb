@@ -13,11 +13,7 @@
     </div>
     <p class="index-post-body mt-2">
       <!-- 検索でヒットしたキーワードを太字にする -->
-      <% if @body.present? %>
-        <%= emphasize_keyword(safe_join(post.body.split("\n"), tag(:br)), @body) %>
-      <% else %>
-        <%= new_line(post.body) %>
-      <% end %>
+      <%= emphasize_keyword(new_line(post.body), @body) %>
     </p>
     <% if post.post_image.present? %>
       <div class="post-img mx-auto">
@@ -26,18 +22,18 @@
     <% end %>
     <hr>
     <%= post.created_at.to_s(:datetime_jp) %><br>
-    <%= link_to '>> 投稿詳細を見る', post_path(post), class: 'mt-2 small' %>
+    <%= link_to ' 投稿詳細を見る', post_path(post), class: 'mt-2 small fas fa-angle-double-right' %>
     <div class="post-reaction mt-2">
       <% if post.user == current_user %>
-        <%= link_to post_path(post), method: :delete, class: 'plain-link text-muted small mr-4',
+        <%= link_to post_path(post), method: :delete, class: 'plain-link small mr-4',
             data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
           <i class="far fa-trash-alt"></i> 削除
         <% end %>
       <% end %>
-      <span class="mr-4 small comment-btn">
+      <span class="mr-4 small">
         <%= render 'public/post_comments/comments_count', post: post %>
       </span>
-      <span id="like-btn-<%= post.id %>" class="small like-btn">
+      <span id="like-btn-<%= post.id %>" class="small">
         <%= render 'public/likes/likes_count', post: post %>
       </span>
     </div>
