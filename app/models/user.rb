@@ -73,7 +73,7 @@ class User < ApplicationRecord
     when 'created_at_asc'
       order(created_at: "ASC")
     when 'followers_count'
-      users = self.includes(:relationships).sort_by{|user| user.followers.size}.reverse
+      users = self.includes(:followers).sort_by{|user| user.followers.size}.reverse
       return Kaminari.paginate_array(users)
     end
   end
