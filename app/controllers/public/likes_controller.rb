@@ -5,7 +5,9 @@ class Public::LikesController < ApplicationController
     @post = Post.find(params[:post_id])
     like = current_user.likes.new(post_id: @post.id)
     like.save
-    @post.create_notification_like(current_user)
+    if @post.user.like_notice == true
+      @post.create_notification_like(current_user)
+    end
   end
 
   def destroy
