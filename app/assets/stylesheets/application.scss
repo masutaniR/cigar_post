@@ -150,12 +150,6 @@ a.plain-link {
   }
 }
 
-.comment-btn, .like-btn {
-  .plain-link {
-    color: #6c757d;
-  }
-}
-
 .search-btn {
   @extend .btn !optional;
   font-family: FontAwesome;
@@ -202,8 +196,14 @@ select#sort {
   .sidebar {
     margin-top: 30px;
   }
-  .heading-search {
+  .heading-search,
+  .search-container {
     display: block !important;
+    .sort-search {
+      display: flex;
+      justify-content: flex-end;
+      margin: 10px 0 !important;
+    }
   }
   .heading {
     padding-bottom: 10px;

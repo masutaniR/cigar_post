@@ -24,6 +24,7 @@
     <%= link_to 'ホーム', timeline_path, class: 'dropdown-item' %>
     <%= link_to 'マイページ', user_path(current_user), class: 'dropdown-item' %>
     <%= link_to 'プロフィール編集', edit_user_path(current_user), class: 'dropdown-item' %>
+    <%= link_to '通知設定', notifications_setting_path, class: 'dropdown-item' %>
     <%= link_to '登録情報変更', edit_user_registration_path, class: 'dropdown-item' %>
     <div class="dropdown-divider"></div>
     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>

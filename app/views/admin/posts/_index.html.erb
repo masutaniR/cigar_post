@@ -22,11 +22,7 @@
       </td>
       <td>
         <!-- 検索でヒットしたキーワードを太字にする -->
-        <% if @body.present? %>
-          <%= emphasize_keyword(safe_join(post.body.split("\n"), tag(:br)), @body) %>
-        <% else %>
-          <%= new_line(post.body) %>
-        <% end %>
+        <%= emphasize_keyword(new_line(post.body), @body) %>
       </td>
       <td>
         <% if post.post_image.present? %>
@@ -34,7 +30,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to '>> 詳細', admin_post_path(post) %>
+        <%= link_to ' 詳細', admin_post_path(post), class: 'fas fa-angle-right' %>
       </td>
     </tr>
     <% end %>

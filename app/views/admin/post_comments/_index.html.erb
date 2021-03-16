@@ -21,14 +21,10 @@
       </td>
       <td>
         <!-- 検索でヒットしたキーワードを太字にする -->
-        <% if @comment.present? %>
-          <%= emphasize_keyword(safe_join(comment.comment.split("\n"), tag(:br)), @comment) %>
-        <% else %>
-          <%= new_line(comment.comment) %>
-        <% end %>
+        <%= emphasize_keyword(new_line(comment.comment), @comment) %>
       </td>
       <td>
-        <%= link_to '>> 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}" %>
+        <%= link_to ' 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}", class: 'fas fa-angle-right' %>
       </td>
     </tr>
     <% end %>
