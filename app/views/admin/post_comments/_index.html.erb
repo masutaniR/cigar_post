@@ -24,7 +24,7 @@
         <%= emphasize_keyword(new_line(comment.comment), @comment) %>
       </td>
       <td>
-        <%= link_to ' 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}", class: 'fas fa-angle-double-right' %>
+        <%= link_to ' 詳細', "/admin/posts/#{comment.post.id}#comment-#{comment.id}", class: 'fas fa-angle-right' %>
       </td>
     </tr>
     <% end %>

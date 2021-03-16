@@ -5,7 +5,8 @@ class Public::LikesController < ApplicationController
     @post = Post.find(params[:post_id])
     like = current_user.likes.new(post_id: @post.id)
     like.save
-    if @post.user.like_notice == true
+    # いいね通知を許可している場合のみ通知を作成
+    if @post.user.like_notice
       @post.create_notification_like(current_user)
     end
   end
