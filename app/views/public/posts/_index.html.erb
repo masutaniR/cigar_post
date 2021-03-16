@@ -22,7 +22,7 @@
     <% end %>
     <hr>
     <%= post.created_at.to_s(:datetime_jp) %><br>
-    <%= link_to ' 投稿詳細を見る', post_path(post), class: 'mt-2 small fas fa-angle-double-right' %>
+    <%= link_to ' 投稿詳細を見る', post_path(post), class: 'mt-2 small fas fa-angle-right' %>
     <div class="post-reaction mt-2">
       <% if post.user == current_user %>
         <%= link_to post_path(post), method: :delete, class: 'plain-link small mr-4',

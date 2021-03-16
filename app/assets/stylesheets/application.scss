@@ -196,8 +196,14 @@ select#sort {
   .sidebar {
     margin-top: 30px;
   }
-  .heading-search {
+  .heading-search,
+  .search-container {
     display: block !important;
+    .sort-search {
+      display: flex;
+      justify-content: flex-end;
+      margin: 10px 0 !important;
+    }
   }
   .heading {
     padding-bottom: 10px;

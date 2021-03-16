@@ -1,5 +1,5 @@
 <%= form_with url: users_path, method: :get, local: true do |f| %>
-  <div class="sort-box my-auto ml-3">
+  <div class="sort-search my-auto ml-3">
     <%= f.select :sort,  [['新着順', 'created_at_desc'], ['古い順', 'created_at_asc'], ['人気順', 'followers_count']],
       {prompt: '並び替え', selected: params[:sort]}, {onchange: "this.form.submit()", class: 'btn btn-outline-secondary'} %>
   </div>
