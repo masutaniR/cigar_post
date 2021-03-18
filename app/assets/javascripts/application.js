@@ -18,3 +18,24 @@
 //= require turbolinks
 //= require_tree .
 //= require data-confirm-modal
+
+$(document).on('turbolinks:load', function() {
+  load_effect();
+});
+
+function load_effect() {
+  var scroll = $(window).scrollTop();
+  var windowHeight = $(window).height();
+  $('.effect-fade-fast').each(function () {
+    var elemPos = $(this).offset().top;
+    if (scroll > elemPos - windowHeight) {
+      $(this).addClass("done");
+    }
+  });
+  $('.effect-fade').each(function () {
+    var elemPos = $(this).offset().top;
+    if (scroll > elemPos - windowHeight) {
+      $(this).addClass("done");
+    }
+  });
+}

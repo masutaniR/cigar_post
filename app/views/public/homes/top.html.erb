@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-5 welcome">
-      <div class="welcome-info">
+    <div class="col-md-5 welcome effect-fade-fast">
+      <div class="welcome-info effect-fade">
         <h2 class="text-center">Welcome to CigarPost!!</h2>
         <div class="d-flex justify-content-center py-2">
           <%= link_to 'CigarPostとは？', about_path, class: 'whats_cp text-center' %>
@@ -20,21 +20,30 @@
 
     <div class="col-md-7 main">
       <div class="col-md-11 mx-auto mt-4">
-        <h4>
+        <h4 class="effect-fade">
           <span class="text-info"><i class="fas fa-fire"></i></span> 人気投稿TOP3
         </h4>
+        <div class="effect-fade">
           <%= render 'popular_posts', popular_posts: @popular_posts %>
-        <h4 class="mt-5">
+        </div>
+
+        <h4 class="mt-5 effect-fade">
           <span class="text-info"><i class="fas fa-seedling"></i></span> 新着投稿
         </h4>
+        <div class="effect-fade">
           <%= render 'new_posts', new_posts: @new_posts %>
-        <h5 class="mt-5">
+        </div>
+
+        <h5 class="mt-5 effect-fade">
           <span class="highlight">
             <i class="fas fa-info-circle"></i> CigarPostからのお知らせ
           </span>
         </h5>
+        <div class="effect-fade">
           <%= render 'admin_info' %>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
