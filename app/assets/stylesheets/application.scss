@@ -162,6 +162,10 @@ a.plain-link {
     box-shadow: none;
     color: #46CAB8;
   }
+  &:active {
+    background-color: transparent !important;
+    color: #46CAB8 !important;
+  }
 }
 
 .form-container {
@@ -180,6 +184,10 @@ a.plain-link {
     box-shadow: none;
     background-color: transparent;
     border: 1px solid transparent;
+  }
+  &:active {
+    background-color: transparent !important;
+    color: black !important;
   }
 }
 

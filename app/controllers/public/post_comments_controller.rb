@@ -5,6 +5,7 @@ class Public::PostCommentsController < ApplicationController
   def create
     @new_comment = PostComment.new
     @post = Post.find(params[:post_id])
+    @post_comments = @post.post_comments.includes(:user)
     @post_comment = current_user.post_comments.new(post_comment_params)
     @post_comment.post_id = @post.id
     if @post_comment.save
@@ -28,6 +29,7 @@ class Public::PostCommentsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:post_id])
+    @post_comments = @post.post_comments.includes(:user)
     PostComment.find_by(id: params[:id], post_id: @post.id).destroy
     @post_comment = PostComment.new
   end
