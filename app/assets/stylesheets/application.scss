@@ -223,4 +223,8 @@ select#sort {
   .heading {
     padding-bottom: 10px;
   }
+  .effect-fade-second {
+    opacity: 1 !important;
+    transform: translate(0, 0);
+  }
 }
