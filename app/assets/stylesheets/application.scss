@@ -17,6 +17,7 @@
  @import "bootstrap";
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
+ @import "bootstrap-social";
 
 $info: #17a2b8;
 
@@ -58,7 +59,7 @@ thead {
 .about-info {
   padding: 190px 0;
   .btn {
-    width: 200px;
+    min-width: 200px;
   }
 }
 
