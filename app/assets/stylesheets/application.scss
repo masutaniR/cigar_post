@@ -48,7 +48,7 @@ thead {
   background-size: cover;
 }
 
-.whats_cp {
+.whats-cp {
   font-size: 20px;
   text-decoration: underline;
   color: #212529;
@@ -157,7 +157,7 @@ a.plain-link {
   border: 1px solid transparent;
   color: $info;
   &:focus {
-    @extend .btn:focus !optional;
+    @extend .btn, :focus !optional;
     box-shadow: none;
     color: #46CAB8;
   }
