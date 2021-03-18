@@ -40,24 +40,11 @@
           <%= f.label :profile_image_id %>
           <small class="text-muted ml-3">クリックで画像選択/変更</small>
           <br>
-          <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
-          <%= f.label :profile_image, class: 'image_label' do %>
-            <div class="prev-contents">
-              <!--既に登録されている画像があれば表示-->
-              <% if @user.profile_image.present? %>
-                <div class="prev-content">
-                  <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
-                </div>
-              <% else %>
-                <!--登録画像がなければno-imgを表示-->
-                <div class="no-img">
-                  <%= image_tag asset_path('no-img.jpeg'), class: 'no-photo' %>
-                </div>
-              <% end %>
-              <!--非表示-->
-              <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
-            </div>
-          <% end %>
+          <div class="prev-content">
+            <%= attachment_image_tag(@user, :profile_image, fallback: 'no-img.jpeg', onClick: "$('.profile-img-field').click()", alt: "preview", class: "prev-image") %>
+          </div>
+          <!--非表示-->
+          <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
         </div>
 
         <div class="field">
