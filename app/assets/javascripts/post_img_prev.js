@@ -12,7 +12,7 @@ $(document).on('turbolinks:load', function () {
     }
 
     // 画像が選択された時に発火
-    $(document).on('change', '.post-img-field', function () {
+    $('.post-img-field').on('change', function () {
       // .file_filedからデータを取得して変数fileに代入
       var file = this.files[0];
       // FileReaderオブジェクトを作成

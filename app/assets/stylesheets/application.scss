@@ -175,7 +175,7 @@ a.plain-link {
   background-color: transparent;
   border: 1px solid transparent;
   &:focus {
-    @extend .form-control:focus !optional;
+    @extend .form-control, :focus !optional;
     box-shadow: none;
     background-color: transparent;
     border: 1px solid transparent;
@@ -186,7 +186,22 @@ select#sort {
   height: 44px;
 }
 
-@media screen and (max-width:767px) {
+.effect-fade-fast {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.effect-fade {
+  opacity: 0;
+  transition: all 3s;
+}
+
+.done {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@media screen and (max-width:768px) {
   .main {
     margin-top: 10px;
   }
