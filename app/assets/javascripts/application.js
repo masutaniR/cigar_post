@@ -19,7 +19,7 @@
 //= require_tree .
 //= require data-confirm-modal
 
-$(function() {
+$(document).on('turbolinks:load', function() {
   load_effect();
 });
 
@@ -29,13 +29,13 @@ function load_effect() {
   $('.effect-fade-fast').each(function () {
     var elemPos = $(this).offset().top;
     if (scroll > elemPos - windowHeight) {
-      $(this).addClass("effect-scroll");
+      $(this).addClass("done");
     }
   });
   $('.effect-fade').each(function () {
     var elemPos = $(this).offset().top;
     if (scroll > elemPos - windowHeight) {
-      $(this).addClass("effect-scroll");
+      $(this).addClass("done");
     }
   });
 }
