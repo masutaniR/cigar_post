@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id).order(created_at: :desc).limit(3)
-    @post_comments = PostComment.where(user_id: @user.id).order(created_at: :desc).limit(3)
+    @posts = Post.includes(:user).where(user_id: @user.id).order(created_at: :desc).limit(3)
+    @post_comments = PostComment.includes(:user, :post).where(user_id: @user.id).order(created_at: :desc).limit(3)
   end
 end

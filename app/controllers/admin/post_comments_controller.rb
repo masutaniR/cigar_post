@@ -2,10 +2,10 @@ class Admin::PostCommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @post_comments = PostComment.all
+    @post_comments = PostComment.all.includes(:user, :post)
     if params[:user_id].present?
       @user = User.find(params[:user_id])
-      @post_comments = @post_comments.where(user_id: @user.id).reverse_order.page(params[:page])
+      @post_comments = @post_comments.where(user_id: @user.id).order(created_at: :desc).page(params[:page])
     end
     if params[:comment].present?
       @comment = params[:comment]
@@ -19,7 +19,7 @@ class Admin::PostCommentsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:post_id])
+    @post_comments = @post.post_comments.includes(:user)
     PostComment.find_by(id: params[:id], post_id: @post.id).destroy
-    @post_comment = PostComment.new
   end
 end

@@ -1,7 +1,7 @@
-<% if post.post_comments.any? %>
+<% if post_comments.any? %>
   <hr>
   <h5>コメント一覧</h5>
-  <% post.post_comments.each do |post_comment| %>
+  <% post_comments.each do |post_comment| %>
     <hr>
     <div class="one-comment py-2 px-4">
       <div class="d-flex justify-content-between">

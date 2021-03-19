@@ -2,11 +2,11 @@ class Admin::PostsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @posts = Post.all
+    @posts = Post.all.includes(:user)
     # ユーザーごとの投稿一覧
     if params[:user_id].present?
       @user = User.find(params[:user_id])
-      @posts = Post.where(user_id: @user.id).page(params[:page])
+      @posts = @posts.where(user_id: @user.id).page(params[:page])
     end
     # キーワード検索
     if params[:body].present?
@@ -22,6 +22,7 @@ class Admin::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @post_comments = @post.post_comments.includes(:user)
   end
 
   def destroy

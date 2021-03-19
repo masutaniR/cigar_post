@@ -31,7 +31,7 @@
         <%= @post.created_at.to_s(:datetime_jp) %>
         <div class="post-reaction mt-2">
           <span id="comments-count" class="mr-4">
-            <i class="far fa-comment"></i> コメント(<%= @post.post_comments.count %>)
+            <i class="far fa-comment"></i> コメント(<%= @post_comments.count %>)
           </span>
           <span id="like-btn-<%= @post.id %>">
             <i class="far fa-heart"></i> いいね(<%= @post.likes.count %>)
@@ -39,7 +39,7 @@
         </div>
 
         <div id="comment-container" class="pt-2">
-          <%= render 'admin/post_comments/comments', post: @post %>
+          <%= render 'admin/post_comments/comments', post_comments: @post_comments %>
         </div>
 
       </div>
