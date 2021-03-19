@@ -16,7 +16,7 @@
         <p class="mt-4 text-muted no-contents">該当する投稿はありません</p>
       <% else %>
         <div class="col-12 post-index-container mt-2">
-          <%= render 'public/posts/index', posts: @posts %>
+          <%= render 'public/posts/index', posts: @posts, post_comments: @post_comments %>
         </div>
       <% end %>
 

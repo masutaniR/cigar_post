@@ -1,2 +1,2 @@
-$('#comment-container').html("<%= j( render 'admin/post_comments/comments', post: @post ) %>");
-$('#comments-count').html("<i class='far fa-comment'></i> コメント(<%= @post.post_comments.count %>)");
+$('#comment-container').html("<%= j( render 'admin/post_comments/comments', post_comments: @post_comments ) %>");
+$('#comments-count').html("<i class='far fa-comment'></i> コメント(<%= @post_comments.count %>)");

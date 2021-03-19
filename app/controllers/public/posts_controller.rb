@@ -18,11 +18,12 @@ class Public::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @post_comments = @post.post_comments.includes(:user)
     @post_comment = PostComment.new
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.all.includes(:user, :post_comments, :likes)
     # キーワード検索
     if params[:body].present?
       @body = params[:body]

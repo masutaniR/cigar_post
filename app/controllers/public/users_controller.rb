@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id).page(params[:page]).order(created_at: :desc)
+    @posts = Post.where(user_id: @user.id).includes(:user, :post_comments, :likes).page(params[:page]).order(created_at: :desc)
   end
 
   def index
@@ -45,7 +45,8 @@ class Public::UsersController < ApplicationController
   # いいね一覧
   def likes
     @user = User.find(params[:id])
-    @posts = Kaminari.paginate_array(@user.likes.order(created_at: :desc).map{|like| like.post}).page(params[:page])
+    @posts = Kaminari.paginate_array(@user.likes.includes(post: [:post_comments, :likes, :user])
+             .order(created_at: :desc).map{|like| like.post}).page(params[:page])
   end
 
   # フォロー一覧
@@ -67,10 +68,10 @@ class Public::UsersController < ApplicationController
     @posts = []
     if users.present?
       users.each do |user|
-      following_user_posts = Post.where(user_id: user.id)
+      following_user_posts = Post.includes(:user, :post_comments, :likes).where(user_id: user.id)
       @posts.concat(following_user_posts)
       end
-      current_user_posts = Post.where(user_id: current_user.id)
+      current_user_posts = Post.includes(:user, :post_comments, :likes).where(user_id: current_user.id)
       @posts.concat(current_user_posts)
       @posts = @posts.sort_by!{|post| post.created_at}.reverse!
     else
