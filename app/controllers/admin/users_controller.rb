@@ -22,8 +22,10 @@ class Admin::UsersController < ApplicationController
     @user.update(user_params)
     if @user.is_active
       redirect_to admin_user_path(@user), notice: 'アカウントの凍結を解除しました。'
+      SuspendMailer.unsuspend_mail(@user).deliver_now
     else
       redirect_to admin_user_path(@user), notice: 'アカウントを凍結しました。'
+      SuspendMailer.suspend_mail(@user).deliver_now
     end
   end
 
