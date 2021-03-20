@@ -21,9 +21,13 @@
             </div>
           </div>
         <% end %>
-        <div class="actions d-flex justify-content-center">
-          <%= link_to 'キャンセル', edit_user_registration_path, class: 'btn btn-outline-dark mr-5' %>
-          <%= f.submit "退会する" ,class: 'btn btn-sm btn-danger ml-5'%>
+        <div class="actions confirm-btn d-flex justify-content-center">
+          <div class="cancel-btn">
+            <%= link_to 'キャンセル', edit_user_registration_path, class: 'btn btn-outline-dark mr-5' %>
+          </div>
+          <div class="withdraw-btn">
+            <%= f.submit '退会する', class: 'btn btn-danger ml-5' %>
+          </div>
         </div>
       <% end %>
 
