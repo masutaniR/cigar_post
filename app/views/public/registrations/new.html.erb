@@ -11,8 +11,8 @@
 
         <div class="field pt-3">
           <span class="need-item">*</span>
-          <%= f.label :name %><br>
-          <%= f.text_field :name, autofocus: true, placeholder: '名前', class: 'form-control' %>
+          <!--%= f.label :name %><br>-->
+          <!--%= f.text_field :name, autofocus: true, placeholder: '名前', class: 'form-control' %>-->
         </div>
 
         <div class="field">
@@ -41,24 +41,24 @@
           <small class="text-muted ml-3">クリックで画像選択/変更</small>
           <br>
           <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
-        <!--  %= f.label :profile_image, class: 'image-label' do %>-->
-        <!--    <div class="prev-contents">-->
+          <%= f.label :profile_image, class: 'image-label' do %>
+            <div class="prev-contents">
               <!--既に登録されている画像があれば表示-->
-        <!--      % if @user.profile_image.present? %>-->
-        <!--        <div class="prev-content">-->
-        <!--          %= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>-->
-        <!--        </div>-->
-        <!--      % else %>-->
+              <% if @user.profile_image.present? %>
+                <div class="prev-content">
+                  <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
+                </div>
+              <% else %>
                 <!--選択画像がなければiconを表示-->
-        <!--        <div class="no-img">-->
-        <!--          %= icon('fas', 'image', class: 'no-photo') %>-->
-        <!--        </div>-->
-        <!--      % end %>-->
+                <div class="no-img">
+                  <%= icon('fas', 'image', class: 'no-photo') %>
+                </div>
+              <% end %>
               <!--非表示-->
-        <!--      %= f.file_field :profile_image, class: 'profile-img-field mt-2' %>-->
-        <!--    </div>-->
-        <!--  % end %>-->
-        <!--</div>-->
+              <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
+            </div>
+          <% end %>
+        </div>
 
         <div class="field">
           <%= f.label :introduction %><br>
