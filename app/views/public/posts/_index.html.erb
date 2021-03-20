@@ -23,19 +23,23 @@
     <hr>
     <%= post.created_at.to_s(:datetime_jp) %><br>
     <%= link_to ' 投稿詳細を見る', post_path(post), class: 'mt-2 small fas fa-angle-right' %>
-    <div class="post-reaction mt-2">
-      <% if post.user == current_user %>
-        <%= link_to post_path(post), method: :delete, class: 'plain-link small mr-4',
-            data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
-          <i class="far fa-trash-alt"></i> 削除
+    <% if post.user.is_active %>
+      <div class="post-reaction mt-2">
+        <% if post.user == current_user %>
+          <%= link_to post_path(post), method: :delete, class: 'plain-link small mr-4',
+              data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
+            <i class="far fa-trash-alt"></i> 削除
+          <% end %>
         <% end %>
-      <% end %>
-      <span class="mr-4 small">
-        <%= render 'public/post_comments/comments_count', post: post %>
-      </span>
-      <span id="like-btn-<%= post.id %>" class="small">
-        <%= render 'public/likes/likes_count', post: post %>
-      </span>
-    </div>
+        <span class="mr-4 small">
+          <%= render 'public/post_comments/comments_count', post: post %>
+        </span>
+        <span id="like-btn-<%= post.id %>" class="small">
+          <%= render 'public/likes/likes_count', post: post %>
+        </span>
+      </div>
+    <% else %>
+      <p class="small text-danger mt-2 mb-0">この投稿者はアカウントを凍結されています</p>
+    <% end %>
   </div>
 <% end %>

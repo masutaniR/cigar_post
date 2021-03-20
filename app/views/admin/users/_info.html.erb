@@ -21,6 +21,14 @@
       <b>登録日時：</b><br>
       <%= user.created_at.to_s(:datetime_jp) %>
     </div>
+    <div class="user-field my-2">
+      <b>ステータス：</b><br>
+      <% if user.is_active %>
+        <p>利用可能</p>
+      <% else %>
+        <p class="text-danger">凍結中</p>
+      <% end %>
+    </div>
     <hr>
     <table class="table table-sm table-borderless">
       <tbody>
@@ -50,5 +58,17 @@
         </tr>
       </tbody>
     </table>
+
+    <%= form_with model: user, url: admin_user_path, local: true do |f| %>
+      <% if user.is_active %>
+        <%= f.hidden_field :is_active, value: false %>
+        <%= f.submit 'アカウント凍結', class: 'btn btn-block btn-danger',
+            data: { confirm: 'このアカウントを凍結します。本当によろしいですか？', cancel: 'やめる', commit: '凍結する'}, title: '凍結確認' %>
+      <% else %>
+        <%= f.hidden_field :is_active, value: true %>
+        <%= f.submit 'アカウント凍結解除', class: 'btn btn-block btn-secondary',
+            data: { confirm: 'このアカウントの凍結を解除します。本当によろしいですか？', cancel: 'やめる', commit: '解除する'}, title: '凍結解除確認' %>
+      <% end %>
+    <% end %>
   </div>
 </div>
