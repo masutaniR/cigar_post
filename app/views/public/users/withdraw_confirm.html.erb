@@ -4,16 +4,23 @@
     <div class="col-md-7 mx-auto mt-2">
       <h4 class="title">本当に退会しますか？</h4>
 
-      <p class="mt-4">退会するとアカウントの情報はすべて削除され、復元することはできません。<br>
-        退会手続を決行する場合は、パスワードを入力してください。</p>
+      <p class="mt-4 mb-0">退会するとアカウントの情報はすべて削除され、復元することはできません。</p>
+      <% if current_user.uid.present? %>
+        <p>本当によろしいですか？</p>
+      <% else %>
+        <p>退会手続を決行する場合は、パスワードを入力してください。</p>
+      <% end %>
 
+      <!--Googleアカウント以外は退会時パスワードを要求-->
       <%= form_with model: @user, url: user_registration_path, method: :delete, local: true do |f| %>
-        <div class="d-flex justify-content-center">
-          <div class="form-inline mt-3 pb-5">
-            <%= f.label :password, 'パスワード', class: 'mr-3' %>
-            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+        <% if current_user.uid.nil? %>
+          <div class="d-flex justify-content-center">
+            <div class="form-inline mt-3 pb-5">
+              <%= f.label :password, 'パスワード', class: 'mr-3' %>
+              <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+            </div>
           </div>
-        </div>
+        <% end %>
         <div class="actions d-flex justify-content-center">
           <%= link_to 'キャンセル', edit_user_registration_path, class: 'btn btn-outline-dark mr-5' %>
           <%= f.submit "退会する" ,class: 'btn btn-sm btn-danger ml-5'%>
