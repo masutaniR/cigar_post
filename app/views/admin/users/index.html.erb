@@ -19,6 +19,7 @@
               <th>登録日時</th>
               <th>ユーザー名</th>
               <th>メールアドレス</th>
+              <th>ステータス</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,13 @@
                     <%= emphasize_keyword(user.email, @word) %>
                   <% else %>
                     <%= user.email %>
+                  <% end %>
+                </td>
+                <td class="text-center">
+                  <% if user.is_active %>
+                    <p class="text-muted">利用可能</p>
+                  <% else %>
+                    <p class="text-danger">凍結中</p>
                   <% end %>
                 </td>
               </tr>

@@ -16,4 +16,19 @@ class Admin::UsersController < ApplicationController
     @posts = Post.includes(:user).where(user_id: @user.id).order(created_at: :desc).limit(3)
     @post_comments = PostComment.includes(:user, :post).where(user_id: @user.id).order(created_at: :desc).limit(3)
   end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
+    if @user.is_active
+      redirect_to admin_user_path(@user), notice: 'アカウントの凍結を解除しました。'
+    else
+      redirect_to admin_user_path(@user), notice: 'アカウントを凍結しました。'
+    end
+  end
+
+  private
+    def user_params
+      params.require(:user).permit(:is_active)
+    end
 end

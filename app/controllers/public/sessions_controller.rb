@@ -2,6 +2,7 @@
 
 class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  before_action :reject_inactive_user, only: [:create]
 
   def new_guest
     user = User.guest
@@ -23,6 +24,16 @@ class Public::SessionsController < Devise::SessionsController
   # def destroy
   #   super
   # end
+
+  # 凍結されているアカウントをブロック
+  def reject_inactive_user
+    @user = User.find_by(email: params[:user][:email])
+    if @user
+      if (@user.valid_password?(params[:user][:password])) && (@user.is_active == false)
+        redirect_to new_user_session_path, alert: 'アカウントが凍結されています。'
+      end
+    end
+  end
 
   # protected
 

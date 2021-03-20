@@ -34,6 +34,10 @@ class Public::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def after_update_path_for(resource)
+    user_path(current_user)
+  end
+
   # DELETE /resource
   def destroy
      @user = current_user

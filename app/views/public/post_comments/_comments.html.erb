@@ -27,31 +27,36 @@
           <% end %>
         <% end %>
       </small>
+      <% unless post_comment.user.is_active %>
+        <p class="small text-danger mt-2 mb-0">このコメント投稿者はアカウントを凍結されています</p>
+      <% end %>
     </div>
   <% end %>
 <% end %>
 
-<div id="comment-form" class="comment-form">
-  <hr>
-  <div id="error-messages">
-    <%= render 'layouts/errors', obj: post_comment %>
-  </div>
-  <%= form_with(model:[post, post_comment], url: post_post_comments_path(post)) do |f| %>
-    <div class="field">
-      <%= f.text_area :comment, rows: '5', placeholder: 'コメントを入力してください', class: 'form-control' %>
+<% if post.user.is_active %>
+  <div id="comment-form" class="comment-form">
+    <hr>
+    <div id="error-messages">
+      <%= render 'layouts/errors', obj: post_comment %>
     </div>
-
-    <div class="field d-flex justify-content-start">
-      <%= f.label :category %>
-      <div class="radio-btn ml-4">
-        <%= f.radio_button :category, 'senryu', checked: true %><%= f.label :category, '川柳', value: 'senryu', class: 'pl-1 mb-0' %><br>
-        <%= f.radio_button :category, 'tanka' %><%= f.label :category, '短歌', value: 'tanka', class: 'pl-1 mb-0' %><br>
-        <%= f.radio_button :category, 'free_haiku' %><%= f.label :category, '自由律俳句', value: 'free_haiku', class: 'pl-1 mb-0' %>
+    <%= form_with(model:[post, post_comment], url: post_post_comments_path(post)) do |f| %>
+      <div class="field">
+        <%= f.text_area :comment, rows: '5', placeholder: 'コメントを入力してください', class: 'form-control' %>
       </div>
-    </div>
 
-    <div class="actions">
-      <%= f.submit '送信', class: 'btn btn-info' %>
-    </div>
-  <% end %>
-</div>
+      <div class="field d-flex justify-content-start">
+        <%= f.label :category %>
+        <div class="radio-btn ml-4">
+          <%= f.radio_button :category, 'senryu', checked: true %><%= f.label :category, '川柳', value: 'senryu', class: 'pl-1 mb-0' %><br>
+          <%= f.radio_button :category, 'tanka' %><%= f.label :category, '短歌', value: 'tanka', class: 'pl-1 mb-0' %><br>
+          <%= f.radio_button :category, 'free_haiku' %><%= f.label :category, '自由律俳句', value: 'free_haiku', class: 'pl-1 mb-0' %>
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '送信', class: 'btn btn-info' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

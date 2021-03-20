@@ -41,7 +41,7 @@
           <small class="text-muted ml-3">クリックで画像選択/変更</small>
           <br>
           <!--ラベルでfile_fieldとプレビュー画像を紐付ける-->
-          <%= f.label :profile_image, class: 'image_label' do %>
+          <%= f.label :profile_image, class: 'image-label' do %>
             <div class="prev-contents">
               <!--既に登録されている画像があれば表示-->
               <% if @user.profile_image.present? %>
@@ -49,8 +49,10 @@
                   <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
                 </div>
               <% else %>
-                <!--登録画像がなければbackground-imageでno-imgを表示-->
-                <div class="no-photo"></div>
+                <!--選択画像がなければiconを表示-->
+                <div class="no-img">
+                  <%= icon('fas', 'image', class: 'no-photo') %>
+                </div>
               <% end %>
               <!--非表示-->
               <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
@@ -60,7 +62,7 @@
 
         <div class="field">
           <%= f.label :introduction %><br>
-          <%= f.text_area :introduction, autofocus: true, placeholder: '自己紹介', rows: '5', class: 'form-control' %>
+          <%= f.text_area :introduction, placeholder: '自己紹介', rows: '5', class: 'form-control' %>
         </div>
 
         <div class="actions">
