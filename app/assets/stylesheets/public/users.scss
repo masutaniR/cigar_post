@@ -4,7 +4,8 @@
 
 $info: #17a2b8;
 
-.prev-content > img {
+.prev-content > img,
+img.no-photo {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -13,10 +14,6 @@ $info: #17a2b8;
 
 .profile-img-field {
   display: none;
-}
-
-.no-photo {
-  font-size: 80px;
 }
 
 img.user-icon {

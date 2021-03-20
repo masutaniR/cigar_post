@@ -27,9 +27,9 @@
                   <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
                 </div>
               <% else %>
-                <!--選択画像がなければiconを表示-->
+                <!--選択画像がなければno-imgを表示-->
                 <div class="no-img">
-                  <%= icon('fas', 'image', class: 'no-photo') %>
+                  <%= image_tag asset_path('no-img.jpeg'), class: 'no-photo' %>
                 </div>
               <% end %>
               <!--非表示-->
