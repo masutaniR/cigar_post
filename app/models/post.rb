@@ -51,18 +51,18 @@ class Post < ApplicationRecord
 
   # 投稿検索
   def self.body_search_for(content)
-    Post.where("body LIKE?", "%#{content}%")
+    where("body LIKE?", "%#{content}%")
   end
 
   # カテゴリ検索
   def self.category_search_for(content)
     case content
     when 'senryu'
-      Post.where("category LIKE?", "0")
+      where("category LIKE?", "0")
     when 'tanka'
-      Post.where("category LIKE?", "1")
+      where("category LIKE?", "1")
     when 'free_haiku'
-      Post.where("category LIKE?", "2")
+      where("category LIKE?", "2")
     end
   end
 

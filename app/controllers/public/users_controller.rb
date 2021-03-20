@@ -73,7 +73,7 @@ class Public::UsersController < ApplicationController
       end
       current_user_posts = Post.includes(:user, :post_comments, :likes).where(user_id: current_user.id)
       @posts.concat(current_user_posts)
-      @posts = @posts.sort_by!{|post| post.created_at}.reverse!
+      @posts = @posts.sort_by{|post| post.created_at}.reverse
     else
       @posts = current_user.posts.order(created_at: :desc).page(params[:page])
     end
