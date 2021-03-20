@@ -24,20 +24,24 @@
         <% end %>
         <hr>
         <%= @post.created_at.to_s(:datetime_jp) %>
-        <div class="post-reaction mt-2">
-          <% if @post.user == current_user %>
-            <%= link_to post_path(@post), method: :delete, class: 'plain-link mr-4',
-                data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
-              <i class="far fa-trash-alt"></i> 削除
+        <% if @post.user.is_active %>
+          <div class="post-reaction mt-2">
+            <% if @post.user == current_user %>
+              <%= link_to post_path(@post), method: :delete, class: 'plain-link mr-4',
+                  data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' do %>
+                <i class="far fa-trash-alt"></i> 削除
+              <% end %>
             <% end %>
-          <% end %>
-          <span id="comments-count" class="mr-4">
-            <%= render 'public/post_comments/comments_count', post: @post %>
-          </span>
-          <span id="like-btn-<%= @post.id %>">
-            <%= render 'public/likes/likes_count', post: @post %>
-          </span>
-        </div>
+            <span id="comments-count" class="mr-4">
+              <%= render 'public/post_comments/comments_count', post: @post %>
+            </span>
+            <span id="like-btn-<%= @post.id %>">
+              <%= render 'public/likes/likes_count', post: @post %>
+            </span>
+          </div>
+        <% else %>
+          <p class="text-danger mt-2">この投稿者はアカウントを凍結されています</p>
+        <% end %>
 
         <div id="comment-container" class="pt-2">
           <%= render 'public/post_comments/comments', post: @post, post_comments: @post_comments, post_comment: @post_comment %>
