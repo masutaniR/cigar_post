@@ -236,4 +236,14 @@ select#sort {
     opacity: 1 !important;
     transform: translate(0, 0);
   }
+  .confirm-btn {
+    display: block !important;
+    div {
+      display: flex;
+      justify-content: center;
+      .btn {
+        margin: 10px 0 !important;
+      }
+    }
+  }
 }

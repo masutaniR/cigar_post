@@ -49,8 +49,10 @@
                   <%= attachment_image_tag(@user, :profile_image, alt: "preview", class: "prev-image") %>
                 </div>
               <% else %>
-                <!--登録画像がなければbackground-imageでno-imgを表示-->
-                <div class="no-photo"></div>
+                <!--登録画像がなければno-imgを表示-->
+                <div class="no-img">
+                  <%= image_tag asset_path('no-img.jpeg'), class: 'no-photo' %>
+                </div>
               <% end %>
               <!--非表示-->
               <%= f.file_field :profile_image, class: 'profile-img-field mt-2' %>
@@ -60,7 +62,7 @@
 
         <div class="field">
           <%= f.label :introduction %><br>
-          <%= f.text_area :introduction, autofocus: true, placeholder: '自己紹介', rows: '5', class: 'form-control' %>
+          <%= f.text_area :introduction, placeholder: '自己紹介', rows: '5', class: 'form-control' %>
         </div>
 
         <div class="actions">
