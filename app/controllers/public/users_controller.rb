@@ -64,14 +64,14 @@ class Public::UsersController < ApplicationController
   # タイムライン
   def home
     # フォローしているユーザー＋自分の投稿を最新順で取得
-    users = current_user.following
+    users = current_user.following.includes(posts: [:post_comments, :likes])
     @posts = []
     if users.present?
       users.each do |user|
-      following_user_posts = Post.includes(:user, :post_comments, :likes).where(user_id: user.id)
+      following_user_posts = user.posts
       @posts.concat(following_user_posts)
       end
-      current_user_posts = Post.includes(:user, :post_comments, :likes).where(user_id: current_user.id)
+      current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
       @posts.concat(current_user_posts)
       @posts = @posts.sort_by{|post| post.created_at}.reverse
     else

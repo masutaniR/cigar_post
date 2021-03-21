@@ -8,7 +8,7 @@
         <% if @posts.empty? %>
           <p class="mt-4 pb-4 text-muted">まだ投稿はありません</p>
         <% else %>
-          <div class="admin-post-container mt-3">
+          <div class="admin-post-container table-responsive-md mt-3">
             <%= render 'admin/posts/index', posts: @posts %>
           </div>
           <div class="d-flex justify-content-end">
@@ -22,7 +22,7 @@
         <% if @post_comments.empty? %>
           <p class="mt-4 text-muted">まだコメントの投稿はありません</p>
         <% else %>
-          <div class="admin-comment-container mt-3">
+          <div class="admin-comment-container table-responsive-md mt-3">
             <%= render 'admin/post_comments/index', post_comments: @post_comments %>
           </div>
           <div class="d-flex justify-content-end">
