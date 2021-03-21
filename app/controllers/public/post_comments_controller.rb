@@ -15,7 +15,7 @@ class Public::PostCommentsController < ApplicationController
       end
       # コメントした投稿への他のコメント投稿通知を許可している場合のみ他のコメント投稿者へ通知
       temp_ids = PostComment.select(:user_id).where(post_id: @post.id)
-                 .where.not("(user_id = ?) OR (user_id = ?)", current_user.id, @post.user.id).distinct
+                            .where.not('(user_id = ?) OR (user_id = ?)', current_user.id, @post.user.id).distinct
       temp_ids.each do |temp_id|
         comment_user = User.find(temp_id['user_id'])
         if comment_user.other_comment_notice
@@ -35,14 +35,15 @@ class Public::PostCommentsController < ApplicationController
   end
 
   private
-    def post_comment_params
-      params.require(:post_comment).permit(:comment, :category)
-    end
 
-    def ensure_correct_user
-      @post_comment = PostComment.find(params[:id])
-      unless @post_comment.user == current_user
-        redirect_to user_path(current_user)
-      end
+  def post_comment_params
+    params.require(:post_comment).permit(:comment, :category)
+  end
+
+  def ensure_correct_user
+    @post_comment = PostComment.find(params[:id])
+    unless @post_comment.user == current_user
+      redirect_to user_path(current_user)
     end
+  end
 end

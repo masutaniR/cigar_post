@@ -12,53 +12,55 @@
       <% if @users.empty? %>
         <p class="mt-4 text-muted">該当するユーザーはいません</p>
       <% else %>
-        <table class="table table-bordered mt-3">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>登録日時</th>
-              <th>ユーザー名</th>
-              <th>メールアドレス</th>
-              <th>ステータス</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @users.each do |user| %>
+        <div class="table-responsive-md">
+          <table class="table table-bordered mt-3">
+            <thead>
               <tr>
-                <td class="text-center">
-                  <%= user.id %>
-                </td>
-                <td>
-                  <%= user.created_at.to_s(:datetime_jp) %>
-                </td>
-                <td>
-                  <!-- 検索でヒットしたキーワードを太字にする -->
-                  <% if @word.present? %>
-                    <%= link_to admin_user_path(user) do %>
-                      <%= emphasize_keyword(user.name, @word) %>
-                    <% end %>
-                  <% else %>
-                    <%= link_to user.name, admin_user_path(user) %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if @word.present? %>
-                    <%= emphasize_keyword(user.email, @word) %>
-                  <% else %>
-                    <%= user.email %>
-                  <% end %>
-                </td>
-                <td class="text-center">
-                  <% if user.is_active %>
-                    <p class="text-muted">利用可能</p>
-                  <% else %>
-                    <p class="text-danger">凍結中</p>
-                  <% end %>
-                </td>
+                <th>ID</th>
+                <th>登録日時</th>
+                <th>ユーザー名</th>
+                <th>メールアドレス</th>
+                <th>ステータス</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td class="text-center">
+                    <%= user.id %>
+                  </td>
+                  <td>
+                    <%= user.created_at.to_s(:datetime_jp) %>
+                  </td>
+                  <td>
+                    <!-- 検索でヒットしたキーワードを太字にする -->
+                    <% if @word.present? %>
+                      <%= link_to admin_user_path(user) do %>
+                        <%= emphasize_keyword(user.name, @word) %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to user.name, admin_user_path(user) %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if @word.present? %>
+                      <%= emphasize_keyword(user.email, @word) %>
+                    <% else %>
+                      <%= user.email %>
+                    <% end %>
+                  </td>
+                  <td class="text-center">
+                    <% if user.is_active %>
+                      <p class="text-muted">利用可能</p>
+                    <% else %>
+                      <p class="text-danger">凍結中</p>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       <% end %>
 
       <div class="paginate">

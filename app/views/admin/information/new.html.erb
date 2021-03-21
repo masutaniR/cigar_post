@@ -9,7 +9,7 @@
       <%= form_with model: @information, url: admin_information_new_confirm_path, method: :get, local: true do |f| %>
       <div class="field">
         <%= f.label :title %>
-        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.text_field :title, autofocus: true, class: 'form-control' %>
       </div>
       <div class="field">
         <%= f.label :body %>

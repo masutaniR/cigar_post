@@ -40,7 +40,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
 
   # DELETE /resource
   def destroy
-     @user = current_user
+    @user = current_user
     if @user.email == 'test@test.com'
       redirect_to edit_user_registration_path, alert: 'ゲストアカウントは退会できません。'
     # Googleアカウント以外は退会時パスワードを要求
@@ -63,9 +63,9 @@ class Public::RegistrationsController < Devise::RegistrationsController
 
   protected
 
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :profile_image, :introduction])
-    end
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :profile_image, :introduction])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
