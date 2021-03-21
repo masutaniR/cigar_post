@@ -1,0 +1,27 @@
+# inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+    - 'config/environments/*'
+    - 'config/application.rb'
+    - 'config/initializers/*'
+    - 'config/spring.rb'
+    - 'lib/tasks/*'
+    - 'vendor/**/*'
+    - 'path/ruby'
+    - 'test/**/*'
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+# 日本語のコメントを許可
+Style/AsciiComments:
+  Enabled: false
+# 条件式の方を意識させたい場合には後置の if/unless を使わない方が分かりやすい
+Style/IfUnlessModifier:
+  Enabled: false
+# if 文の中に数行程度のブロック記述を許可
+Style/GuardClause:
+  MinBodyLength: 5

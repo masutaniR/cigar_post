@@ -20,7 +20,9 @@
       <% if @post_comments.empty? %>
         <p class="mt-4 text-muted no-contents">該当する投稿はありません</p>
       <% else %>
-        <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+        <div class="table-responsive-md">
+          <%= render 'admin/post_comments/index', post_comments: @post_comments %>
+        </div>
       <% end %>
 
       <div class="paginate">
