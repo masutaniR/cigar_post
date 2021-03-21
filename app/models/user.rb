@@ -25,8 +25,8 @@ class User < ApplicationRecord
     find_or_create_by(email: 'test@test.com') do |user|
       user.name = 'ゲスト'
       user.password = SecureRandom.urlsafe_base64
-      user.introduction = ""
-      user.profile_image_id = ""
+      user.introduction = ''
+      user.profile_image_id = ''
     end
   end
 
@@ -47,7 +47,7 @@ class User < ApplicationRecord
 
   # フォロー通知
   def create_notification_follow(current_user)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ?", current_user.id, id, 'follow'])
+    temp = Notification.where(['visitor_id = ? and visited_id = ? and action = ?', current_user.id, id, 'follow'])
     if temp.blank?
       notification = current_user.active_notifications.new(
         visited_id: id,
@@ -59,24 +59,24 @@ class User < ApplicationRecord
 
   # ユーザー検索
   def self.search_for(content)
-    where("name LIKE? OR introduction LIKE?", "%#{content}%", "%#{content}%")
+    where('name LIKE? OR introduction LIKE?', "%#{content}%", "%#{content}%")
   end
 
   # 管理側ユーザー検索
   def self.admin_search_for(content)
-    where("name LIKE? OR email LIKE?", "%#{content}%", "%#{content}%")
+    where('name LIKE? OR email LIKE?', "%#{content}%", "%#{content}%")
   end
 
   # 並び替え
   def self.sort_for(sort)
     case sort
     when 'created_at_desc'
-      order(created_at: "DESC")
+      order(created_at: 'DESC')
     when 'created_at_asc'
-      order(created_at: "ASC")
+      order(created_at: 'ASC')
     when 'followers_count'
-      users = self.includes(:followers).sort_by{|user| user.followers.size}.reverse
-      return Kaminari.paginate_array(users)
+      users = includes(:followers).sort_by{ |user| user.followers.size }.reverse
+      Kaminari.paginate_array(users)
     end
   end
 

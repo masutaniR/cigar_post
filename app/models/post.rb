@@ -21,7 +21,7 @@ class Post < ApplicationRecord
 
   # いいね通知
   def create_notification_like(current_user)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and post_id = ? and action = ?", current_user.id, user_id, id, 'like'])
+    temp = Notification.where(['visitor_id = ? and visited_id = ? and post_id = ? and action = ?', current_user.id, user_id, id, 'like'])
     if temp.blank?
       notification = current_user.active_notifications.new(
         post_id: id,
@@ -51,18 +51,18 @@ class Post < ApplicationRecord
 
   # 投稿検索
   def self.body_search_for(content)
-    where("body LIKE?", "%#{content}%")
+    where('body LIKE?', "%#{content}%")
   end
 
   # カテゴリ検索
   def self.category_search_for(content)
     case content
     when 'senryu'
-      where("category LIKE?", "0")
+      where('category LIKE?', '0')
     when 'tanka'
-      where("category LIKE?", "1")
+      where('category LIKE?', '1')
     when 'free_haiku'
-      where("category LIKE?", "2")
+      where('category LIKE?', '2')
     end
   end
 
@@ -70,15 +70,15 @@ class Post < ApplicationRecord
   def self.sort_for(sort)
     case sort
     when 'created_at_desc'
-      order("created_at DESC")
+      order('created_at DESC')
     when 'created_at_asc'
-      order("created_at ASC")
+      order('created_at ASC')
     when 'likes_count'
-      posts = self.includes(:likes).sort_by{|post| post.likes.size}.reverse
-      return Kaminari.paginate_array(posts)
+      posts = includes(:likes).sort_by{ |post| post.likes.size }.reverse
+      Kaminari.paginate_array(posts)
     when 'comments_count'
-      posts = self.includes(:post_comments).sort_by{|post| post.post_comments.size}.reverse
-      return Kaminari.paginate_array(posts)
+      posts = includes(:post_comments).sort_by{ |post| post.post_comments.size }.reverse
+      Kaminari.paginate_array(posts)
     end
   end
 end

@@ -62,7 +62,8 @@ class Admin::InformationController < ApplicationController
   end
 
   private
-    def info_params
-      params.require(:information).permit(:id, :title, :body)
-    end
+
+  def info_params
+    params.require(:information).permit(:id, :title, :body)
+  end
 end

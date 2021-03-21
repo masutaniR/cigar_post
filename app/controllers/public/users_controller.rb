@@ -15,11 +15,11 @@ class Public::UsersController < ApplicationController
       @users = @users.search_for(@word)
     end
     # 並び替え
-    if params[:sort].present?
-      @users = @users.sort_for(params[:sort])
-    else
-      @users = @users.order(created_at: :desc)
-    end
+    @users = if params[:sort].present?
+               @users.sort_for(params[:sort])
+             else
+               @users.order(created_at: :desc)
+             end
     @users = @users.page(params[:page])
   end
 
@@ -39,14 +39,13 @@ class Public::UsersController < ApplicationController
   end
 
   # 退会確認
-  def withdraw_confirm
-  end
+  def withdraw_confirm; end
 
   # いいね一覧
   def likes
     @user = User.find(params[:id])
     @posts = Kaminari.paginate_array(@user.likes.includes(post: [:post_comments, :likes, :user])
-             .order(created_at: :desc).map{|like| like.post}).page(params[:page])
+             .order(created_at: :desc).map{ |like| like.post }).page(params[:page])
   end
 
   # フォロー一覧
@@ -68,22 +67,23 @@ class Public::UsersController < ApplicationController
     @posts = []
     if users.present?
       users.each do |user|
-      following_user_posts = user.posts
-      @posts.concat(following_user_posts)
+        following_user_posts = user.posts
+        @posts.concat(following_user_posts)
       end
       current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
       @posts.concat(current_user_posts)
-      @posts = @posts.sort_by{|post| post.created_at}.reverse
+      @posts = @posts.sort_by{ |post| post.created_at }.reverse
     else
       @posts = current_user.posts.order(created_at: :desc).page(params[:page])
     end
-    # タイムライン内検索
+    # キーワード検索
     if params[:body].present?
       @body = params[:body]
       @posts = @posts.select do |post|
         post.body.include?(@body)
       end
     end
+    # カテゴリ検索
     if params[:category].present?
       case params[:category]
       when 'senryu'
@@ -104,16 +104,17 @@ class Public::UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(
-        :name, :introduction, :profile_image, :like_notice, :comment_notice, :other_comment_notice, :follow_notice
-        )
-    end
 
-    def ensure_correct_user
-      @user = User.find(params[:id])
-      unless @user == current_user
-        redirect_to user_path(current_user)
-      end
+  def user_params
+    params.require(:user).permit(
+      :name, :introduction, :profile_image, :like_notice, :comment_notice, :other_comment_notice, :follow_notice
+    )
+  end
+
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path(current_user)
     end
+  end
 end

@@ -34,11 +34,11 @@ class Public::PostsController < ApplicationController
       @posts = @posts.category_search_for(params[:category])
     end
     # 並び替え
-    if params[:sort].present?
-      @posts = @posts.sort_for(params[:sort])
-    else
-      @posts = @posts.order(created_at: :desc)
-    end
+    @posts = if params[:sort].present?
+               @posts.sort_for(params[:sort])
+             else
+               @posts.order(created_at: :desc)
+             end
     @posts = @posts.page(params[:page])
   end
 
@@ -49,14 +49,15 @@ class Public::PostsController < ApplicationController
   end
 
   private
-    def post_params
-      params.require(:post).permit(:body, :post_image, :category)
-    end
 
-    def ensure_correct_user
-      @post = Post.find(params[:id])
-      unless @post.user == current_user
-        redirect_to user_path(current_user)
-      end
+  def post_params
+    params.require(:post).permit(:body, :post_image, :category)
+  end
+
+  def ensure_correct_user
+    @post = Post.find(params[:id])
+    unless @post.user == current_user
+      redirect_to user_path(current_user)
     end
+  end
 end
