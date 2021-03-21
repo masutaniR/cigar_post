@@ -17,6 +17,7 @@ class Admin::UsersController < ApplicationController
     @post_comments = PostComment.includes(:user, :post).where(user_id: @user.id).order(created_at: :desc).limit(3)
   end
 
+  # ユーザー凍結処理
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
