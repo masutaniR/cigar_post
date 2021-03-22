@@ -8,6 +8,9 @@
     <div class="user-field my-2">
       <b>ユーザー名：</b><br>
       <%= user.name %>
+      <% if user.uid.present? %>
+        <span class="badge badge-primary badge-bg"><i class="fa fa-google"></i></span>
+      <% end %>
     </div>
     <div class="user-field my-2">
       <b>自己紹介：</b><br>
@@ -63,11 +66,25 @@
       <% if user.is_active %>
         <%= f.hidden_field :is_active, value: false %>
         <%= f.submit 'アカウント凍結', class: 'btn btn-block btn-danger',
-            data: { confirm: 'このアカウントを凍結します。本当によろしいですか？', cancel: 'やめる', commit: '凍結する'}, title: '凍結確認' %>
+            data: {
+              confirm: "以下のアカウントを凍結します。<br>
+                        本当によろしいですか？<br>
+                        <br>
+                        ユーザー名：#{user.name}<br>
+                        メールアドレス：#{user.email}",
+              cancel: 'やめる', commit: '凍結する'},
+              title: 'アカウント凍結' %>
       <% else %>
         <%= f.hidden_field :is_active, value: true %>
         <%= f.submit 'アカウント凍結解除', class: 'btn btn-block btn-secondary',
-            data: { confirm: 'このアカウントの凍結を解除します。本当によろしいですか？', cancel: 'やめる', commit: '解除する'}, title: '凍結解除確認' %>
+            data: {
+              confirm: "以下のアカウントの凍結を解除します。<br>
+                        本当によろしいですか？<br>
+                        <br>
+                        ユーザー名：#{user.name}<br>
+                        メールアドレス：#{user.email}",
+              cancel: 'やめる', commit: '解除する'},
+              title: 'アカウント凍結解除' %>
       <% end %>
     <% end %>
   </div>
