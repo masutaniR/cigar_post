@@ -59,26 +59,16 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # 開発環境のメール送信はletter_oener_webを使う
-  # if Rails.env.production?
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: 'smtp.gmail.com',
-      domain: 'gmail.com',
-      port: 587,
-      user_name: 'mstnryk@gmail.com',
-      password: ENV['EMAIL_KEY'],
-      authentication: 'plain',
-      enable_starttls_auto: true
-    }
-  # elsif Rails.env.development?
-  #   config.action_mailer.default_url_options = { host: '315ef41a0f1e42a1b28e40da2377c839.vfs.cloud9.ap-northeast-1.amazonaws.com' }
-  #   config.action_mailer.perform_caching = true
-  #   config.action_mailer.delivery_method = :letter_opener_web
-  #   config.action_mailer.perform_deliveries = true
-  # else
-  #   config.action_mailer.delivery_method = :test
-  # end
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    domain: 'gmail.com',
+    port: 587,
+    user_name: 'mstnryk@gmail.com',
+    password: ENV['EMAIL_KEY'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 
   config.after_initialize do
     Bullet.enable = true
