@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'ユーザーログイン後のテスト' do
 
   let(:user) { create(:user) }
-  let!(:other_user) { create(:user) }
+  let(:other_user) { create(:user) }
   let!(:post) { create(:post, user_id: user.id) }
   let!(:other_post) { create(:post, user_id: other_user.id) }
 
@@ -24,7 +24,7 @@ describe 'ユーザーログイン後のテスト' do
       it 'URLが正しい' do
         expect(current_path).to eq '/posts'
       end
-      it '最新の投稿が一番上に表示される' do
+      it '新着投稿が一番上に表示される' do
         posts = all('.index-post-body')
         top_post = posts[0]
         expect(top_post).to have_content other_post.body
@@ -220,6 +220,47 @@ describe 'ユーザーログイン後のテスト' do
         expect(user_info).to have_content other_user.introduction
       end
     end
+  end
+
+  describe 'ユーザー一覧画面のテスト' do
+
+    before do
+      visit users_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users'
+      end
+      it '新着ユーザーが一番上に表示される' do
+        users = all('.one-user')
+        top_user = users[0]
+        expect(top_user).to have_content other_user.name
+      end
+      it '自分と他人のプロフィール画像が表示される' do
+        users = find('.main-contents')
+        expect(users).to have_selector('img', count: 2)
+      end
+      it '自分と他人の名前のリンクが正しい' do
+        expect(page).to have_link user.name, href: user_path(user)
+        expect(page).to have_link other_user.name, href: user_path(other_user)
+      end
+      it '自分と他人の自己紹介が表示される' do
+        expect(page).to have_content user.introduction
+        expect(page).to have_content other_user.introduction
+      end
+      it '自分にはフォローボタンが表示されない' do
+        users = all('.one-user')
+        user_info = users[1]
+        expect(user_info).not_to have_link 'フォローする'
+      end
+      it '他人にフォローボタンが表示される' do
+        users = all('.one-user')
+        other_user_info = users[0]
+        expect(other_user_info).to have_link 'フォローする'
+      end
+    end
+
   end
 
 end
