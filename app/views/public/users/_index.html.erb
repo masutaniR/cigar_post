@@ -1,5 +1,5 @@
 <% users.each do |user| %>
-  <div class="row my-3 px-3">
+  <div class="row one-user my-3 px-3">
     <div class="col-sm-2">
       <%= link_to user_path(user) do %>
         <%= attachment_image_tag(user, :profile_image, format: 'jpg', size: '60x60', fallback: 'no-img.jpeg', class: 'user-icon') %>
