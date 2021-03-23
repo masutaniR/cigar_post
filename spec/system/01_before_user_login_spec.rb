@@ -133,7 +133,7 @@ describe 'ユーザーログイン前のテスト' do
       end
       it '新規登録後のリダイレクト先がマイページになっている' do
         click_button '新規登録'
-        expect(current_path).to eq "/users/#{User.last.id.to_s}"
+        expect(current_path).to eq "/users/#{ User.last.id.to_s }"
       end
     end
 
@@ -244,7 +244,7 @@ describe 'ユーザーログイン前のテスト' do
       it '通知のリンクの内容が正しい' do
         click_link '通知'
         expect(current_path).to eq '/notifications'
-        # 以下の記述は"there were no matches"と出る
+        # 以下の記述は"there were no matches"でエラーになる
         # notifications_link = find_all('a')[4].native.inner_text
         # expect(page).to have_link notifications_link, href: '/notifications'
       end
