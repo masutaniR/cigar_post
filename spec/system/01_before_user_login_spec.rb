@@ -253,12 +253,13 @@ describe 'ユーザーログイン前のテスト' do
         expect(dropdown).to match ''
       end
       it 'ドロップダウンメニューの内容が正しい' do
-        expect(page).to have_link 'ホーム', href: timeline_path
-        expect(page).to have_link 'マイページ', href: user_path(user)
-        expect(page).to have_link 'プロフィール編集', href: edit_user_path(user)
-        expect(page).to have_link '通知設定', href: notifications_setting_path
-        expect(page).to have_link '登録情報変更', href: edit_user_registration_path
-        expect(page).to have_link 'ログアウト', href: destroy_user_session_path
+        menu = find('.dropdown-menu')
+        expect(menu).to have_link 'ホーム', href: timeline_path
+        expect(menu).to have_link 'マイページ', href: user_path(user)
+        expect(menu).to have_link 'プロフィール編集', href: edit_user_path(user)
+        expect(menu).to have_link '通知設定', href: notifications_setting_path
+        expect(menu).to have_link '登録情報変更', href: edit_user_registration_path
+        expect(menu).to have_link 'ログアウト', href: destroy_user_session_path
       end
     end
 

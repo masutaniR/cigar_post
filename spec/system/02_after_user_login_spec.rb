@@ -25,8 +25,7 @@ describe 'ユーザーログイン後のテスト' do
         expect(current_path).to eq '/posts'
       end
       it '新着投稿が一番上に表示される' do
-        posts = all('.index-post-body')
-        top_post = posts[0]
+        top_post = find_all('.index-post-body')[0]
         expect(top_post).to have_content other_post.body
       end
       it '自分と他人の画像・名前のリンクが正しい' do
@@ -46,13 +45,11 @@ describe 'ユーザーログイン後のテスト' do
         expect(page).to have_link '投稿詳細を見る', href: post_path(other_post)
       end
       it '自分の投稿に削除リンクが表示される' do
-        posts = all('.post-reaction')
-        my_post = posts[1]
+        my_post = find_all('.post-reaction')[1]
         expect(my_post).to have_link '削除', href: post_path(post)
       end
       it '他人の投稿には削除リンクが表示されない' do
-        posts = all('.post-reaction')
-        other_post = posts[0]
+        other_post = find_all('.post-reaction')[0]
         expect(other_post).not_to have_link '削除'
       end
       it 'コメントリンクが表示される' do
@@ -100,7 +97,7 @@ describe 'ユーザーログイン後のテスト' do
         expect(page).to have_field 'post[category]'
       end
       it 'カテゴリボタンのデフォルト選択が川柳になっている' do
-        expect(page).to have_checked_field('川柳')
+        expect(page).to have_checked_field '川柳'
       end
       it '新規投稿ボタンが表示される' do
         expect(page).to have_button '送信'
@@ -233,8 +230,7 @@ describe 'ユーザーログイン後のテスト' do
         expect(current_path).to eq '/users'
       end
       it '新着ユーザーが一番上に表示される' do
-        users = all('.one-user')
-        top_user = users[0]
+        top_user = find_all('.one-user')[0]
         expect(top_user).to have_content other_user.name
       end
       it '自分と他人のプロフィール画像が表示される' do
@@ -250,17 +246,134 @@ describe 'ユーザーログイン後のテスト' do
         expect(page).to have_content other_user.introduction
       end
       it '自分にはフォローボタンが表示されない' do
-        users = all('.one-user')
-        user_info = users[1]
+        user_info = find_all('.one-user')[1]
         expect(user_info).not_to have_link 'フォローする'
       end
       it '他人にフォローボタンが表示される' do
-        users = all('.one-user')
-        other_user_info = users[0]
+        other_user_info = find_all('.one-user')[0]
         expect(other_user_info).to have_link 'フォローする'
       end
     end
+  end
 
+  describe '自分のユーザー詳細画面のテスト' do
+
+    before do
+      visit user_path(user)
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }"
+      end
+      it '投稿一覧の画像・名前のリンク先が正しい' do
+        expect(page).to have_link user.name, href: user_path(user)
+      end
+      it '投稿一覧に自分の投稿のカテゴリーが表示される' do
+        expect(page).to have_content post.category_i18n
+      end
+      it '投稿一覧に自分の投稿本文が表示される' do
+        expect(page).to have_content post.body
+      end
+      it '投稿詳細ページへのリンクが表示される' do
+        post_box = find('.one-post')
+        expect(post_box).to have_link '投稿詳細を見る', href: post_path(post)
+      end
+      it '投稿に削除リンクが表示される' do
+        my_post = find('.post-reaction')
+        expect(my_post).to have_link '削除', href: post_path(post)
+      end
+      it 'コメントリンクが表示される' do
+        expect(page).to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
+      end
+      it 'いいねボタンが表示される' do
+        expect(page).to have_link 'いいね', href: post_likes_path(post)
+      end
+      it '他人の投稿は表示されない' do
+        expect(page).not_to have_content other_post.body
+        expect(page).not_to have_link '投稿詳細を見る', href: post_path(other_post)
+      end
+    end
+    
+    context 'サイドバーの確認' do
+      it '自分のプロフィールが表示される' do
+        user_info = find('.user-info')
+        expect(user_info).to have_link user.name, href: user_path(user)
+        expect(user_info).to have_content user.introduction
+      end
+      it 'プロフィール編集リンクが表示される' do
+        user_info = find('.user-info')
+        expect(user_info).to have_link 'プロフィール編集', href: edit_user_path(user)
+      end
+      it '通知設定リンクが表示される' do
+        user_info = find('.user-info')
+        expect(user_info).to have_link '通知設定', href: notifications_setting_path
+      end
+      it 'フォローボタンは表示されない' do
+        user_info = find('.user-info')
+        expect(user_info).not_to have_link 'フォローする'
+      end
+    end
+  end
+  
+  describe '他人のユーザー詳細画面のテスト' do
+
+    before do
+      visit user_path(other_user)
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ other_user.id.to_s }"
+      end
+      it '投稿一覧の画像・名前のリンク先が正しい' do
+        expect(page).to have_link other_user.name, href: user_path(other_user)
+      end
+      it '投稿一覧に投稿のカテゴリーが表示される' do
+        expect(page).to have_content other_post.category_i18n
+      end
+      it '投稿一覧に投稿本文が表示される' do
+        expect(page).to have_content other_post.body
+      end
+      it '投稿詳細ページへのリンクが表示される' do
+        post_box = find('.one-post')
+        expect(post_box).to have_link '投稿詳細を見る', href: post_path(other_post)
+      end
+      it '投稿に削除リンクは表示されない' do
+        others_post = find('.post-reaction')
+        expect(others_post).not_to have_link '削除'
+      end
+      it 'コメントリンクが表示される' do
+        expect(page).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
+      end
+      it 'いいねボタンが表示される' do
+        expect(page).to have_link 'いいね', href: post_likes_path(other_post)
+      end
+      it '自分の投稿は表示されない' do
+        expect(page).not_to have_content post.body
+        expect(page).not_to have_link '投稿詳細を見る', href: post_path(post)
+      end
+    end
+    
+    context 'サイドバーの確認' do
+      it '他人のプロフィールが表示される' do
+        other_user_info = find('.user-info')
+        expect(other_user_info).to have_link other_user.name, href: user_path(other_user)
+        expect(other_user_info).to have_content other_user.introduction
+      end
+      it 'フォローボタンが表示される' do
+        other_user_info = find('.user-info')
+        expect(other_user_info).to have_link 'フォローする'
+      end
+      it 'プロフィール編集リンクは表示されない' do
+        other_user_info = find('.user-info')
+        expect(other_user_info).not_to have_link 'プロフィール編集'
+      end
+      it '通知設定リンクは表示されない' do
+        other_user_info = find('.user-info')
+        expect(other_user_info).not_to have_link '通知設定'
+      end
+    end
   end
 
 end
