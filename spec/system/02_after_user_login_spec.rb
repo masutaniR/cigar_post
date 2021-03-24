@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'ユーザーログイン後のテスト' do
+describe 'ユーザーログイン後のテスト', js: true do
 
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
@@ -66,6 +66,7 @@ describe 'ユーザーログイン後のテスト' do
 
       before do
         click_link '削除'
+        click_button '削除する'
       end
 
       it '正しく削除される' do
@@ -90,8 +91,11 @@ describe 'ユーザーログイン後のテスト' do
       it 'bodyフォームが表示される' do
         expect(page).to have_field 'post[body]'
       end
-      it 'post_imageフォームが表示される' do
-        expect(page).to have_field 'post[post_image]'
+      it 'post_imageフォームは表示されない' do
+        expect(page).not_to have_field 'post[post_image]'
+      end
+      it 'imageアイコンが表示される' do
+        expect(page).to have_selector 'i', class: 'fa-image'
       end
       it 'カテゴリボタンが表示される' do
         expect(page).to have_field 'post[category]'
@@ -166,10 +170,12 @@ describe 'ユーザーログイン後のテスト' do
       end
       it '投稿が正しく削除される' do
         click_link '削除'
+        click_button '削除する'
         expect(Post.where(id: post.id).count).to eq 0
       end
       it '削除後のリダイレクト先が投稿一覧になっている' do
         click_link '削除'
+        click_button '削除する'
         expect(current_path).to eq '/posts'
       end
     end
@@ -211,10 +217,16 @@ describe 'ユーザーログイン後のテスト' do
       it 'コメント送信ボタンが表示される' do
         expect(page).to have_button '送信'
       end
-      it 'サイドバーに自分のプロフィールが表示される' do
+      it 'サイドバーに他人のプロフィールが表示される' do
         user_info = find('.user-info')
         expect(user_info).to have_link other_user.name, href: user_path(other_user)
         expect(user_info).to have_content other_user.introduction
+      end
+      it 'いいね' do
+        click_link 'いいね'
+        expect(page).to have_content 'いいね 1'
+        visit current_path
+        expect(other_post.likes.count).to eq 1
       end
     end
   end
@@ -389,8 +401,11 @@ describe 'ユーザーログイン後のテスト' do
       it '名前編集フォームに自分の名前が表示される' do
         expect(page).to have_field 'user[name]', with: user.name
       end
-      it 'プロフィール画像編集フォームが表示される' do
-        expect(page).to have_field 'user[profile_image]'
+      it 'プロフィール画像フォームは表示されない' do
+        expect(page).not_to have_field 'user[profile_image]'
+      end
+      it 'NoUserアイコンが表示される' do
+        expect(page).to have_selector 'img', class: 'no-photo'
       end
       it '自己紹介編集フォームに自分の自己紹介文が表示される' do
         expect(page).to have_field 'user[introduction]', with: user.introduction
