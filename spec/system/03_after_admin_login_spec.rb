@@ -9,6 +9,7 @@ describe '管理者画面のテスト' do
   let!(:other_post) { create(:post, user_id: other_user.id) }
   let!(:comment) { create(:post_comment, user_id: user.id, post_id: other_post.id) }
   let!(:other_comment) { create(:post_comment, user_id: other_user.id, post_id: post.id) }
+  let!(:info) { create(:information) }
 
   before do
     visit new_admin_session_path
@@ -475,6 +476,227 @@ describe '管理者画面のテスト' do
         it '投稿詳細ページへのリンクが表示される' do
           expect(page).to have_link '詳細', href: "/admin/posts/#{ comment.post.id.to_s }#comment-#{ comment.id.to_s }"
           expect(page).to have_link '詳細', href: "/admin/posts/#{ other_comment.post.id.to_s }#comment-#{ other_comment.id.to_s }"
+        end
+      end
+    end
+
+    describe 'お知らせ一覧画面のテスト' do
+
+      before do
+        visit admin_information_index_path
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/information'
+        end
+        it 'お知らせ新規投稿ページへのリンクが表示される' do
+          expect(page).to have_link '新規投稿', href: new_admin_information_path
+        end
+        it 'お知らせのタイトルが表示される' do
+          expect(page).to have_content info.title
+        end
+        it 'お知らせのリンクが正しい' do
+          expect(page).to have_link info.title, href: admin_information_path(info)
+        end
+      end
+    end
+
+    describe 'お知らせ新規投稿のテスト' do
+
+      before do
+        visit new_admin_information_path
+      end
+
+      context '新規投稿画面表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/information/new'
+        end
+        it 'titleフォームが表示される' do
+          expect(page).to have_field 'information[title]'
+        end
+        it 'bodyフォームが表示される' do
+          expect(page).to have_field 'information[body]'
+        end
+        it '確認ボタンが表示される' do
+          expect(page).to have_button '確認画面へ'
+        end
+      end
+
+      context '確認画面のテスト' do
+
+        before do
+          @new_info_title = Faker::Lorem.characters(number: 15)
+          @new_info_body = Faker::Lorem.characters(number: 500)
+          fill_in 'information[title]', with: @new_info_title
+          fill_in 'information[body]', with: @new_info_body
+          click_button '確認画面へ'
+        end
+
+        it '投稿前のお知らせが表示される' do
+          expect(page).to have_content @new_info_title
+          expect(page).to have_content @new_info_body
+        end
+        it 'お知らせはまだ保存されていない' do
+          expect(Information.all.count).to eq 1
+        end
+        it '送信ボタンが表示される' do
+          expect(page).to have_button '送信'
+        end
+        it '戻るボタンが表示される' do
+          expect(page).to have_button '入力画面に戻る'
+        end
+      end
+
+      context '入力画面に戻るテスト' do
+
+        before do
+          @new_info_title = Faker::Lorem.characters(number: 15)
+          @new_info_body = Faker::Lorem.characters(number: 500)
+          fill_in 'information[title]', with: @new_info_title
+          fill_in 'information[body]', with: @new_info_body
+          click_button '確認画面へ'
+          click_button '入力画面に戻る'
+        end
+
+        it 'titleフォームに入力した内容が表示される' do
+          expect(page).to have_field 'information[title]', with: @new_info_title
+        end
+        it 'bodyフォームに入力した内容が表示される' do
+          expect(page).to have_field 'information[body]', with: @new_info_body
+        end
+        it '確認ボタンが表示される' do
+          expect(page).to have_button '確認画面へ'
+        end
+      end
+
+      context '新規投稿のテスト' do
+
+        before do
+          @new_info_title = Faker::Lorem.characters(number: 15)
+          @new_info_body = Faker::Lorem.characters(number: 500)
+          fill_in 'information[title]', with: @new_info_title
+          fill_in 'information[body]', with: @new_info_body
+          click_button '確認画面へ'
+        end
+
+        it '新しい投稿が正しく保存される' do
+          expect{ click_button '送信' }.to change{ Information.count }.by(1)
+        end
+        it 'リダイレクト先がお知らせ詳細ページになっている' do
+          click_button '送信'
+          expect(current_path).to eq "/admin/information/#{ Information.last.id.to_s }"
+        end
+        it '投稿されたお知らせがトップ画面に表示される' do
+          click_button '送信'
+          click_link 'ログアウト'
+          visit root_path
+          expect(page).to have_link @new_info_title, href: "/information/#{ Information.last.id.to_s }"
+        end
+      end
+    end
+
+    describe 'お知らせ詳細ページのテスト' do
+
+      before do
+        visit admin_information_path(info)
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq "/admin/information/#{ info.id.to_s }"
+        end
+        it '投稿日時が表示される' do
+          expect(page).to have_content info.created_at.to_s(:datetime_jp)
+        end
+        it 'お知らせのタイトルが表示される' do
+          expect(page).to have_content info.title
+        end
+        it 'お知らせの本文が表示される' do
+          expect(page).to have_content info.body
+        end
+        it 'お知らせ編集ボタンが表示される' do
+          expect(page).to have_link '編集', href: edit_admin_information_path(info)
+        end
+        it 'お知らせ削除ボタンが表示される' do
+          expect(page).to have_link '削除', href: admin_information_path(info)
+        end
+      end
+
+      context 'お知らせ削除テスト' do
+
+        before do
+          click_link '削除'
+        end
+
+        it 'お知らせが正しく削除される' do
+          expect(Information.where(id: info.id).count).to eq 0
+        end
+        it '削除後のリダイレクト先がお知らせ一覧になっている' do
+          expect(current_path).to eq '/admin/information'
+        end
+        it '削除されたお知らせはトップ画面に表示されない' do
+          click_link 'ログアウト'
+          visit root_path
+          expect(page).not_to have_content info.title
+        end
+      end
+    end
+
+    describe 'お知らせ編集ページのテスト' do
+
+      before do
+        visit admin_information_path(info)
+        click_link '編集'
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq "/admin/information/#{ info.id.to_s }/edit"
+        end
+        it 'title編集フォームに入力した内容が表示される' do
+          expect(page).to have_field 'information[title]', with: info.title
+        end
+        it 'bodyフォームに入力した内容が表示される' do
+          expect(page).to have_field 'information[body]', with: info.body
+        end
+        it '変更ボタンが表示される' do
+          expect(page).to have_button '変更'
+        end
+      end
+
+      context '更新成功のテスト' do
+
+        before do
+          @old_title = info.title
+          @old_body = info.body
+          @new_title = Faker::Lorem.characters(number: 8)
+          @new_body = Faker::Lorem.characters(number: 600)
+          fill_in 'information[title]', with: @new_title
+          fill_in 'information[body]', with: @new_body
+          click_button '変更'
+          click_button '更新'
+        end
+
+        it 'titleが正しく更新される' do
+          expect(info.reload.title).not_to eq @old_title
+          expect(info.reload.title).to eq @new_title
+        end
+        it 'bodyが正しく更新される' do
+          expect(info.reload.body).not_to eq @old_body
+          expect(info.reload.body).to eq @new_body
+        end
+        it '更新後、お知らせ詳細画面にリダイレクトする' do
+          expect(current_path).to eq "/admin/information/#{ info.id.to_s }"
+        end
+        it 'お知らせ詳細に更新日時が表示される' do
+          expect(page).to have_content info.updated_at.to_s(:datetime_jp)
+        end
+        it '更新されたお知らせがトップ画面に表示される' do
+          click_link 'ログアウト'
+          visit root_path
+          expect(page).not_to have_content @old_title
+          expect(page).to have_link @new_title, href: "/information/#{ info.id.to_s }"
         end
       end
     end
