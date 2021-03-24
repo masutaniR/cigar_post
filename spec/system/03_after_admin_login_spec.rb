@@ -280,6 +280,9 @@ describe '管理者画面のテスト' do
       end
 
       context 'アカウント凍結のテスト' do
+        it 'ユーザー詳細ページにリダイレクトされる' do
+          expect(current_path).to eq "/admin/users/#{ user.id.to_s }"
+        end
         it 'ユーザーステータスが正しく更新される' do
           expect(user.reload.is_active).to eq false
         end
@@ -301,13 +304,16 @@ describe '管理者画面のテスト' do
           expect(page).to have_content 'アカウントが凍結されています。'
         end
       end
-      
+
       context 'アカウント凍結解除のテスト' do
-        
+
         before do
           click_button 'アカウント凍結解除'
         end
-        
+
+        it 'ユーザー詳細ページにリダイレクトされる' do
+          expect(current_path).to eq "/admin/users/#{ user.id.to_s }"
+        end
         it 'ユーザーステータスが正しく更新される' do
           expect(user.reload.is_active).to eq true
         end
@@ -327,6 +333,148 @@ describe '管理者画面のテスト' do
           click_button 'ログイン'
           expect(current_path).to eq '/home'
           expect(page).to have_content 'ログインしました。'
+        end
+      end
+    end
+
+    describe '投稿一覧画面のテスト' do
+
+      before do
+        visit admin_posts_path
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/posts'
+        end
+        it '新着投稿が一番上に表示される' do
+          top_post = find_all('tr')[1]
+          expect(top_post).to have_content other_post.body
+        end
+        it '各投稿者の名前が表示される' do
+          expect(page).to have_content user.name
+          expect(page).to have_content other_user.name
+        end
+        it '投稿者名のリンクが正しい' do
+          expect(page).to have_link user.name, href: admin_user_path(user)
+          expect(page).to have_link other_user.name, href: admin_user_path(other_user)
+        end
+        it '投稿カテゴリーが表示される' do
+          expect(page).to have_content post.category_i18n
+          expect(page).to have_content other_post.category_i18n
+        end
+        it '投稿本文が表示される' do
+          expect(page).to have_content post.body
+          expect(page).to have_content other_post.body
+        end
+        it '投稿詳細ページへのリンクが表示される' do
+          expect(page).to have_link '詳細', href: admin_post_path(post)
+          expect(page).to have_link '詳細', href: admin_post_path(other_post)
+        end
+      end
+    end
+
+    describe '投稿詳細ページのテスト' do
+
+      before do
+        visit admin_post_path(post)
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq "/admin/posts/#{ post.id.to_s }"
+        end
+        it '投稿削除ボタンが表示される' do
+          expect(page).to have_link '投稿を削除', href: admin_post_path(post)
+        end
+        it 'プロフィール画像と名前のリンクが正しい' do
+          post_detail = find('.main-contents')
+          expect(post_detail).to have_link user.name, href: admin_user_path(user)
+        end
+        it '投稿のカテゴリが表示される' do
+          expect(page).to have_content post.category_i18n
+        end
+        it '投稿の本文が表示される' do
+          expect(page).to have_content post.body
+        end
+        it 'サイドバーに投稿者のプロフィールが表示される' do
+          user_info = find('.user-info')
+          expect(user_info).to have_content user.name
+          expect(user_info).to have_content user.introduction
+          expect(user_info).to have_content user.email
+          expect(user_info).to have_content user.created_at.to_s(:datetime_jp)
+          expect(user_info).to have_content '利用可能'
+        end
+        it 'コメント一覧が表示される' do
+          comment_box = find('#comment-container')
+          expect(comment_box).to have_content 'コメント一覧'
+        end
+      end
+
+      context '投稿削除のテスト' do
+
+        before do
+          click_link '投稿を削除'
+        end
+
+        it '投稿が正しく削除される' do
+          expect(Post.where(id: post.id).count).to eq 0
+        end
+        it '削除後のリダイレクト先が投稿一覧になっている' do
+          expect(current_path).to eq '/admin/posts'
+        end
+      end
+
+      context 'コメント一覧表示の確認' do
+        it 'コメント投稿者のプロフィール画像と名前のリンクが正しい' do
+          comment_box = find('#comment-container')
+          expect(comment_box).to have_link other_user.name, href: admin_user_path(other_user)
+        end
+        it 'コメントのカテゴリが表示される' do
+          expect(page).to have_content other_comment.category_i18n
+        end
+        it 'コメント本文が表示される' do
+          expect(page).to have_content other_comment.comment
+        end
+        it 'コメント削除ボタンが表示される' do
+          expect(page).to have_link 'コメントを削除', href: admin_post_post_comment_path(post, other_comment)
+        end
+      end
+    end
+
+    describe 'コメント一覧画面のテスト' do
+
+      before do
+        visit admin_post_comments_path
+      end
+
+      context '表示内容の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/post_comments'
+        end
+        it '新着投稿が一番上に表示される' do
+          top_comment = find_all('tr')[1]
+          expect(top_comment).to have_content other_comment.comment
+        end
+        it '各コメント投稿者の名前が表示される' do
+          expect(page).to have_content user.name
+          expect(page).to have_content other_user.name
+        end
+        it 'コメント投稿者名のリンクが正しい' do
+          expect(page).to have_link user.name, href: admin_user_path(user)
+          expect(page).to have_link other_user.name, href: admin_user_path(other_user)
+        end
+        it 'コメントカテゴリーが表示される' do
+          expect(page).to have_content comment.category_i18n
+          expect(page).to have_content other_comment.category_i18n
+        end
+        it 'コメント本文が表示される' do
+          expect(page).to have_content comment.comment
+          expect(page).to have_content other_comment.comment
+        end
+        it '投稿詳細ページへのリンクが表示される' do
+          expect(page).to have_link '詳細', href: "/admin/posts/#{ comment.post.id.to_s }#comment-#{ comment.id.to_s }"
+          expect(page).to have_link '詳細', href: "/admin/posts/#{ other_comment.post.id.to_s }#comment-#{ other_comment.id.to_s }"
         end
       end
     end
