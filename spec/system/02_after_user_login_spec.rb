@@ -294,7 +294,7 @@ describe 'ユーザーログイン後のテスト' do
         expect(page).not_to have_link '投稿詳細を見る', href: post_path(other_post)
       end
     end
-    
+
     context 'サイドバーの確認' do
       it '自分のプロフィールが表示される' do
         user_info = find('.user-info')
@@ -315,7 +315,7 @@ describe 'ユーザーログイン後のテスト' do
       end
     end
   end
-  
+
   describe '他人のユーザー詳細画面のテスト' do
 
     before do
@@ -354,7 +354,7 @@ describe 'ユーザーログイン後のテスト' do
         expect(page).not_to have_link '投稿詳細を見る', href: post_path(post)
       end
     end
-    
+
     context 'サイドバーの確認' do
       it '他人のプロフィールが表示される' do
         other_user_info = find('.user-info')
@@ -372,6 +372,184 @@ describe 'ユーザーログイン後のテスト' do
       it '通知設定リンクは表示されない' do
         other_user_info = find('.user-info')
         expect(other_user_info).not_to have_link '通知設定'
+      end
+    end
+  end
+
+  describe '自分のプロフィール編集画面のテスト' do
+
+    before do
+      visit edit_user_path(user)
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }/edit"
+      end
+      it '名前編集フォームに自分の名前が表示される' do
+        expect(page).to have_field 'user[name]', with: user.name
+      end
+      it 'プロフィール画像編集フォームが表示される' do
+        expect(page).to have_field 'user[profile_image]'
+      end
+      it '自己紹介編集フォームに自分の自己紹介文が表示される' do
+        expect(page).to have_field 'user[introduction]', with: user.introduction
+      end
+      it '更新ボタンが表示される' do
+        expect(page).to have_button '更新'
+      end
+    end
+
+    context '更新成功のテスト' do
+
+      before do
+        @old_name = user.name
+        @old_intro = user.introduction
+        @new_name = Faker::Lorem.characters(number: 8)
+        @new_intro = Faker::Lorem.characters(number: 50)
+        fill_in 'user[name]', with: @new_name
+        fill_in 'user[introduction]', with: @new_intro
+        click_button '更新'
+      end
+
+      it 'nameが正しく更新される' do
+        expect(user.reload.name).not_to eq @old_name
+        expect(user.reload.name).to eq @new_name
+      end
+      it 'introductionが正しく更新される' do
+        expect(user.reload.introduction).not_to eq @old_intro
+        expect(user.reload.introduction).to eq @new_intro
+      end
+      it '更新後、自分のユーザ詳細画面にリダイレクトする' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }"
+      end
+    end
+  end
+
+  describe '他人のプロフィール編集画面のテスト' do
+
+    it 'アクセスできず、マイページにリダイレクトされる' do
+      visit edit_user_path(other_user)
+      expect(current_path).to eq "/users/#{ user.id.to_s }"
+    end
+
+  end
+
+  describe 'ユーザー登録情報変更画面のテスト' do
+
+    before do
+      visit edit_user_registration_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/edit'
+      end
+      it 'email編集フォームに自分のemailが表示される' do
+        expect(page).to have_field 'user[email]', with: user.email
+      end
+      it 'password編集フォームが表示される' do
+        expect(page).to have_field 'user[password]'
+      end
+      it '確認用password編集フォームが表示される' do
+        expect(page).to have_field 'user[password_confirmation]'
+      end
+      it '現在のpasswordフォームが表示される' do
+        expect(page).to have_field 'user[current_password]'
+      end
+      it '変更ボタンが表示される' do
+        expect(page).to have_button '変更'
+      end
+      it '退会リンクが表示される' do
+        expect(page).to have_link '退会する', href: withdraw_confirm_users_path
+      end
+    end
+
+    context '更新成功のテスト' do
+
+      before do
+        @old_email = user.email
+        @new_email = Faker::Internet.email
+        fill_in 'user[email]', with: @new_email
+        fill_in 'user[current_password]', with: 'password'
+        click_button '変更'
+      end
+
+      it 'emailが正しく更新される' do
+        expect(user.reload.email).not_to eq @old_email
+        expect(user.reload.email).to eq @new_email
+      end
+      it '更新後、自分のユーザ詳細画面にリダイレクトする' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }"
+      end
+    end
+  end
+
+  describe '退会のテスト' do
+
+    before do
+      visit withdraw_confirm_users_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/withdraw_confirm'
+      end
+      it '退会確認メッセージが表示される' do
+        expect(page).to have_content '本当に退会しますか？'
+      end
+      it 'パスワード入力フォームが表示される' do
+        expect(page).to have_field 'password'
+      end
+      it 'キャンセルボタンが表示される' do
+        expect(page).to have_link 'キャンセル', href: edit_user_registration_path
+      end
+      it '退会ボタンが表示される' do
+        expect(page).to have_button '退会する'
+      end
+    end
+
+    context '退会に失敗する' do
+      it 'パスワードが空白' do
+        fill_in 'password', with: ''
+        click_button '退会する'
+        expect(current_path).to eq '/users/edit'
+        expect(page).to have_content 'パスワードが違います。'
+      end
+      it 'パスワードが違う' do
+        fill_in 'password', with: 'userpass'
+        click_button '退会する'
+        expect(current_path).to eq '/users/edit'
+        expect(page).to have_content 'パスワードが違います。'
+      end
+      it '正しいパスワードを入力後「キャンセル」を押す' do
+        fill_in 'password', with: 'password'
+        click_link 'キャンセル'
+        expect(current_path).to eq '/users/edit'
+      end
+    end
+
+    context '退会成功のテスト' do
+
+      before do
+        fill_in 'password', with: 'password'
+        click_button '退会する'
+      end
+
+      it 'ユーザーが正しく退会（物理削除）される' do
+        expect(User.where(id: user.id).count).to eq 0
+      end
+      it '退会後のリダイレクト先がトップ画面になっている' do
+        expect(current_path).to eq '/'
+        expect(page).to have_content '退会手続が完了しました。'
+      end
+      it '退会したアカウントではログインできない' do
+        visit new_user_session_path
+        fill_in 'user[email]', with: user.email
+        fill_in 'user[password]', with: user.password
+        click_button 'ログイン'
+        expect(current_path).to eq '/users/sign_in'
+        expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
       end
     end
   end
