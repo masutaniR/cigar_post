@@ -10,7 +10,7 @@ class Admin::PostsController < ApplicationController
       @posts = @posts.where(user_id: @user.id)
     end
     # キーワード検索
-    @posts = @posts.body_search_for(@body) if params[:body]
+    @posts = @posts.body_search_for(@body) if params[:body].present?
     # カテゴリー検索
     @posts = @posts.category_search_for(params[:category]) if params[:category].present?
     @posts = @posts.page(params[:page]).order(created_at: :desc)

@@ -10,7 +10,7 @@ class Admin::PostCommentsController < ApplicationController
       @post_comments = @post_comments.where(user_id: @user.id)
     end
     # キーワード検索
-    @post_comments = @post_comments.comment_search_for(@comment) if params[:comment]
+    @post_comments = @post_comments.comment_search_for(@comment) if params[:comment].present?
     # カテゴリ検索
     @post_comments = @post_comments.category_search_for(params[:category]) if params[:category].present?
     @post_comments = @post_comments.page(params[:page]).order(created_at: :desc)

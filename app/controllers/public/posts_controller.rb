@@ -26,7 +26,7 @@ class Public::PostsController < ApplicationController
     @posts = Post.all.includes(:user, :post_comments, :likes)
     @body = params[:body]
     # キーワード検索
-    @posts = @posts.body_search_for(@body) if params[:body]
+    @posts = @posts.body_search_for(@body) if params[:body].present?
     # カテゴリー検索
     @posts = @posts.category_search_for(params[:category]) if params[:category].present?
     # 並び替え
