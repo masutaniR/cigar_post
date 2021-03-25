@@ -261,7 +261,113 @@ describe 'ユーザーログイン前のテスト', js: true do
         expect(page).to have_content 'ログアウトしました。'
       end
     end
+  end
 
+  describe 'アクセス権限のテスト' do
+
+    subject { current_path }
+
+    context 'ログイン前にアクセスできる' do
+
+      let!(:info) { create(:information) }
+
+      it 'アバウトページにアクセスできる' do
+        visit about_path
+        is_expected.to eq '/about'
+      end
+      it '投稿一覧にアクセスできる' do
+        visit posts_path
+        is_expected.to eq '/posts'
+      end
+      it 'お知らせ一覧にアクセスできる' do
+        visit information_index_path
+        is_expected.to eq '/information'
+      end
+      it 'お知らせ詳細にアクセスできる' do
+        visit information_path(info)
+        is_expected.to eq "/information/#{ info.id.to_s }"
+      end
+    end
+
+    context '未ログインではアクセスできない' do
+
+      let!(:user) { create(:user) }
+      let!(:post) { create(:post) }
+
+      it 'ユーザー一覧ページにアクセスできない' do
+        visit users_path
+        is_expected.to eq new_user_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it 'ユーザー詳細ページにアクセスできない' do
+        visit user_path(user)
+        is_expected.to eq new_user_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '投稿詳細ページにアクセスできない' do
+        visit post_path(post)
+        is_expected.to eq new_user_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '新規投稿ページにアクセスできない' do
+        visit new_post_path
+        is_expected.to eq new_user_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側ユーザー一覧ページにアクセスできない' do
+        visit admin_users_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側投稿一覧ページにアクセスできない' do
+        visit admin_posts_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側コメント一覧ページにアクセスできない' do
+        visit admin_post_comments_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側お知らせ一覧ページにアクセスできない' do
+        visit admin_information_index_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+    end
+
+    context 'ユーザーログイン＆管理者未ログインではアクセスできない' do
+
+      let(:user) { create(:user) }
+
+      before do
+        visit new_user_session_path
+        fill_in 'user[email]', with: user.email
+        fill_in 'user[password]', with: user.password
+        click_button 'ログイン'
+      end
+
+      it '管理者側ユーザー一覧ページにアクセスできない' do
+        visit admin_users_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側投稿一覧ページにアクセスできない' do
+        visit admin_posts_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側コメント一覧ページにアクセスできない' do
+        visit admin_post_comments_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+      it '管理者側お知らせ一覧ページにアクセスできない' do
+        visit admin_information_index_path
+        is_expected.to eq new_admin_session_path
+        expect(page).to have_content 'ログインしてください'
+      end
+    end
   end
 
 end
