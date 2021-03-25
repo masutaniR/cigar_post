@@ -27,7 +27,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def update
     if current_user.email == 'test@test.com'
       redirect_to edit_user_registration_path, alert: 'ゲストアカウントは編集できません。'
-    elsif current_user.uid.present?
+    elsif current_user.uid
       redirect_to edit_user_registration_path, alert: 'Googleアカウントは編集できません。'
     else
       super
@@ -44,7 +44,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
     if @user.email == 'test@test.com'
       redirect_to edit_user_registration_path, alert: 'ゲストアカウントは退会できません。'
     # Googleアカウント以外は退会時パスワードを要求
-    elsif @user.uid.present? || @user.valid_password?(params[:password])
+    elsif @user.uid || @user.valid_password?(params[:password])
       @user.destroy
       redirect_to root_path, notice: '退会手続が完了しました。ご利用ありがとうございました。'
     else

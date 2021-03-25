@@ -3,20 +3,16 @@ class Admin::PostsController < ApplicationController
 
   def index
     @posts = Post.all.includes(:user)
+    @body = params[:body]
     # ユーザーごとの投稿一覧
-    if params[:user_id].present?
+    if params[:user_id]
       @user = User.find(params[:user_id])
-      @posts = @posts.where(user_id: @user.id).page(params[:page])
+      @posts = @posts.where(user_id: @user.id)
     end
     # キーワード検索
-    if params[:body].present?
-      @body = params[:body]
-      @posts = @posts.body_search_for(@body)
-    end
+    @posts = @posts.body_search_for(@body) if params[:body]
     # カテゴリー検索
-    if params[:category].present?
-      @posts = @posts.category_search_for(params[:category])
-    end
+    @posts = @posts.category_search_for(params[:category]) if params[:category].present?
     @posts = @posts.page(params[:page]).order(created_at: :desc)
   end
 
