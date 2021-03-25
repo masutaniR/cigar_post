@@ -137,6 +137,51 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(reactions).to have_content 'いいね'
       end
     end
+
+    context 'いいね一覧のテスト' do
+
+      before do
+        visit likes_user_path(user)
+      end
+
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }/likes"
+      end
+      it 'いいねのカウント表示が正しい' do
+        likes = find_all('tr')[3]
+        expect(likes).to have_content 'いいね'
+        expect(likes).to have_content '1'
+      end
+      it '投稿者の画像・名前のリンクが正しい' do
+        likes = find('.post-container')
+        expect(likes).to have_link other_user.name, href: user_path(other_user)
+      end
+      it 'いいねした投稿のカテゴリーが表示される' do
+        likes = find('.post-container')
+        expect(likes).to have_content other_post.category_i18n
+      end
+      it 'いいねした投稿の本文が表示される' do
+        likes = find('.post-container')
+        expect(likes).to have_content other_post.body
+      end
+      it '詳細ページへのリンクが表示される' do
+        likes = find('.post-container')
+        expect(likes).to have_link '投稿詳細を見る', href: post_path(other_post)
+      end
+      it 'いいねした投稿の削除リンクは表示されない' do
+        like_post = find_all('.post-reaction')[0]
+        expect(like_post).not_to have_link '削除'
+      end
+      it 'コメントリンクが表示される' do
+        like_post = find_all('.post-reaction')[0]
+        expect(like_post).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
+      end
+      it 'いいねボタンが表示される' do
+        like_post = find_all('.post-reaction')[0]
+        expect(like_post).to have_link 'いいね', href: post_likes_path(other_post)
+      end
+    end
+
   end
 
   describe 'フォローのテスト' do
@@ -156,6 +201,9 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(followers).to have_content 'フォロワー'
         expect(followers).to have_content '1'
       end
+      it 'フォロー解除ボタンが表示される' do
+        expect(page).to have_link 'フォロー中', href: user_relationships_path(other_user)
+      end
       it 'フォローが正しく削除される' do
         click_link 'フォロー中'
         visit current_path
@@ -168,6 +216,185 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(followers).to have_content '0'
       end
     end
+
+    context 'フォロー一覧のテスト' do
+
+      before do
+        visit following_user_path(user)
+      end
+
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ user.id.to_s }/following"
+      end
+      it 'フォローのカウント表示が正しい' do
+        following = find_all('tr')[1]
+        expect(following).to have_content 'フォロー'
+        expect(following).to have_content '1'
+      end
+      it 'フォローしているユーザーの名前のリンクが正しい' do
+        users = find('.main-contents')
+        expect(users).to have_link other_user.name, href: user_path(other_user)
+      end
+      it 'フォローしているユーザーの自己紹介が表示される' do
+        users = find('.main-contents')
+        expect(users).to have_content other_user.introduction
+      end
+      it 'フォロー解除ボタンが表示される' do
+        users = find('.main-contents')
+        expect(users).to have_link 'フォロー中', href: user_relationships_path(other_user)
+      end
+    end
+
+    context 'フォロワー一覧のテスト' do
+
+      before do
+        visit followers_user_path(other_user)
+      end
+
+      it 'URLが正しい' do
+        expect(current_path).to eq "/users/#{ other_user.id.to_s }/followers"
+      end
+      it 'フォロワーのカウント表示が正しい' do
+        following = find_all('tr')[2]
+        expect(following).to have_content 'フォロワー'
+        expect(following).to have_content '1'
+      end
+      it 'フォロワーの名前のリンクが正しい' do
+        users = find('.main-contents')
+        expect(users).to have_link user.name, href: user_path(user)
+      end
+      it 'フォロワーの自己紹介が表示される' do
+        users = find('.main-contents')
+        expect(users).to have_content user.introduction
+      end
+    end
+  end
+
+  describe '通知のテスト' do
+
+    describe 'コメント通知のテスト' do
+
+      before do
+        # 他人の投稿にコメント
+        visit post_path(other_post)
+        @comment = Faker::Lorem.characters(number: 25)
+        fill_in 'post_comment[comment]', with: @comment
+        click_button '送信'
+        # ログアウト
+        dropdown = find_all('.nav-link')[4]
+        (dropdown).click
+        click_link 'ログアウト'
+        # 他人のアカウントでログイン
+        visit new_user_session_path
+        fill_in 'user[email]', with: other_user.email
+        fill_in 'user[password]', with: other_user.password
+        click_button 'ログイン'
+        click_link '通知', match: :first
+      end
+
+      context '表示内容の確認' do
+        it 'ヘッダーに未読通知バッチが表示される' do
+          header = find('header')
+          expect(header).to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it 'ページをリロードすると未読通知は消える' do
+          visit current_path
+          header = find('header')
+          expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it '通知一覧にコメント通知が表示される' do
+          notice = find('.main-contents')
+          expect(notice).to have_content 'コメントしました'
+        end
+        it 'コメント投稿者の名前とリンクが正しい' do
+          notice = find('.main-contents')
+          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+        end
+        it '通知にコメント本文が表示される' do
+          notice = find('.main-contents')
+          expect(notice).to have_content @comment
+        end
+      end
+    end
+
+    describe 'いいね通知のテスト' do
+
+      before do
+        # 他人の投稿にいいね
+        visit post_path(other_post)
+        click_link 'いいね'
+        # ログアウト
+        dropdown = find_all('.nav-link')[4]
+        (dropdown).click
+        click_link 'ログアウト'
+        # 他人のアカウントでログイン
+        visit new_user_session_path
+        fill_in 'user[email]', with: other_user.email
+        fill_in 'user[password]', with: other_user.password
+        click_button 'ログイン'
+        click_link '通知', match: :first
+      end
+
+      context '表示内容の確認' do
+        it 'ヘッダーに未読通知バッチが表示される' do
+          header = find('header')
+          expect(header).to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it 'ページをリロードすると未読通知は消える' do
+          visit current_path
+          header = find('header')
+          expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it '通知一覧にいいね通知が表示される' do
+          notice = find('.main-contents')
+          expect(notice).to have_content 'いいねしました'
+        end
+        it 'いいねしたユーザーの名前とリンクが正しい' do
+          notice = find('.main-contents')
+          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+        end
+      end
+    end
+
+    describe 'フォロー通知のテスト' do
+
+      before do
+        # 他人をフォロー
+        visit user_path(other_user)
+        click_link 'フォローする'
+        # ログアウト
+        dropdown = find_all('.nav-link')[4]
+        (dropdown).click
+        click_link 'ログアウト'
+        # 他人のアカウントでログイン
+        visit new_user_session_path
+        fill_in 'user[email]', with: other_user.email
+        fill_in 'user[password]', with: other_user.password
+        click_button 'ログイン'
+        click_link '通知', match: :first
+      end
+
+      context '表示内容の確認' do
+        it 'ヘッダーに未読通知バッチが表示される' do
+          header = find('header')
+          expect(header).to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it 'ページをリロードすると未読通知は消える' do
+          visit current_path
+          header = find('header')
+          expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
+        end
+        it '通知一覧にフォロー通知が表示される' do
+          notice = find('.main-contents')
+          expect(notice).to have_content 'フォローしました'
+        end
+        it 'フォローしてきたユーザーの名前とリンクが正しい' do
+          notice = find('.main-contents')
+          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+        end
+      end
+    end
+
   end
 
 end
