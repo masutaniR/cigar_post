@@ -12,21 +12,22 @@ describe 'ユーザーログイン前のテスト', js: true do
       it 'URLが正しい' do
         expect(current_path).to eq '/'
       end
+      # visible: false でふわっと表示(非表示)要素も含めてテスト
       it 'アバウトリンクが表示される' do
-        info = find('.welcome-info')
-        expect(info).to have_link 'CigarPostとは？', href: about_path
+        info = find('.welcome-info', visible: false)
+        expect(info).to have_link 'CigarPostとは？', href: about_path, visible: false
       end
       it '新規登録リンクが表示される' do
-        info = find('.welcome-info')
-        expect(info).to have_link '新規登録', href: new_user_registration_path
+        info = find('.welcome-info', visible: false)
+        expect(info).to have_link '新規登録', href: new_user_registration_path, visible: false
       end
       it 'ログインリンクが表示される' do
-        info = find('.welcome-info')
-        expect(info).to have_link 'ログイン', href: new_user_session_path
+        info = find('.welcome-info', visible: false)
+        expect(info).to have_link 'ログイン', href: new_user_session_path, visible: false
       end
       it 'Googleログインリンクが表示される' do
-        info = find('.welcome-info')
-        expect(info).to have_link 'Googleアカウントでログイン'
+        info = find('.welcome-info', visible: false)
+        expect(info).to have_link 'Googleアカウントでログイン', visible: false
       end
     end
   end

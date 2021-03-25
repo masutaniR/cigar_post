@@ -222,12 +222,6 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(user_info).to have_link other_user.name, href: user_path(other_user)
         expect(user_info).to have_content other_user.introduction
       end
-      it 'いいね' do
-        click_link 'いいね'
-        expect(page).to have_content 'いいね 1'
-        visit current_path
-        expect(other_post.likes.count).to eq 1
-      end
     end
   end
 
