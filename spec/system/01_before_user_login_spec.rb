@@ -1,43 +1,32 @@
 require 'rails_helper'
 
-describe 'ユーザーログイン前のテスト' do
+describe 'ユーザーログイン前のテスト', js: true do
+
+  before do
+    visit root_path
+  end
 
   describe 'トップ画面のテスト' do
-    before do
-      visit root_path
-    end
 
     context '表示内容の確認' do
       it 'URLが正しい' do
         expect(current_path).to eq '/'
       end
       it 'アバウトリンクが表示される' do
-        about_link = find_all('a')[3].native.inner_text
-        expect(about_link).to match 'CigarPostとは？'
-      end
-      it 'アバウトリンクの内容が正しい' do
-        about_link = find_all('a')[3].native.inner_text
-        expect(page).to have_link about_link, href: about_path
+        info = find('.welcome-info')
+        expect(info).to have_link 'CigarPostとは？', href: about_path
       end
       it '新規登録リンクが表示される' do
-        sign_up_link = find_all('a')[4].native.inner_text
-        expect(sign_up_link).to match '新規登録'
-      end
-      it '新規登録リンクの内容が正しい' do
-        sign_up_link = find_all('a')[4].native.inner_text
-        expect(page).to have_link sign_up_link, href: new_user_registration_path
+        info = find('.welcome-info')
+        expect(info).to have_link '新規登録', href: new_user_registration_path
       end
       it 'ログインリンクが表示される' do
-        log_in_link = find_all('a')[5].native.inner_text
-        expect(log_in_link).to match 'ログイン'
-      end
-      it 'ログインリンクの内容が正しい' do
-        log_in_link = find_all('a')[5].native.inner_text
-        expect(page).to have_link log_in_link, href: new_user_session_path
+        info = find('.welcome-info')
+        expect(info).to have_link 'ログイン', href: new_user_session_path
       end
       it 'Googleログインリンクが表示される' do
-        google_log_in_link = find_all('a')[7].native.inner_text
-        expect(google_log_in_link).to match 'Googleアカウントでログイン'
+        info = find('.welcome-info')
+        expect(info).to have_link 'Googleアカウントでログイン'
       end
     end
   end
@@ -61,28 +50,20 @@ describe 'ユーザーログイン前のテスト' do
 
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(logo_link).to match 'CigarPost'
+        header = find('header')
+        expect(header).to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(page).to have_link logo_link, href: root_path
+        header = find('header')
+        expect(header).to have_link 'CigarPost', href: root_path
       end
       it '新規登録リンクが表示される' do
-        sign_up_link = find_all('a')[1].native.inner_text
-        expect(sign_up_link).to match '新規登録'
-      end
-      it '新規登録リンクの内容が正しい' do
-        sign_up_link = find_all('a')[1].native.inner_text
-        expect(page).to have_link sign_up_link, href: new_user_registration_path
+        header = find('header')
+        expect(header).to have_link '新規登録', href: new_user_registration_path
       end
       it 'ログインリンクが表示される' do
-        log_in_link = find_all('a')[2].native.inner_text
-        expect(log_in_link).to match 'ログイン'
-      end
-      it 'ログインリンクの内容が正しい' do
-        log_in_link = find_all('a')[2].native.inner_text
-        expect(page).to have_link log_in_link, href: new_user_session_path
+        header = find('header')
+        expect(header).to have_link 'ログイン', href: new_user_session_path
       end
     end
   end
@@ -108,8 +89,11 @@ describe 'ユーザーログイン前のテスト' do
       it 'passwordフォームが表示される' do
         expect(page).to have_field 'user[password]'
       end
-      it 'profile_imageフォームが表示される' do
-        expect(page).to have_field 'user[profile_image]'
+      it 'profile_imageフォームは表示されない' do
+        expect(page).not_to have_field 'user[profile_image]'
+      end
+      it 'NoUserアイコンが表示される' do
+        expect(page).to have_selector 'img', class: 'no-photo'
       end
       it 'introductionフォームが表示される' do
         expect(page).to have_field 'user[introduction]'
@@ -206,53 +190,42 @@ describe 'ユーザーログイン前のテスト' do
 
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(logo_link).to match 'CigarPost'
+        header = find('header')
+        expect(header).to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(page).to have_link logo_link, href: timeline_path
+        header = find('header')
+        expect(header).to have_link 'CigarPost', href: timeline_path
       end
       it '新規投稿リンクが表示される' do
-        new_post_link = find_all('a')[1].native.inner_text
-        expect(new_post_link).to match '投稿する'
-      end
-      it '新規投稿のリンクの内容が正しい' do
-        new_post_link = find_all('a')[1].native.inner_text
-        expect(page).to have_link new_post_link, href: new_post_path
+        header = find('header')
+        expect(header).to have_link '投稿する', href: new_post_path
       end
       it '投稿一覧リンクが表示される' do
-        posts_link = find_all('a')[2].native.inner_text
-        expect(posts_link).to match '投稿一覧'
-      end
-      it '投稿一覧のリンクの内容が正しい' do
-        posts_link = find_all('a')[2].native.inner_text
-        expect(page).to have_link posts_link, href: posts_path
+        header = find('header')
+        expect(header).to have_link '投稿一覧', href: posts_path
       end
       it 'ユーザー一覧リンクが表示される' do
-        users_link = find_all('a')[3].native.inner_text
-        expect(users_link).to match 'ユーザー'
-      end
-      it 'ユーザー一覧のリンクの内容が正しい' do
-        users_link = find_all('a')[3].native.inner_text
-        expect(page).to have_link users_link, href: users_path
+        header = find('header')
+        expect(header).to have_link 'ユーザー', href: users_path
       end
       it '通知一覧リンクが表示される' do
-        notifications_link = find_all('a')[4].native.inner_text
-        expect(notifications_link).to match '通知'
+        header = find('header')
+        expect(header).to have_content '通知'
       end
       it '通知のリンクの内容が正しい' do
         click_link '通知'
         expect(current_path).to eq '/notifications'
         # 以下の記述は"there were no matches"でエラーになる
-        # notifications_link = find_all('a')[4].native.inner_text
-        # expect(page).to have_link notifications_link, href: '/notifications'
+        # expect(header).to have_link '通知'', href: '/notifications'
       end
       it 'ドロップダウンメニューが表示される' do
-        dropdown = find_all('a')[5].native.inner_text
-        expect(dropdown).to match ''
+        dropdown = find_all('.nav-link')[4]
+        expect(dropdown).to have_selector 'img', class: 'user-icon'
       end
       it 'ドロップダウンメニューの内容が正しい' do
+        dropdown = find_all('.nav-link')[4]
+        (dropdown).click
         menu = find('.dropdown-menu')
         expect(menu).to have_link 'ホーム', href: timeline_path
         expect(menu).to have_link 'マイページ', href: user_path(user)
@@ -274,6 +247,8 @@ describe 'ユーザーログイン前のテスト' do
       fill_in 'user[email]', with: user.email
       fill_in 'user[password]', with: user.password
       click_button 'ログイン'
+      dropdown = find_all('.nav-link')[4]
+      (dropdown).click
       click_link 'ログアウト'
     end
 

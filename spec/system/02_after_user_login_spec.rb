@@ -398,10 +398,10 @@ describe 'ユーザーログイン後のテスト', js: true do
       it 'URLが正しい' do
         expect(current_path).to eq "/users/#{ user.id.to_s }/edit"
       end
-      it '名前編集フォームに自分の名前が表示される' do
+      it 'name編集フォームに自分の名前が表示される' do
         expect(page).to have_field 'user[name]', with: user.name
       end
-      it 'プロフィール画像フォームは表示されない' do
+      it 'profile_imageフォームは表示されない' do
         expect(page).not_to have_field 'user[profile_image]'
       end
       it 'NoUserアイコンが表示される' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe '管理者画面のテスト' do
+describe '管理者画面のテスト', js: true do
 
   let(:admin) { create(:admin) }
   let!(:user) { create(:user) }
@@ -19,28 +19,20 @@ describe '管理者画面のテスト' do
 
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(logo_link).to match 'CigarPost'
+        header = find('header')
+        expect(header).to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        logo_link = find_all('a')[0].native.inner_text
-        expect(page).to have_link logo_link, href: root_path
+        header = find('header')
+        expect(header).to have_link 'CigarPost', href: root_path
       end
       it 'ユーザー新規登録リンクが表示される' do
-        sign_up_link = find_all('a')[1].native.inner_text
-        expect(sign_up_link).to match '新規登録'
-      end
-      it 'ユーザー新規登録リンクの内容が正しい' do
-        sign_up_link = find_all('a')[1].native.inner_text
-        expect(page).to have_link sign_up_link, href: new_user_registration_path
+        header = find('header')
+        expect(header).to have_link '新規登録', href: new_user_registration_path
       end
       it 'ユーザーログインリンクが表示される' do
-        log_in_link = find_all('a')[2].native.inner_text
-        expect(log_in_link).to match 'ログイン'
-      end
-      it 'ユーザーログインリンクの内容が正しい' do
-        log_in_link = find_all('a')[2].native.inner_text
-        expect(page).to have_link log_in_link, href: new_user_session_path
+        header = find('header')
+        expect(header).to have_link 'ログイン', href: new_user_session_path
       end
     end
   end
@@ -104,52 +96,32 @@ describe '管理者画面のテスト' do
 
       context '表示内容の確認' do
         it 'サイト名が表示される' do
-          logo_link = find_all('a')[0].native.inner_text
-          expect(logo_link).to match 'CigarPost'
+          header = find('header')
+          expect(header).to have_content 'CigarPost'
         end
         it 'サイト名のリンクの内容が正しい' do
-          logo_link = find_all('a')[0].native.inner_text
-          expect(page).to have_link logo_link, href: admin_users_path
+          header = find('header')
+          expect(header).to have_link 'CigarPost', href: admin_users_path
         end
         it 'ユーザー一覧リンクが表示される' do
-          users_link = find_all('a')[1].native.inner_text
-          expect(users_link).to match 'ユーザー'
-        end
-        it 'ユーザー一覧のリンクの内容が正しい' do
-          users_link = find_all('a')[1].native.inner_text
-          expect(page).to have_link users_link, href: admin_users_path
+          header = find('header')
+          expect(header).to have_link 'ユーザー', href: admin_users_path
         end
         it '投稿一覧リンクが表示される' do
-          posts_link = find_all('a')[2].native.inner_text
-          expect(posts_link).to match '投稿'
-        end
-        it '投稿一覧のリンクの内容が正しい' do
-          posts_link = find_all('a')[2].native.inner_text
-          expect(page).to have_link posts_link, href: admin_posts_path
+          header = find('header')
+          expect(header).to have_link '投稿', href: admin_posts_path
         end
         it 'コメント一覧リンクが表示される' do
-          comments_link = find_all('a')[3].native.inner_text
-          expect(comments_link).to match 'コメント'
-        end
-        it 'コメント一覧のリンクの内容が正しい' do
-          comments_link = find_all('a')[3].native.inner_text
-          expect(page).to have_link comments_link, href: admin_post_comments_path
+          header = find('header')
+          expect(header).to have_link 'コメント', href: admin_post_comments_path
         end
         it 'お知らせ一覧リンクが表示される' do
-          info_link = find_all('a')[4].native.inner_text
-          expect(info_link).to match 'お知らせ'
-        end
-        it 'お知らせ一覧のリンクの内容が正しい' do
-          info_link = find_all('a')[4].native.inner_text
-          expect(page).to have_link info_link, href: admin_information_index_path
+          header = find('header')
+          expect(header).to have_link 'お知らせ', href: admin_information_index_path
         end
         it 'ログアウトリンクが表示される' do
-          logout_link = find_all('a')[5].native.inner_text
-          expect(logout_link).to match 'ログアウト'
-        end
-        it 'ログアウトリンクの内容が正しい' do
-          logout_link = find_all('a')[5].native.inner_text
-          expect(page).to have_link logout_link, href: destroy_admin_session_path
+          header = find('header')
+          expect(header).to have_link 'ログアウト', href: destroy_admin_session_path
         end
       end
     end
@@ -278,6 +250,7 @@ describe '管理者画面のテスト' do
       before do
         visit admin_user_path(user)
         click_button 'アカウント凍結'
+        click_button '凍結する'
       end
 
       context 'アカウント凍結のテスト' do
@@ -310,6 +283,7 @@ describe '管理者画面のテスト' do
 
         before do
           click_button 'アカウント凍結解除'
+          click_button '解除する'
         end
 
         it 'ユーザー詳細ページにリダイレクトされる' do
@@ -416,6 +390,7 @@ describe '管理者画面のテスト' do
 
         before do
           click_link '投稿を削除'
+          click_button '削除する'
         end
 
         it '投稿が正しく削除される' do
@@ -627,6 +602,7 @@ describe '管理者画面のテスト' do
 
         before do
           click_link '削除'
+          click_button '削除する'
         end
 
         it 'お知らせが正しく削除される' do
