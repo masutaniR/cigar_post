@@ -566,7 +566,7 @@ describe '管理者画面のテスト', js: true do
           click_button '送信'
           click_link 'ログアウト'
           visit root_path
-          expect(page).to have_link @new_info_title, href: "/information/#{ Information.last.id.to_s }"
+          expect(page).to have_link @new_info_title, href: "/information/#{ Information.last.id.to_s }", visible: false
         end
       end
     end
@@ -672,7 +672,7 @@ describe '管理者画面のテスト', js: true do
           click_link 'ログアウト'
           visit root_path
           expect(page).not_to have_content @old_title
-          expect(page).to have_link @new_title, href: "/information/#{ info.id.to_s }"
+          expect(page).to have_link @new_title, href: "/information/#{ info.id.to_s }", visible: false
         end
       end
     end

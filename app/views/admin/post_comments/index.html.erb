@@ -1,12 +1,9 @@
-<% if params[:user_id].present? %>
-  <% provide(:title, "#{@user.name}さんのコメント一覧") %>
-<% else %>
-  <% provide(:title, 'コメント一覧') %>
-<% end %>
+<% params[:user_id] ? provide(:title, "#{@user.name}さんのコメント一覧") : provide(:title, 'コメント一覧') %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto mt-2">
-      <% if params[:user_id].present? %>
+      <% if params[:user_id] %>
         <h3 class="mr-5 my-auto"><%= @user.name %>さんのコメント一覧</h3>
       <% else %>
       <div class="d-flex justify-content-start heading-search mb-2">

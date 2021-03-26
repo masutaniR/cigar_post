@@ -24,21 +24,13 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.all.includes(:user, :post_comments, :likes)
+    @body = params[:body]
     # キーワード検索
-    if params[:body].present?
-      @body = params[:body]
-      @posts = @posts.body_search_for(@body)
-    end
+    @posts = @posts.body_search_for(@body) if params[:body].present?
     # カテゴリー検索
-    if params[:category].present?
-      @posts = @posts.category_search_for(params[:category])
-    end
+    @posts = @posts.category_search_for(params[:category]) if params[:category].present?
     # 並び替え
-    @posts = if params[:sort].present?
-               @posts.sort_for(params[:sort])
-             else
-               @posts.order(created_at: :desc)
-             end
+    @posts = @posts.sort_for(params[:sort]) || @posts.order(created_at: :desc)
     @posts = @posts.page(params[:page])
   end
 

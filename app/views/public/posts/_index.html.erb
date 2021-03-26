@@ -15,7 +15,7 @@
       <!-- 検索でヒットしたキーワードを太字にする -->
       <%= emphasize_keyword(new_line(post.body), @body) %>
     </p>
-    <% if post.post_image.present? %>
+    <% if post.post_image %>
       <div class="post-img mx-auto">
         <%= attachment_image_tag(post, :post_image, format: 'jpg', class: 'rounded index-post-img') %>
       </div>

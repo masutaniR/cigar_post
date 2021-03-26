@@ -3,17 +3,16 @@ class Admin::PostCommentsController < ApplicationController
 
   def index
     @post_comments = PostComment.all.includes(:user, :post)
-    if params[:user_id].present?
+    @comment = params[:comment]
+    # ユーザーごとのコメント一覧
+    if params[:user_id]
       @user = User.find(params[:user_id])
-      @post_comments = @post_comments.where(user_id: @user.id).order(created_at: :desc).page(params[:page])
+      @post_comments = @post_comments.where(user_id: @user.id)
     end
-    if params[:comment].present?
-      @comment = params[:comment]
-      @post_comments = @post_comments.comment_search_for(@comment)
-    end
-    if params[:category].present?
-      @post_comments = @post_comments.category_search_for(params[:category])
-    end
+    # キーワード検索
+    @post_comments = @post_comments.comment_search_for(@comment) if params[:comment].present?
+    # カテゴリ検索
+    @post_comments = @post_comments.category_search_for(params[:category]) if params[:category].present?
     @post_comments = @post_comments.page(params[:page]).order(created_at: :desc)
   end
 

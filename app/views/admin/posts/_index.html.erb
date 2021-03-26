@@ -24,10 +24,8 @@
         <!-- 検索でヒットしたキーワードを太字にする -->
         <%= emphasize_keyword(new_line(post.body), @body) %>
       </td>
-      <td>
-        <% if post.post_image.present? %>
-          添付あり
-        <% end %>
+      <td class="text-center">
+        <%= '添付あり' if post.post_image %>
       </td>
       <td>
         <%= link_to ' 詳細', admin_post_path(post), class: 'fas fa-angle-right' %>
