@@ -11,7 +11,7 @@ class Public::UsersController < ApplicationController
     @users = User.all
     @word = params[:word]
     # キーワード検索
-    @users = @users.search_for(@word) if params[:word]
+    @users = @users.search_for(@word) if params[:word].present?
     # 並び替え
     @users = @users.sort_for(params[:sort]) || @users.order(created_at: :desc)
     @users = @users.page(params[:page])
@@ -59,26 +59,22 @@ class Public::UsersController < ApplicationController
     # フォローしているユーザー＋自分の投稿を最新順で取得
     users = current_user.following.includes(posts: [:post_comments, :likes])
     @posts = []
-    if users
-      users.each do |user|
-        following_user_posts = user.posts
-        @posts.concat(following_user_posts)
-      end
-      current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
-      @posts.concat(current_user_posts)
-      @posts = @posts.sort_by{ |post| post.created_at }.reverse
-    else
-      @posts = current_user.posts.order(created_at: :desc).page(params[:page])
+    users.each do |user|
+      following_user_posts = user.posts
+      @posts.concat(following_user_posts)
     end
+    current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
+    @posts.concat(current_user_posts)
+    @posts = @posts.sort_by{ |post| post.created_at }.reverse
     # キーワード検索
-    if params[:body]
+    if params[:body].present?
       @body = params[:body]
       @posts = @posts.select do |post|
         post.body.include?(@body)
       end
     end
     # カテゴリ検索
-    if params[:category]
+    if params[:category].present?
       @posts = @posts.select do |post|
         post.category == params[:category]
       end
