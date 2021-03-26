@@ -5,7 +5,7 @@
       <h4 class="title">本当に退会しますか？</h4>
 
       <p class="mt-4 mb-0">退会するとアカウントの情報はすべて削除され、復元することはできません。</p>
-      <% if current_user.uid.present? %>
+      <% if current_user.uid %>
         <p>本当によろしいですか？</p>
       <% else %>
         <p>退会手続を決行する場合は、パスワードを入力してください。</p>

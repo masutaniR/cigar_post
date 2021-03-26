@@ -20,7 +20,7 @@
         <%= f.label :post_image, class: 'image_label' do %>
           <div class="post-prev-contents">
             <!--選択画像があれば表示-->
-            <% if @post.post_image.present? %>
+            <% if @post.post_image %>
               <div class="post-prev-content">
                 <%= attachment_image_tag(@post, :post_image, alt: "preview", class: "post-prev-image rounded") %>
               </div>
@@ -39,9 +39,12 @@
       <div class="field d-flex justify-content-start">
         <%= f.label :category %>
         <div class="radio-btn ml-4">
-          <%= f.radio_button :category, 'senryu', checked: true %><%= f.label :category, '川柳', value: 'senryu', class: 'pl-1 mb-0' %><br>
-          <%= f.radio_button :category, 'tanka' %><%= f.label :category, '短歌', value: 'tanka', class: 'pl-1 mb-0' %><br>
-          <%= f.radio_button :category, 'free_haiku' %><%= f.label :category, '自由律俳句', value: 'free_haiku', class: 'pl-1 mb-0' %>
+          <%= f.radio_button :category, 'senryu', checked: true %>
+          <%= f.label :category, '川柳', value: 'senryu', class: 'pl-1 mb-0' %><br>
+          <%= f.radio_button :category, 'tanka' %>
+          <%= f.label :category, '短歌', value: 'tanka', class: 'pl-1 mb-0' %><br>
+          <%= f.radio_button :category, 'free_haiku' %>
+          <%= f.label :category, '自由律俳句', value: 'free_haiku', class: 'pl-1 mb-0' %>
         </div>
       </div>
 

@@ -3,11 +3,9 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.all
+    @word = params[:word]
     # キーワード検索
-    if params[:word].present?
-      @word = params[:word]
-      @users = @users.admin_search_for(@word)
-    end
+    @users = @users.admin_search_for(@word) if params[:word].present?
     @users = @users.page(params[:page]).order(created_at: :desc)
   end
 

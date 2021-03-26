@@ -9,17 +9,11 @@ class Public::UsersController < ApplicationController
 
   def index
     @users = User.all
+    @word = params[:word]
     # キーワード検索
-    if params[:word].present?
-      @word = params[:word]
-      @users = @users.search_for(@word)
-    end
+    @users = @users.search_for(@word) if params[:word].present?
     # 並び替え
-    @users = if params[:sort].present?
-               @users.sort_for(params[:sort])
-             else
-               @users.order(created_at: :desc)
-             end
+    @users = @users.sort_for(params[:sort]) || @users.order(created_at: :desc)
     @users = @users.page(params[:page])
   end
 
@@ -65,17 +59,13 @@ class Public::UsersController < ApplicationController
     # フォローしているユーザー＋自分の投稿を最新順で取得
     users = current_user.following.includes(posts: [:post_comments, :likes])
     @posts = []
-    if users.present?
-      users.each do |user|
-        following_user_posts = user.posts
-        @posts.concat(following_user_posts)
-      end
-      current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
-      @posts.concat(current_user_posts)
-      @posts = @posts.sort_by{ |post| post.created_at }.reverse
-    else
-      @posts = current_user.posts.order(created_at: :desc).page(params[:page])
+    users.each do |user|
+      following_user_posts = user.posts
+      @posts.concat(following_user_posts)
     end
+    current_user_posts = Post.where(user_id: current_user.id).includes(:user, :post_comments, :likes)
+    @posts.concat(current_user_posts)
+    @posts = @posts.sort_by{ |post| post.created_at }.reverse
     # キーワード検索
     if params[:body].present?
       @body = params[:body]
@@ -85,19 +75,8 @@ class Public::UsersController < ApplicationController
     end
     # カテゴリ検索
     if params[:category].present?
-      case params[:category]
-      when 'senryu'
-        @posts = @posts.select do |post|
-          post.category == 'senryu'
-        end
-      when 'tanka'
-        @posts = @posts.select do |post|
-          post.category == 'tanka'
-        end
-      when 'free_haiku'
-        @posts = @posts.select do |post|
-          post.category == 'free_haiku'
-        end
+      @posts = @posts.select do |post|
+        post.category == params[:category]
       end
     end
     @posts = Kaminari.paginate_array(@posts).page(params[:page])

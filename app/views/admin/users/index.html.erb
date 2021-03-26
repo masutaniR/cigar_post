@@ -34,20 +34,12 @@
                   </td>
                   <td>
                     <!-- 検索でヒットしたキーワードを太字にする -->
-                    <% if @word.present? %>
-                      <%= link_to admin_user_path(user) do %>
-                        <%= emphasize_keyword(user.name, @word) %>
-                      <% end %>
-                    <% else %>
-                      <%= link_to user.name, admin_user_path(user) %>
+                    <%= link_to admin_user_path(user) do %>
+                      <%= emphasize_keyword(user.name, @word) %>
                     <% end %>
                   </td>
                   <td>
-                    <% if @word.present? %>
-                      <%= emphasize_keyword(user.email, @word) %>
-                    <% else %>
-                      <%= user.email %>
-                    <% end %>
+                    <%= emphasize_keyword(user.email, @word) %>
                   </td>
                   <td class="text-center">
                     <% if user.is_active %>

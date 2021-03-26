@@ -17,7 +17,7 @@
         <p class="post-body pt-2">
           <%= new_line(@post.body) %>
         </p>
-        <% if @post.post_image.present? %>
+        <% if @post.post_image %>
           <div class="post-img mx-auto">
             <%= attachment_image_tag(@post, :post_image, format: 'jpg', class: 'rounded post-img') %>
           </div>

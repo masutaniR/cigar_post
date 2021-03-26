@@ -8,7 +8,7 @@
     <div class="user-field my-2">
       <b>ユーザー名：</b><br>
       <%= user.name %>
-      <% if user.uid.present? %>
+      <% if user.uid %>
         <span class="badge badge-primary badge-bg"><i class="fa fa-google"></i></span>
       <% end %>
     </div>
