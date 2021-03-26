@@ -15,6 +15,8 @@ describe 'ユーザーログイン後のテスト', js: true do
   end
 
   describe '投稿一覧画面のテスト' do
+    
+    subject { find('.post-index-container') }
 
     before do
       visit posts_path
@@ -29,20 +31,20 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(top_post).to have_content other_post.body
       end
       it '自分と他人の画像・名前のリンクが正しい' do
-        expect(page).to have_link user.name, href: user_path(user)
-        expect(page).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link user.name, href: user_path(user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it '自分と他人の投稿カテゴリーが表示される' do
-        expect(page).to have_content post.category_i18n
-        expect(page).to have_content other_post.category_i18n
+        is_expected.to have_content post.category_i18n
+        is_expected.to have_content other_post.category_i18n
       end
       it '自分と他人の投稿本文が表示される' do
-        expect(page).to have_content post.body
-        expect(page).to have_content other_post.body
+        is_expected.to have_content post.body
+        is_expected.to have_content other_post.body
       end
       it '詳細ページへのリンクが表示される' do
-        expect(page).to have_link '投稿詳細を見る', href: post_path(post)
-        expect(page).to have_link '投稿詳細を見る', href: post_path(other_post)
+        is_expected.to have_link '投稿詳細を見る', href: post_path(post)
+        is_expected.to have_link '投稿詳細を見る', href: post_path(other_post)
       end
       it '自分の投稿に削除リンクが表示される' do
         my_post = find_all('.post-reaction')[1]
@@ -53,12 +55,12 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(other_post).not_to have_link '削除'
       end
       it 'コメントリンクが表示される' do
-        expect(page).to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
-        expect(page).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
+        is_expected.to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
+        is_expected.to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
       end
       it 'いいねボタンが表示される' do
-        expect(page).to have_link 'いいね', href: post_likes_path(post)
-        expect(page).to have_link 'いいね', href: post_likes_path(other_post)
+        is_expected.to have_link 'いいね', href: post_likes_path(post)
+        is_expected.to have_link 'いいね', href: post_likes_path(other_post)
       end
     end
 
@@ -126,6 +128,8 @@ describe 'ユーザーログイン後のテスト', js: true do
 
   describe '投稿詳細ページのテスト' do
 
+    subject { find('.main-contents') }
+
     context '自分の投稿詳細画面の表示内容の確認' do
 
       before do
@@ -133,35 +137,34 @@ describe 'ユーザーログイン後のテスト', js: true do
       end
 
       it 'プロフィール画像と名前のリンクが正しい' do
-        post_detail = find('.main-contents')
-        expect(post_detail).to have_link user.name, href: user_path(user)
+        is_expected.to have_link user.name, href: user_path(user)
       end
       it '投稿のカテゴリが表示される' do
-        expect(page).to have_content post.category_i18n
+        is_expected.to have_content post.category_i18n
       end
       it '投稿の本文が表示される' do
-        expect(page).to have_content post.body
+        is_expected.to have_content post.body
       end
       it '投稿削除リンクが表示される' do
-        expect(page).to have_link '削除', href: post_path(post)
+        is_expected.to have_link '削除', href: post_path(post)
       end
       it 'コメントリンクが表示される' do
-        expect(page).to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
+        is_expected.to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
       end
       it 'いいねボタンが表示される' do
-        expect(page).to have_link 'いいね', href: post_likes_path(post)
+        is_expected.to have_link 'いいね', href: post_likes_path(post)
       end
       it 'commentフォームが表示される' do
-        expect(page).to have_field 'post_comment[comment]'
+        is_expected.to have_field 'post_comment[comment]'
       end
       it 'コメントカテゴリボタンが表示される' do
-        expect(page).to have_field 'post_comment[category]'
+        is_expected.to have_field 'post_comment[category]'
       end
       it 'コメントカテゴリボタンのデフォルト選択が川柳になっている' do
-        expect(page).to have_checked_field('川柳')
+        is_expected.to have_checked_field('川柳')
       end
       it 'コメント送信ボタンが表示される' do
-        expect(page).to have_button '送信'
+        is_expected.to have_button '送信'
       end
       it 'サイドバーに自分のプロフィールが表示される' do
         user_info = find('.user-info')
@@ -187,35 +190,34 @@ describe 'ユーザーログイン後のテスト', js: true do
       end
 
       it 'プロフィール画像と名前のリンクが正しい' do
-        post_detail = find('.main-contents')
-        expect(post_detail).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it '投稿のカテゴリが表示される' do
-        expect(page).to have_content other_post.category_i18n
+        is_expected.to have_content other_post.category_i18n
       end
       it '投稿の本文が表示される' do
-        expect(page).to have_content other_post.body
+        is_expected.to have_content other_post.body
       end
       it '投稿削除リンクが表示されない' do
-        expect(page).not_to have_link '削除'
+        is_expected.not_to have_link '削除'
       end
       it 'コメントリンクが表示される' do
-        expect(page).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
+        is_expected.to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
       end
       it 'いいねボタンが表示される' do
-        expect(page).to have_link 'いいね', href: post_likes_path(other_post)
+        is_expected.to have_link 'いいね', href: post_likes_path(other_post)
       end
       it 'commentフォームが表示される' do
-        expect(page).to have_field 'post_comment[comment]'
+        is_expected.to have_field 'post_comment[comment]'
       end
       it 'コメントカテゴリボタンが表示される' do
-        expect(page).to have_field 'post_comment[category]'
+        is_expected.to have_field 'post_comment[category]'
       end
       it 'コメントカテゴリボタンのデフォルト選択が川柳になっている' do
-        expect(page).to have_checked_field('川柳')
+        is_expected.to have_checked_field('川柳')
       end
       it 'コメント送信ボタンが表示される' do
-        expect(page).to have_button '送信'
+        is_expected.to have_button '送信'
       end
       it 'サイドバーに他人のプロフィールが表示される' do
         user_info = find('.user-info')
@@ -226,6 +228,8 @@ describe 'ユーザーログイン後のテスト', js: true do
   end
 
   describe 'ユーザー一覧画面のテスト' do
+
+    subject { find('.main-contents') }
 
     before do
       visit users_path
@@ -240,16 +244,15 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(top_user).to have_content other_user.name
       end
       it '自分と他人のプロフィール画像が表示される' do
-        users = find('.main-contents')
-        expect(users).to have_selector('img', count: 2)
+        is_expected.to have_selector('img', count: 2)
       end
       it '自分と他人の名前のリンクが正しい' do
-        expect(page).to have_link user.name, href: user_path(user)
-        expect(page).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link user.name, href: user_path(user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it '自分と他人の自己紹介が表示される' do
-        expect(page).to have_content user.introduction
-        expect(page).to have_content other_user.introduction
+        is_expected.to have_content user.introduction
+        is_expected.to have_content other_user.introduction
       end
       it '自分にはフォローボタンが表示されない' do
         user_info = find_all('.one-user')[1]
@@ -269,17 +272,20 @@ describe 'ユーザーログイン後のテスト', js: true do
     end
 
     context '表示内容の確認' do
+
+      subject { find('.main-contents') }
+
       it 'URLが正しい' do
         expect(current_path).to eq "/users/#{ user.id.to_s }"
       end
       it '投稿一覧の画像・名前のリンク先が正しい' do
-        expect(page).to have_link user.name, href: user_path(user)
+        is_expected.to have_link user.name, href: user_path(user)
       end
       it '投稿一覧に自分の投稿のカテゴリーが表示される' do
-        expect(page).to have_content post.category_i18n
+        is_expected.to have_content post.category_i18n
       end
       it '投稿一覧に自分の投稿本文が表示される' do
-        expect(page).to have_content post.body
+        is_expected.to have_content post.body
       end
       it '投稿詳細ページへのリンクが表示される' do
         post_box = find('.one-post')
@@ -290,10 +296,12 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(my_post).to have_link '削除', href: post_path(post)
       end
       it 'コメントリンクが表示される' do
-        expect(page).to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
+        my_post = find('.post-reaction')
+        expect(my_post).to have_link 'コメント', href: "/posts/#{ post.id.to_s }#comment-form"
       end
       it 'いいねボタンが表示される' do
-        expect(page).to have_link 'いいね', href: post_likes_path(post)
+        my_post = find('.post-reaction')
+        expect(my_post).to have_link 'いいね', href: post_likes_path(post)
       end
       it '他人の投稿は表示されない' do
         expect(page).not_to have_content other_post.body
@@ -302,22 +310,21 @@ describe 'ユーザーログイン後のテスト', js: true do
     end
 
     context 'サイドバーの確認' do
+
+      subject { find('.user-info') }
+
       it '自分のプロフィールが表示される' do
-        user_info = find('.user-info')
-        expect(user_info).to have_link user.name, href: user_path(user)
-        expect(user_info).to have_content user.introduction
+        is_expected.to have_link user.name, href: user_path(user)
+        is_expected.to have_content user.introduction
       end
       it 'プロフィール編集リンクが表示される' do
-        user_info = find('.user-info')
-        expect(user_info).to have_link 'プロフィール編集', href: edit_user_path(user)
+        is_expected.to have_link 'プロフィール編集', href: edit_user_path(user)
       end
       it '通知設定リンクが表示される' do
-        user_info = find('.user-info')
-        expect(user_info).to have_link '通知設定', href: notifications_setting_path
+        is_expected.to have_link '通知設定', href: notifications_setting_path
       end
       it 'フォローボタンは表示されない' do
-        user_info = find('.user-info')
-        expect(user_info).not_to have_link 'フォローする'
+        is_expected.not_to have_link 'フォローする'
       end
     end
   end
@@ -329,17 +336,20 @@ describe 'ユーザーログイン後のテスト', js: true do
     end
 
     context '表示内容の確認' do
+
+      subject { find('.main-contents') }
+
       it 'URLが正しい' do
         expect(current_path).to eq "/users/#{ other_user.id.to_s }"
       end
       it '投稿一覧の画像・名前のリンク先が正しい' do
-        expect(page).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it '投稿一覧に投稿のカテゴリーが表示される' do
-        expect(page).to have_content other_post.category_i18n
+        is_expected.to have_content other_post.category_i18n
       end
       it '投稿一覧に投稿本文が表示される' do
-        expect(page).to have_content other_post.body
+        is_expected.to have_content other_post.body
       end
       it '投稿詳細ページへのリンクが表示される' do
         post_box = find('.one-post')
@@ -350,10 +360,12 @@ describe 'ユーザーログイン後のテスト', js: true do
         expect(others_post).not_to have_link '削除'
       end
       it 'コメントリンクが表示される' do
-        expect(page).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
+        others_post = find('.post-reaction')
+        expect(others_post).to have_link 'コメント', href: "/posts/#{ other_post.id.to_s }#comment-form"
       end
       it 'いいねボタンが表示される' do
-        expect(page).to have_link 'いいね', href: post_likes_path(other_post)
+        others_post = find('.post-reaction')
+        expect(others_post).to have_link 'いいね', href: post_likes_path(other_post)
       end
       it '自分の投稿は表示されない' do
         expect(page).not_to have_content post.body
@@ -362,22 +374,21 @@ describe 'ユーザーログイン後のテスト', js: true do
     end
 
     context 'サイドバーの確認' do
+
+      subject { find('.user-info') }
+
       it '他人のプロフィールが表示される' do
-        other_user_info = find('.user-info')
-        expect(other_user_info).to have_link other_user.name, href: user_path(other_user)
-        expect(other_user_info).to have_content other_user.introduction
+        is_expected.to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_content other_user.introduction
       end
       it 'フォローボタンが表示される' do
-        other_user_info = find('.user-info')
-        expect(other_user_info).to have_link 'フォローする'
+        is_expected.to have_link 'フォローする'
       end
       it 'プロフィール編集リンクは表示されない' do
-        other_user_info = find('.user-info')
-        expect(other_user_info).not_to have_link 'プロフィール編集'
+        is_expected.not_to have_link 'プロフィール編集'
       end
       it '通知設定リンクは表示されない' do
-        other_user_info = find('.user-info')
-        expect(other_user_info).not_to have_link '通知設定'
+        is_expected.not_to have_link '通知設定'
       end
     end
   end

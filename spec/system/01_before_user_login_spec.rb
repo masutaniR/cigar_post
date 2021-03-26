@@ -8,26 +8,24 @@ describe 'ユーザーログイン前のテスト', js: true do
 
   describe 'トップ画面のテスト' do
 
+    # visible: false でふわっと表示(非表示)要素も含めてテスト
+    subject { find('.welcome-info', visible: false) }
+
     context '表示内容の確認' do
       it 'URLが正しい' do
         expect(current_path).to eq '/'
       end
-      # visible: false でふわっと表示(非表示)要素も含めてテスト
       it 'アバウトリンクが表示される' do
-        info = find('.welcome-info', visible: false)
-        expect(info).to have_link 'CigarPostとは？', href: about_path, visible: false
+        is_expected.to have_link 'CigarPostとは？', href: about_path, visible: false
       end
       it '新規登録リンクが表示される' do
-        info = find('.welcome-info', visible: false)
-        expect(info).to have_link '新規登録', href: new_user_registration_path, visible: false
+        is_expected.to have_link '新規登録', href: new_user_registration_path, visible: false
       end
       it 'ログインリンクが表示される' do
-        info = find('.welcome-info', visible: false)
-        expect(info).to have_link 'ログイン', href: new_user_session_path, visible: false
+        is_expected.to have_link 'ログイン', href: new_user_session_path, visible: false
       end
       it 'Googleログインリンクが表示される' do
-        info = find('.welcome-info', visible: false)
-        expect(info).to have_link 'Googleアカウントでログイン', visible: false
+        is_expected.to have_link 'Googleアカウントでログイン', visible: false
       end
     end
   end
@@ -45,26 +43,25 @@ describe 'ユーザーログイン前のテスト', js: true do
   end
 
   describe 'ヘッダーのテスト：ログイン前' do
+
+    subject { find('header') }
+
     before do
       visit root_path
     end
 
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        header = find('header')
-        expect(header).to have_content 'CigarPost'
+        is_expected.to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        header = find('header')
-        expect(header).to have_link 'CigarPost', href: root_path
+        is_expected.to have_link 'CigarPost', href: root_path
       end
       it '新規登録リンクが表示される' do
-        header = find('header')
-        expect(header).to have_link '新規登録', href: new_user_registration_path
+        is_expected.to have_link '新規登録', href: new_user_registration_path
       end
       it 'ログインリンクが表示される' do
-        header = find('header')
-        expect(header).to have_link 'ログイン', href: new_user_session_path
+        is_expected.to have_link 'ログイン', href: new_user_session_path
       end
     end
   end
@@ -180,6 +177,8 @@ describe 'ユーザーログイン前のテスト', js: true do
 
   describe 'ヘッダーのテスト：ユーザーログイン後' do
 
+    subject { find('header') }
+
     let(:user) { create(:user) }
 
     before do
@@ -191,34 +190,22 @@ describe 'ユーザーログイン前のテスト', js: true do
 
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        header = find('header')
-        expect(header).to have_content 'CigarPost'
+        is_expected.to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        header = find('header')
-        expect(header).to have_link 'CigarPost', href: timeline_path
+        is_expected.to have_link 'CigarPost', href: timeline_path
       end
       it '新規投稿リンクが表示される' do
-        header = find('header')
-        expect(header).to have_link '投稿する', href: new_post_path
+        is_expected.to have_link '投稿する', href: new_post_path
       end
       it '投稿一覧リンクが表示される' do
-        header = find('header')
-        expect(header).to have_link '投稿一覧', href: posts_path
+        is_expected.to have_link '投稿一覧', href: posts_path
       end
       it 'ユーザー一覧リンクが表示される' do
-        header = find('header')
-        expect(header).to have_link 'ユーザー', href: users_path
+        is_expected.to have_link 'ユーザー', href: users_path
       end
       it '通知一覧リンクが表示される' do
-        header = find('header')
-        expect(header).to have_content '通知'
-      end
-      it '通知のリンクの内容が正しい' do
-        click_link '通知'
-        expect(current_path).to eq '/notifications'
-        # 以下の記述は"there were no matches"でエラーになる
-        # expect(header).to have_link '通知'', href: '/notifications'
+        is_expected.to have_link '通知', href: notifications_path
       end
       it 'ドロップダウンメニューが表示される' do
         dropdown = find_all('.nav-link')[4]
@@ -236,7 +223,6 @@ describe 'ユーザーログイン前のテスト', js: true do
         expect(menu).to have_link 'ログアウト', href: destroy_user_session_path
       end
     end
-
   end
 
   describe 'ユーザーログアウトのテスト' do
