@@ -1,24 +1,15 @@
-<!-- いいねが1件以上ある場合のみ数字を表示 -->
 <% if user_signed_in? %>
-  <% if post.likes.empty? %>
+
+  <% if post.liked_by?(current_user) %>
+    <%= link_to post_likes_path(post), method: :delete, remote: true, class: 'plain-link' do %>
+      <i class="fas fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
+    <% end %>
+  <% else %>
     <%= link_to post_likes_path(post), method: :post, remote: true, class: 'plain-link' do %>
-      <i class="far fa-heart"></i> いいね
-    <% end %>
-  <% else %>
-    <% if post.liked_by?(current_user) %>
-      <%= link_to post_likes_path(post), method: :delete, remote: true, class: 'plain-link' do %>
-        <i class="fas fa-heart"></i> いいね <%= post.likes.count %>
-      <% end %>
-    <% else %>
-      <%= link_to post_likes_path(post), method: :post, remote: true, class: 'plain-link' do %>
-        <i class="far fa-heart"></i> いいね <%= post.likes.count %>
-      <% end %>
+      <i class="far fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
     <% end %>
   <% end %>
+
 <% else %>
-  <% if post.likes.empty? %>
-    <i class="far fa-heart"></i> いいね
-  <% else %>
-    <i class="far fa-heart"></i> いいね <%= post.likes.count %>
-  <% end %>
+  <i class="far fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
 <% end %>
