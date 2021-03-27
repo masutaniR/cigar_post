@@ -17,22 +17,20 @@ describe '管理者画面のテスト', js: true do
 
   describe 'ヘッダーのテスト：管理者ログイン前' do
 
+    subject { find('header') }
+
     context '表示内容の確認' do
       it 'サイト名が表示される' do
-        header = find('header')
-        expect(header).to have_content 'CigarPost'
+        is_expected.to have_content 'CigarPost'
       end
       it 'サイト名のリンクの内容が正しい' do
-        header = find('header')
-        expect(header).to have_link 'CigarPost', href: root_path
+        is_expected.to have_link 'CigarPost', href: root_path
       end
       it 'ユーザー新規登録リンクが表示される' do
-        header = find('header')
-        expect(header).to have_link '新規登録', href: new_user_registration_path
+        is_expected.to have_link '新規登録', href: new_user_registration_path
       end
       it 'ユーザーログインリンクが表示される' do
-        header = find('header')
-        expect(header).to have_link 'ログイン', href: new_user_session_path
+        is_expected.to have_link 'ログイン', href: new_user_session_path
       end
     end
   end
@@ -94,34 +92,29 @@ describe '管理者画面のテスト', js: true do
 
     describe 'ヘッダーのテスト：管理者ログイン後' do
 
+      subject { find('header') }
+
       context '表示内容の確認' do
         it 'サイト名が表示される' do
-          header = find('header')
-          expect(header).to have_content 'CigarPost'
+          is_expected.to have_content 'CigarPost'
         end
         it 'サイト名のリンクの内容が正しい' do
-          header = find('header')
-          expect(header).to have_link 'CigarPost', href: admin_users_path
+          is_expected.to have_link 'CigarPost', href: admin_users_path
         end
         it 'ユーザー一覧リンクが表示される' do
-          header = find('header')
-          expect(header).to have_link 'ユーザー', href: admin_users_path
+          is_expected.to have_link 'ユーザー', href: admin_users_path
         end
         it '投稿一覧リンクが表示される' do
-          header = find('header')
-          expect(header).to have_link '投稿', href: admin_posts_path
+          is_expected.to have_link '投稿', href: admin_posts_path
         end
         it 'コメント一覧リンクが表示される' do
-          header = find('header')
-          expect(header).to have_link 'コメント', href: admin_post_comments_path
+          is_expected.to have_link 'コメント', href: admin_post_comments_path
         end
         it 'お知らせ一覧リンクが表示される' do
-          header = find('header')
-          expect(header).to have_link 'お知らせ', href: admin_information_index_path
+          is_expected.to have_link 'お知らせ', href: admin_information_index_path
         end
         it 'ログアウトリンクが表示される' do
-          header = find('header')
-          expect(header).to have_link 'ログアウト', href: destroy_admin_session_path
+          is_expected.to have_link 'ログアウト', href: destroy_admin_session_path
         end
       end
     end
@@ -185,67 +178,76 @@ describe '管理者画面のテスト', js: true do
         it 'URLが正しい' do
           expect(current_path).to eq "/admin/users/#{ user.id.to_s }"
         end
-        it '投稿一覧の画像・名前のリンク先が正しい' do
-          posts = find('.post-index')
-          expect(posts).to have_link user.name, href: admin_user_path(user)
+      end
+
+      context '投稿一覧表示の確認' do
+
+        subject { find('.post-index') }
+
+        it 'ユーザーの画像・名前のリンク先が正しい' do
+          is_expected.to have_link user.name, href: admin_user_path(user)
         end
-        it '投稿一覧に投稿のカテゴリーが表示される' do
-          expect(page).to have_content post.category_i18n
+        it '投稿のカテゴリーが表示される' do
+          is_expected.to have_content post.category_i18n
         end
-        it '投稿一覧に投稿本文が表示される' do
-          expect(page).to have_content post.body
+        it '投稿本文が表示される' do
+          is_expected.to have_content post.body
         end
         it '投稿詳細ページへのリンクが表示される' do
-          posts = find('.post-index')
-          expect(posts).to have_link '詳細', href: admin_post_path(post)
+          is_expected.to have_link '詳細', href: admin_post_path(post)
         end
-        it 'ユーザーの投稿一覧ページへのリンクが表示される' do
-          posts = find('.post-index')
-          expect(posts).to have_link 'すべて見る', href: admin_posts_path(user_id: user.id)
+        it '「すべて見る」リンクが表示される' do
+          is_expected.to have_link 'すべて見る', href: admin_posts_path(user_id: user.id)
         end
         it '他人の投稿は表示されない' do
-          expect(page).not_to have_content other_post.body
+          is_expected.not_to have_content other_post.body
         end
-        it 'コメント一覧の画像・名前のリンク先が正しい' do
-          comments = find('.comment-index')
-          expect(comments).to have_link user.name, href: admin_user_path(user)
+      end
+
+      context 'コメント一覧表示の確認' do
+
+        subject { find('.comment-index') }
+
+        it 'ユーザーの画像・名前のリンク先が正しい' do
+          is_expected.to have_link user.name, href: admin_user_path(user)
         end
-        it 'コメント一覧に投稿のコメントカテゴリーが表示される' do
-          expect(page).to have_content comment.category_i18n
+        it 'コメントカテゴリーが表示される' do
+          is_expected.to have_content comment.category_i18n
         end
-        it 'コメント一覧にコメント本文が表示される' do
-          expect(page).to have_content comment.comment
+        it 'コメント本文が表示される' do
+          is_expected.to have_content comment.comment
         end
         it 'コメント投稿詳細ページへのリンクが表示される' do
-          comments = find('.comment-index')
-          expect(comments).to have_link '詳細', href: "/admin/posts/#{ comment.post.id.to_s }#comment-#{ comment.id.to_s }"
+          is_expected.to have_link '詳細', href: "/admin/posts/#{ comment.post.id.to_s }#comment-#{ comment.id.to_s }"
         end
-        it 'ユーザーのコメント一覧ページへのリンクが表示される' do
-          comments = find('.comment-index')
-          expect(comments).to have_link 'すべて見る', href: admin_post_comments_path(user_id: user.id)
+        it '「すべて見る」リンクが表示される' do
+          is_expected.to have_link 'すべて見る', href: admin_post_comments_path(user_id: user.id)
         end
         it '他人のコメントは表示されない' do
-          expect(page).not_to have_content other_comment.comment
+          is_expected.not_to have_content other_comment.comment
         end
       end
 
       context 'サイドバーの確認' do
+
+        subject { find('.user-info') }
+
         it 'ユーザーのプロフィールが表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_content user.name
-          expect(user_info).to have_content user.introduction
-          expect(user_info).to have_content user.email
-          expect(user_info).to have_content user.created_at.to_s(:datetime_jp)
-          expect(user_info).to have_content '利用可能'
+          is_expected.to have_content user.name
+          is_expected.to have_content user.introduction
+          is_expected.to have_content user.email
+          is_expected.to have_content user.created_at.to_s(:datetime_jp)
+          is_expected.to have_content '利用可能'
         end
         it 'アカウント凍結ボタンが表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_button 'アカウント凍結'
+          is_expected.to have_button 'アカウント凍結'
         end
       end
     end
 
     describe 'ユーザーアカウント凍結のテスト' do
+
+      subject { find('.user-info') }
 
       before do
         visit admin_user_path(user)
@@ -261,12 +263,10 @@ describe '管理者画面のテスト', js: true do
           expect(user.reload.is_active).to eq false
         end
         it '更新されたユーザーステータスが正しく表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_content '凍結中'
+          is_expected.to have_content '凍結中'
         end
         it '凍結解除ボタンが表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_button 'アカウント凍結解除'
+          is_expected.to have_button 'アカウント凍結解除'
         end
         it '凍結されたアカウントではログインできない' do
           click_link 'ログアウト'
@@ -293,12 +293,10 @@ describe '管理者画面のテスト', js: true do
           expect(user.reload.is_active).to eq true
         end
         it '更新されたユーザーステータスが正しく表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_content '利用可能'
+          is_expected.to have_content '利用可能'
         end
         it 'アカウント凍結ボタンが表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_button 'アカウント凍結'
+          is_expected.to have_button 'アカウント凍結'
         end
         it '凍結解除されたアカウントでログインできる' do
           click_link 'ログアウト'
@@ -356,6 +354,9 @@ describe '管理者画面のテスト', js: true do
       end
 
       context '表示内容の確認' do
+        
+        subject { find('.main-contents') }
+        
         it 'URLが正しい' do
           expect(current_path).to eq "/admin/posts/#{ post.id.to_s }"
         end
@@ -363,26 +364,30 @@ describe '管理者画面のテスト', js: true do
           expect(page).to have_link '投稿を削除', href: admin_post_path(post)
         end
         it 'プロフィール画像と名前のリンクが正しい' do
-          post_detail = find('.main-contents')
-          expect(post_detail).to have_link user.name, href: admin_user_path(user)
+          is_expected.to have_link user.name, href: admin_user_path(user)
         end
         it '投稿のカテゴリが表示される' do
-          expect(page).to have_content post.category_i18n
+          is_expected.to have_content post.category_i18n
         end
         it '投稿の本文が表示される' do
-          expect(page).to have_content post.body
-        end
-        it 'サイドバーに投稿者のプロフィールが表示される' do
-          user_info = find('.user-info')
-          expect(user_info).to have_content user.name
-          expect(user_info).to have_content user.introduction
-          expect(user_info).to have_content user.email
-          expect(user_info).to have_content user.created_at.to_s(:datetime_jp)
-          expect(user_info).to have_content '利用可能'
+          is_expected.to have_content post.body
         end
         it 'コメント一覧が表示される' do
           comment_box = find('#comment-container')
           expect(comment_box).to have_content 'コメント一覧'
+        end
+      end
+      
+      context 'サイドバーの確認' do
+        
+        subject { find('.user-info') }
+        
+        it 'サイドバーに投稿者のプロフィールが表示される' do
+          is_expected.to have_content user.name
+          is_expected.to have_content user.introduction
+          is_expected.to have_content user.email
+          is_expected.to have_content user.created_at.to_s(:datetime_jp)
+          is_expected.to have_content '利用可能'
         end
       end
 
@@ -402,18 +407,20 @@ describe '管理者画面のテスト', js: true do
       end
 
       context 'コメント一覧表示の確認' do
+        
+        subject { find('#comment-container') }
+        
         it 'コメント投稿者のプロフィール画像と名前のリンクが正しい' do
-          comment_box = find('#comment-container')
-          expect(comment_box).to have_link other_user.name, href: admin_user_path(other_user)
+          is_expected.to have_link other_user.name, href: admin_user_path(other_user)
         end
         it 'コメントのカテゴリが表示される' do
-          expect(page).to have_content other_comment.category_i18n
+          is_expected.to have_content other_comment.category_i18n
         end
         it 'コメント本文が表示される' do
-          expect(page).to have_content other_comment.comment
+          is_expected.to have_content other_comment.comment
         end
         it 'コメント削除ボタンが表示される' do
-          expect(page).to have_link 'コメントを削除', href: admin_post_post_comment_path(post, other_comment)
+          is_expected.to have_link 'コメントを削除', href: admin_post_post_comment_path(post, other_comment)
         end
       end
     end
