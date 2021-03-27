@@ -16,6 +16,8 @@ describe 'ユーザー間交流のテスト', js: true do
 
   describe 'コメントのテスト' do
 
+    subject { find_all('.one-comment')[0] }
+
     before do
       visit post_path(other_post)
     end
@@ -65,20 +67,16 @@ describe 'ユーザー間交流のテスト', js: true do
       end
 
       it 'コメント投稿者の画像と名前のリンクが正しい' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_link PostComment.last.user.name, href: "/users/#{ PostComment.last.user.id.to_s }"
+        is_expected.to have_link PostComment.last.user.name, href: "/users/#{ PostComment.last.user.id.to_s }"
       end
       it 'コメント本文が表示される' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_content @comment
+        is_expected.to have_content @comment
       end
       it 'コメントカテゴリが表示される' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_content PostComment.last.category_i18n
+        is_expected.to have_content PostComment.last.category_i18n
       end
       it 'コメント削除リンクが表示される' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_link '削除', href: post_post_comment_path(other_post, PostComment.last)
+        is_expected.to have_link '削除', href: post_post_comment_path(other_post, PostComment.last)
       end
     end
 
@@ -91,20 +89,16 @@ describe 'ユーザー間交流のテスト', js: true do
       end
 
       it 'コメント投稿者の画像と名前のリンクが正しい' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_link other_user.name, href: "/users/#{ other_user.id.to_s }"
+        is_expected.to have_link other_user.name, href: "/users/#{ other_user.id.to_s }"
       end
       it 'コメント本文が表示される' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_content other_comment.comment
+        is_expected.to have_content other_comment.comment
       end
       it 'コメントカテゴリが表示される' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).to have_content other_comment.category_i18n
+        is_expected.to have_content other_comment.category_i18n
       end
       it 'コメント削除リンクは表示されない' do
-        comment_box = find_all('.one-comment')[0]
-        expect(comment_box).not_to have_link '削除'
+        is_expected.not_to have_link '削除'
       end
     end
   end
@@ -117,13 +111,15 @@ describe 'ユーザー間交流のテスト', js: true do
     end
 
     context 'いいね作成と削除' do
+
+      subject { find('.post-reaction') }
+
       it 'いいねが正しく保存される' do
         visit current_path
         expect(other_post.likes.count).to eq 1
       end
       it 'いいねのカウントが表示される' do
-        reactions = find('.post-reaction')
-        expect(reactions).to have_content 'いいね 1'
+        is_expected.to have_content 'いいね 1'
       end
       it 'いいねが正しく削除される：1投稿に1つしか作成できない' do
         click_link 'いいね 1'
@@ -132,13 +128,14 @@ describe 'ユーザー間交流のテスト', js: true do
       end
       it 'いいねが0の場合カウントは表示されない' do
         click_link 'いいね 1'
-        reactions = find('.post-reaction')
-        expect(reactions).not_to have_content 'いいね 1'
-        expect(reactions).to have_content 'いいね'
+        is_expected.not_to have_content 'いいね 1'
+        is_expected.to have_content 'いいね'
       end
     end
 
     context 'いいね一覧のテスト' do
+      
+      subject { find('.post-container') }
 
       before do
         visit likes_user_path(user)
@@ -153,20 +150,16 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(likes).to have_content '1'
       end
       it '投稿者の画像・名前のリンクが正しい' do
-        likes = find('.post-container')
-        expect(likes).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it 'いいねした投稿のカテゴリーが表示される' do
-        likes = find('.post-container')
-        expect(likes).to have_content other_post.category_i18n
+        is_expected.to have_content other_post.category_i18n
       end
       it 'いいねした投稿の本文が表示される' do
-        likes = find('.post-container')
-        expect(likes).to have_content other_post.body
+        is_expected.to have_content other_post.body
       end
       it '詳細ページへのリンクが表示される' do
-        likes = find('.post-container')
-        expect(likes).to have_link '投稿詳細を見る', href: post_path(other_post)
+        is_expected.to have_link '投稿詳細を見る', href: post_path(other_post)
       end
       it 'いいねした投稿の削除リンクは表示されない' do
         like_post = find_all('.post-reaction')[0]
@@ -192,14 +185,16 @@ describe 'ユーザー間交流のテスト', js: true do
     end
 
     context 'フォロー作成と削除' do
+      
+      subject { find_all('tr')[2] }
+      
       it 'フォローが正しく保存される' do
         visit current_path
         expect(other_user.followers.count).to eq 1
       end
       it 'フォローしたユーザーのフォロワー数が更新される' do
-        followers = find_all('tr')[2]
-        expect(followers).to have_content 'フォロワー'
-        expect(followers).to have_content '1'
+        is_expected.to have_content 'フォロワー'
+        is_expected.to have_content '1'
       end
       it 'フォロー解除ボタンが表示される' do
         expect(page).to have_link 'フォロー中', href: user_relationships_path(other_user)
@@ -211,13 +206,14 @@ describe 'ユーザー間交流のテスト', js: true do
       end
       it 'フォロー削除したユーザーのフォロワー数が更新される' do
         click_link 'フォロー中'
-        followers = find_all('tr')[2]
-        expect(followers).to have_content 'フォロワー'
-        expect(followers).to have_content '0'
+        is_expected.to have_content 'フォロワー'
+        is_expected.to have_content '0'
       end
     end
 
     context 'フォロー一覧のテスト' do
+      
+      subject { find('.main-contents') }
 
       before do
         visit following_user_path(user)
@@ -232,20 +228,19 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(following).to have_content '1'
       end
       it 'フォローしているユーザーの名前のリンクが正しい' do
-        users = find('.main-contents')
-        expect(users).to have_link other_user.name, href: user_path(other_user)
+        is_expected.to have_link other_user.name, href: user_path(other_user)
       end
       it 'フォローしているユーザーの自己紹介が表示される' do
-        users = find('.main-contents')
-        expect(users).to have_content other_user.introduction
+        is_expected.to have_content other_user.introduction
       end
       it 'フォロー解除ボタンが表示される' do
-        users = find('.main-contents')
-        expect(users).to have_link 'フォロー中', href: user_relationships_path(other_user)
+        is_expected.to have_link 'フォロー中', href: user_relationships_path(other_user)
       end
     end
 
     context 'フォロワー一覧のテスト' do
+      
+      subject { find('.main-contents') }
 
       before do
         visit followers_user_path(other_user)
@@ -260,17 +255,17 @@ describe 'ユーザー間交流のテスト', js: true do
         expect(following).to have_content '1'
       end
       it 'フォロワーの名前のリンクが正しい' do
-        users = find('.main-contents')
-        expect(users).to have_link user.name, href: user_path(user)
+        is_expected.to have_link user.name, href: user_path(user)
       end
       it 'フォロワーの自己紹介が表示される' do
-        users = find('.main-contents')
-        expect(users).to have_content user.introduction
+        is_expected.to have_content user.introduction
       end
     end
   end
 
   describe '通知のテスト' do
+    
+    subject { find('.main-contents') }
 
     describe 'コメント通知のテスト' do
 
@@ -303,16 +298,13 @@ describe 'ユーザー間交流のテスト', js: true do
           expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
         end
         it '通知一覧にコメント通知が表示される' do
-          notice = find('.main-contents')
-          expect(notice).to have_content 'コメントしました'
+          is_expected.to have_content 'コメントしました'
         end
         it 'コメント投稿者の名前とリンクが正しい' do
-          notice = find('.main-contents')
-          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+          is_expected.to have_link user.name, href: "/users/#{ user.id.to_s }"
         end
         it '通知にコメント本文が表示される' do
-          notice = find('.main-contents')
-          expect(notice).to have_content @comment
+          is_expected.to have_content @comment
         end
       end
     end
@@ -346,12 +338,10 @@ describe 'ユーザー間交流のテスト', js: true do
           expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
         end
         it '通知一覧にいいね通知が表示される' do
-          notice = find('.main-contents')
-          expect(notice).to have_content 'いいねしました'
+          is_expected.to have_content 'いいねしました'
         end
         it 'いいねしたユーザーの名前とリンクが正しい' do
-          notice = find('.main-contents')
-          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+          is_expected.to have_link user.name, href: "/users/#{ user.id.to_s }"
         end
       end
     end
@@ -385,12 +375,10 @@ describe 'ユーザー間交流のテスト', js: true do
           expect(header).not_to have_selector 'p', class: 'badge-danger', text: '1'
         end
         it '通知一覧にフォロー通知が表示される' do
-          notice = find('.main-contents')
-          expect(notice).to have_content 'フォローしました'
+          is_expected.to have_content 'フォローしました'
         end
         it 'フォローしてきたユーザーの名前とリンクが正しい' do
-          notice = find('.main-contents')
-          expect(notice).to have_link user.name, href: "/users/#{ user.id.to_s }"
+          is_expected.to have_link user.name, href: "/users/#{ user.id.to_s }"
         end
       end
     end
