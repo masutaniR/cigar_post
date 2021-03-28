@@ -48,4 +48,9 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index]
     get 'notifications/setting' => 'notifications#setting'
   end
+
+  get '*path' => 'application#render_404',
+  constraints: lambda { |req|
+    req.path.exclude? 'attachments/'
+  }
 end

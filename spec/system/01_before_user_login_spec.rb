@@ -356,4 +356,17 @@ describe 'ユーザーログイン前のテスト', js: true do
     end
   end
 
+  describe 'ルーティングエラーのテスト' do
+
+    before do
+      visit '/abc'
+    end
+
+    context '表示のテスト' do
+      it 'エラーページが表示されるか' do
+        expect(page).to have_content 'ページが見つかりませんでした'
+      end
+    end
+  end
+
 end
