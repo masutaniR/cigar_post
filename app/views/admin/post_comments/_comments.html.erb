@@ -22,7 +22,7 @@
       <small class="ml-3">
           <%= link_to 'コメントを削除', admin_post_post_comment_path(post_comment.post, post_comment),
               method: :delete, remote: true, class: 'btn btn-danger btn-sm mr-4',
-              data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: '削除確認' %>
+              data: { confirm: '本当に削除しますか？', cancel: 'やめる', commit: '削除する'}, title: 'コメント削除' %>
       </small>
     </div>
   <% end %>
