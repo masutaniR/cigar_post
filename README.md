@@ -53,10 +53,13 @@ https://docs.google.com/spreadsheets/d/1p2eNx49KThXUrPEluwff0QOLA7k9yHlytG6SJwKq
 ## 使用素材
 
 - [ぱくたそ](https://www.pakutaso.com/)
+<br>
 ∟ TOP, ABOUTページのメインビジュアル
 
 - [icon rainbow](https://icon-rainbow.com/)
+<br>
 ∟ ユーザーのデフォルトアイコン
 
 - [ICOON MONO](https://icooon-mono.com/)
+<br>
 ∟ favicon
