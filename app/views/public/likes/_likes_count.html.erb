@@ -1,15 +1,11 @@
-<% if user_signed_in? %>
-
-  <% if post.liked_by?(current_user) %>
-    <%= link_to post_likes_path(post), method: :delete, remote: true, class: 'plain-link' do %>
-      <i class="fas fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
-    <% end %>
-  <% else %>
-    <%= link_to post_likes_path(post), method: :post, remote: true, class: 'plain-link' do %>
-      <i class="far fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
-    <% end %>
+<% if user_signed_in? && post.liked_by?(current_user) %>
+  <%= link_to post_likes_path(post), method: :delete, remote: true, class: 'plain-link' do %>
+    <i class="fas fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
   <% end %>
-
+<% elsif user_signed_in? %>
+  <%= link_to post_likes_path(post), method: :post, remote: true, class: 'plain-link' do %>
+    <i class="far fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
+  <% end %>
 <% else %>
   <i class="far fa-heart"></i> いいね <%= post.likes.count if post.likes.present? %>
 <% end %>
